@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_form_version_list" model="ir.ui.view">
+        <field name="name">cas.form.version.list</field>
+        <field name="model">cas.form.version</field>
+        <field name="arch" type="xml">
+            <list string="نسخه‌های فرم">
+                <field name="definition_id"/>
+                <field name="revision"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="published_at"/>
+                <field name="published_by_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_form_version_form" model="ir.ui.view">
+        <field name="name">cas.form.version.form</field>
+        <field name="model">cas.form.version</field>
+        <field name="arch" type="xml">
+            <form string="نسخه فرم">
+                <header>
+                    <button name="action_publish"
+                            type="object"
+                            string="انتشار"
+                            class="btn-primary"
+                            groups="cas_form_core.group_cas_form_publisher"
+                            invisible="state != 'draft'"/>
+                    <button name="action_new_revision"
+                            type="object"
+                            string="ایجاد بازنگری جدید"
+                            groups="cas_form_core.group_cas_form_designer"
+                            invisible="state == 'draft'"/>
+                    <button name="action_archive"
+                            type="object"
+                            string="بایگانی نسخه"
+                            groups="cas_form_core.group_cas_form_publisher"
+                            invisible="state != 'published'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,published,archived"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="definition_id" readonly="state != 'draft'"/>
+                            <field name="revision" readonly="state != 'draft'"/>
+                            <field name="effective_from" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="published_at" readonly="1"/>
+                            <field name="published_by_id" readonly="1"/>
+                            <field name="schema_hash" readonly="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="فیلدها">
+                            <field name="field_ids" readonly="state != 'draft'">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="technical_key"/>
+                                    <field name="label"/>
+                                    <field name="field_type"/>
+                                    <field name="required"/>
+                                    <field name="readonly"/>
+                                    <field name="reportable"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="ساختار">
+                            <field name="node_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="version_id" column_invisible="True"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="technical_key"/>
+                                    <field name="node_type"/>
+                                    <field name="title"/>
+                                    <field name="parent_id"/>
+                                    <field name="field_id"/>
+                                    <field name="column_count"/>
+                                    <field name="column_span"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="یادداشت بازنگری">
+                            <field name="notes" readonly="state != 'draft'"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_form_field_form" model="ir.ui.view">
+        <field name="name">cas.form.field.form</field>
+        <field name="model">cas.form.field</field>
+        <field name="arch" type="xml">
+            <form string="فیلد فرم">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="label"/>
+                        <h1><field name="label" placeholder="عنوان فیلد..."/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="version_id" readonly="1"/>
+                            <field name="technical_key"/>
+                            <field name="field_uuid" readonly="1"/>
+                            <field name="field_type"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="required"/>
+                            <field name="readonly"/>
+                            <field name="reportable"/>
+                            <field name="allowed_model"
+                                   invisible="field_type != 'record_reference'"
+                                   required="field_type == 'record_reference'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="راهنما و مقدار پیش‌فرض">
+                            <group>
+                                <field name="placeholder"/>
+                                <field name="help_text"/>
+                                <field name="default_value"/>
+                            </group>
+                        </page>
+                        <page string="گزینه‌ها"
+                              invisible="field_type not in ['single_select', 'multi_select', 'radio', 'dropdown', 'tag']">
+                            <field name="option_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="technical_key"/>
+                                    <field name="label"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="اعتبارسنجی فنی" groups="cas_form_core.group_cas_form_manager">
+                            <field name="validation_config"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cas_form_version" model="ir.actions.act_window">
+        <field name="name">نسخه‌های فرم</field>
+        <field name="res_model">cas.form.version</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

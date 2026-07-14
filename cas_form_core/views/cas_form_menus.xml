@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_forms_root"
+              name="فرم‌های سازمانی"
+              sequence="45"
+              groups="cas_form_core.group_cas_form_user"/>
+
+    <menuitem id="menu_cas_forms_configuration"
+              name="طراحی و پیکربندی"
+              parent="menu_cas_forms_root"
+              sequence="90"
+              groups="cas_form_core.group_cas_form_designer"/>
+
+    <menuitem id="menu_cas_form_definitions"
+              name="تعریف فرم‌ها"
+              parent="menu_cas_forms_configuration"
+              action="action_cas_form_definition"
+              sequence="10"/>
+
+    <menuitem id="menu_cas_form_versions"
+              name="نسخه‌های فرم"
+              parent="menu_cas_forms_configuration"
+              action="action_cas_form_version"
+              sequence="20"/>
+</odoo>
+

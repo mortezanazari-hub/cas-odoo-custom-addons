@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cas_form_definition_user,cas.form.definition user,model_cas_form_definition,group_cas_form_user,1,0,0,0
+access_cas_form_version_user,cas.form.version user,model_cas_form_version,group_cas_form_user,1,0,0,0
+access_cas_form_field_user,cas.form.field user,model_cas_form_field,group_cas_form_user,1,0,0,0
+access_cas_form_field_option_user,cas.form.field.option user,model_cas_form_field_option,group_cas_form_user,1,0,0,0
+access_cas_form_node_user,cas.form.node user,model_cas_form_node,group_cas_form_user,1,0,0,0
+access_cas_form_definition_designer,cas.form.definition designer,model_cas_form_definition,group_cas_form_designer,1,1,1,0
+access_cas_form_version_designer,cas.form.version designer,model_cas_form_version,group_cas_form_designer,1,1,1,0
+access_cas_form_field_designer,cas.form.field designer,model_cas_form_field,group_cas_form_designer,1,1,1,1
+access_cas_form_field_option_designer,cas.form.field.option designer,model_cas_form_field_option,group_cas_form_designer,1,1,1,1
+access_cas_form_node_designer,cas.form.node designer,model_cas_form_node,group_cas_form_designer,1,1,1,1
+access_cas_form_definition_manager,cas.form.definition manager,model_cas_form_definition,group_cas_form_manager,1,1,1,1
+access_cas_form_version_manager,cas.form.version manager,model_cas_form_version,group_cas_form_manager,1,1,1,1
+

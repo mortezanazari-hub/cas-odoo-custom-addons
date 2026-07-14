@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_cas_form_user" model="res.groups">
+        <field name="name">کاربر فرم‌های سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_cas_form_designer" model="res.groups">
+        <field name="name">طراح فرم‌های سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
+    </record>
+
+    <record id="group_cas_form_publisher" model="res.groups">
+        <field name="name">منتشرکننده فرم‌های سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('cas_form_core.group_cas_form_designer'))]"/>
+    </record>
+
+    <record id="group_cas_form_manager" model="res.groups">
+        <field name="name">مدیر فنی فرم‌های سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('cas_form_core.group_cas_form_publisher'))]"/>
+    </record>
+
+    <!-- Technical Odoo administrators must be able to configure CAS forms.
+         The reverse implication is deliberate: delegated CAS form managers do
+         not receive general Odoo Settings access. -->
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('cas_form_core.group_cas_form_manager'))]"/>
+    </record>
+
+    <record id="rule_cas_form_definition_company" model="ir.rule">
+        <field name="name">فرم‌ها: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_form_definition"/>
+        <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_cas_form_version_company" model="ir.rule">
+        <field name="name">نسخه فرم: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_form_version"/>
+        <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_cas_form_field_company" model="ir.rule">
+        <field name="name">فیلد فرم: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_form_field"/>
+        <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_cas_form_field_option_company" model="ir.rule">
+        <field name="name">گزینه فیلد: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_form_field_option"/>
+        <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_cas_form_node_company" model="ir.rule">
+        <field name="name">ساختار فرم: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_form_node"/>
+        <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

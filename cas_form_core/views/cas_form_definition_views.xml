@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_form_definition_list" model="ir.ui.view">
+        <field name="name">cas.form.definition.list</field>
+        <field name="model">cas.form.definition</field>
+        <field name="arch" type="xml">
+            <list string="فرم‌های سازمانی">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="owner_user_id"/>
+                <field name="current_version_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_form_definition_form" model="ir.ui.view">
+        <field name="name">cas.form.definition.form</field>
+        <field name="model">cas.form.definition</field>
+        <field name="arch" type="xml">
+            <form string="فرم سازمانی">
+                <header>
+                    <button name="action_create_initial_version"
+                            type="object"
+                            string="ایجاد نسخه اولیه"
+                            class="btn-primary"
+                            groups="cas_form_core.group_cas_form_designer"
+                            invisible="version_ids"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" text="بایگانی‌شده" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="عنوان فرم..."/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="owner_user_id"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="current_version_id" readonly="1"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="توضیحات">
+                            <field name="description" placeholder="هدف و دامنه استفاده از فرم..."/>
+                        </page>
+                        <page string="نسخه‌ها">
+                            <field name="version_ids" readonly="1">
+                                <list>
+                                    <field name="revision"/>
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                    <field name="published_at"/>
+                                    <field name="published_by_id"/>
+                                    <field name="schema_hash" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_form_definition_search" model="ir.ui.view">
+        <field name="name">cas.form.definition.search</field>
+        <field name="model">cas.form.definition</field>
+        <field name="arch" type="xml">
+            <search string="جست‌وجوی فرم‌ها">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="owner_user_id"/>
+                <filter name="active_forms" string="فعال" domain="[('active', '=', True)]"/>
+                <filter name="archived_forms" string="بایگانی‌شده" domain="[('active', '=', False)]"/>
+                <filter name="group_owner" string="گروه‌بندی بر اساس مالک فرایند" context="{'group_by': 'owner_user_id'}"/>
+                <filter name="group_company" string="گروه‌بندی بر اساس شرکت" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cas_form_definition" model="ir.actions.act_window">
+        <field name="name">فرم‌های سازمانی</field>
+        <field name="res_model">cas.form.definition</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cas_form_definition_search"/>
+        <field name="context">{'search_default_active_forms': 1}</field>
+    </record>
+</odoo>
