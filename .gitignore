@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.log
+*.swp
+*.swo
+.idea/
+.vscode/
+.coverage
+.pytest_cache/
+.DS_Store
