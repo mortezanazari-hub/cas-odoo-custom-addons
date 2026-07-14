@@ -92,33 +92,36 @@ html[dir="rtl"] .cas_jalali_picker_button {
     white-space: nowrap;
 }
 
-/* Graphical picker */
+/* Graphical picker rendered by Odoo's overlay/popover service. */
+.cas_jalali_picker_popover {
+    width: auto !important;
+    max-width: calc(100vw - 16px) !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    z-index: 2000 !important;
+}
+
 .cas_jalali_picker {
-    position: absolute !important;
-    top: calc(100% + 6px) !important;
-    right: 0 !important;
-    left: auto !important;
+    position: static !important;
     width: 320px !important;
     min-width: 320px !important;
-    max-width: 320px !important;
-    height: auto !important;
+    max-width: min(320px, calc(100vw - 16px)) !important;
+    max-height: calc(100vh - 24px) !important;
     padding: 0 !important;
     margin: 0 !important;
     direction: rtl !important;
-    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
     color: #212529;
     background: #ffffff;
     border: 1px solid #d8dadd;
     border-radius: 6px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-    z-index: 2000 !important;
     font-size: 14px;
     line-height: 1.4;
-}
-
-html[dir="rtl"] .cas_jalali_picker {
-    right: auto !important;
-    left: 0 !important;
 }
 
 .cas_jalali_picker_header {
@@ -228,19 +231,45 @@ html[dir="rtl"] .cas_jalali_picker {
 }
 
 .cas_jalali_time {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: flex-end;
     justify-content: center;
     padding: 8px;
     column-gap: 4px;
-    direction: ltr;
+    direction: ltr !important;
+    flex-direction: row !important;
     border-top: 1px solid #e5e7eb;
+}
+
+.cas_jalali_time_part {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 3px;
+    margin: 0;
+}
+
+.cas_jalali_time_label {
+    display: block;
+    min-height: 1rem;
+    color: #6c757d;
+    font-size: 0.72rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.cas_jalali_time_separator {
+    align-self: flex-end;
+    padding-bottom: 0.45rem;
+    font-weight: 600;
 }
 
 .cas_jalali_time_select {
     width: 72px;
-    direction: ltr;
+    direction: ltr !important;
     text-align: center;
+    font-variant-numeric: tabular-nums;
 }
 
 .cas_jalali_picker_footer {
@@ -267,18 +296,15 @@ html[dir="rtl"] .o_row > .o_field_widget.o_field_daterange {
 }
 
 @media (max-width: 576px) {
-    .cas_jalali_picker,
-    html[dir="rtl"] .cas_jalali_picker {
-        position: fixed !important;
-        top: 50% !important;
-        right: 8px !important;
-        left: 8px !important;
-        width: auto !important;
+    .cas_jalali_picker_popover {
+        max-width: calc(100vw - 8px) !important;
+    }
+
+    .cas_jalali_picker {
+        width: calc(100vw - 16px) !important;
         min-width: 0 !important;
-        max-width: none !important;
-        max-height: calc(100vh - 16px);
-        overflow-y: auto !important;
-        transform: translateY(-50%);
+        max-width: calc(100vw - 16px) !important;
+        max-height: calc(100vh - 16px) !important;
     }
 
     .cas_jalali_day {
@@ -287,4 +313,30 @@ html[dir="rtl"] .o_row > .o_field_widget.o_field_daterange {
         min-width: 36px !important;
         min-height: 36px !important;
     }
+}
+
+
+/* Shared Odoo DateTimeInput bridge:
+   Custom Filter, DomainSelector and technical date editors. */
+.cas_jalali_core_datetime_input {
+    direction: ltr !important;
+    text-align: center !important;
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+    min-width: 10rem;
+}
+
+.o_domain_selector .cas_jalali_core_datetime_input,
+.o_tree_editor .cas_jalali_core_datetime_input {
+    width: 100%;
+    max-width: 18rem;
+}
+
+
+/* Final bidi stabilization for short Jalali datetime strings. */
+.cas_jalali_value,
+.cas_jalali_input,
+.cas_jalali_core_datetime_input {
+    direction: ltr !important;
+    unicode-bidi: isolate !important;
 }

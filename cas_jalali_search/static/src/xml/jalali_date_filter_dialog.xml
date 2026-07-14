@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_jalali_search.JalaliDateFilterDialog">
+        <Dialog title="'فیلتر تاریخ شمسی'"
+                size="'md'"
+                contentClass="'cas_jalali_search_dialog'">
+            <div class="cas_jalali_search_form" dir="rtl">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">فیلد تاریخ</label>
+                    <select class="form-select"
+                            t-on-change="onFieldChange">
+                        <option t-foreach="props.fields"
+                                t-as="field"
+                                t-key="field.name"
+                                t-att-value="field.name"
+                                t-att-selected="field.name === state.fieldName">
+                            <t t-esc="field.string"/>
+                            <t t-if="field.type === 'datetime'"> — تاریخ و ساعت</t>
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">دوره</label>
+                    <select class="form-select"
+                            t-on-change="onPeriodChange">
+                        <option t-foreach="periodOptions"
+                                t-as="period"
+                                t-key="period.id"
+                                t-att-value="period.id"
+                                t-att-selected="period.id === state.periodId"
+                                t-esc="period.label"/>
+                    </select>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">از تاریخ</label>
+                        <input type="text"
+                               class="form-control cas_jalali_search_date"
+                               dir="ltr"
+                               inputmode="numeric"
+                               autocomplete="off"
+                               placeholder="۱۴۰۵/۰۱/۰۱"
+                               t-att-value="state.startText"
+                               t-on-input="onStartInput"/>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">تا تاریخ</label>
+                        <input type="text"
+                               class="form-control cas_jalali_search_date"
+                               dir="ltr"
+                               inputmode="numeric"
+                               autocomplete="off"
+                               placeholder="۱۴۰۵/۱۲/۲۹"
+                               t-att-value="state.endText"
+                               t-on-input="onEndInput"/>
+                    </div>
+                </div>
+
+                <div class="alert alert-light border mt-3 mb-0">
+                    <div class="small text-muted mb-1">پیش‌نمایش فیلتر</div>
+                    <strong class="cas_jalali_search_preview"
+                            t-esc="previewText"/>
+                </div>
+
+                <div t-if="selectedField and selectedField.type === 'datetime'"
+                     class="small text-muted mt-2">
+                    بازه تاریخ و ساعت براساس منطقه زمانی کاربر محاسبه می‌شود.
+                </div>
+            </div>
+
+            <t t-set-slot="footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        t-on-click="apply">
+                    اعمال فیلتر
+                </button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        t-on-click="discard">
+                    انصراف
+                </button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

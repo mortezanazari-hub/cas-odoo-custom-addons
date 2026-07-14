@@ -5,6 +5,9 @@ from odoo.tests.common import TransactionCase
 from ..tools.jalali import (
     format_jalali_date,
     format_jalali_datetime,
+    format_jalali_date_long,
+    format_jalali_datetime_long,
+    format_jalali_time,
     from_jalali,
     is_jalali_leap,
     parse_jalali_date,
@@ -50,3 +53,19 @@ class TestJalaliConversion(TransactionCase):
     def test_leap_year(self):
         self.assertTrue(is_jalali_leap(1403))
         self.assertFalse(is_jalali_leap(1404))
+
+
+    def test_long_formatting(self):
+        value = datetime(2026, 7, 14, 9, 5)
+        self.assertEqual(
+            format_jalali_date_long(value),
+            "۲۳ تیر ۱۴۰۵",
+        )
+        self.assertEqual(
+            format_jalali_time(value),
+            "۰۹:۰۵",
+        )
+        self.assertEqual(
+            format_jalali_datetime_long(value),
+            "۲۳ تیر ۱۴۰۵، ۰۹:۰۵",
+        )

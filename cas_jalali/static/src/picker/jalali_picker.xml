@@ -84,41 +84,63 @@
             </div>
 
             <div t-if="props.type === 'datetime' and props.showTime !== false"
-                 class="cas_jalali_time d-flex align-items-center justify-content-center gap-1 p-2 border-top"
-                 dir="ltr">
-                <select class="form-select form-select-sm cas_jalali_time_select"
-                        aria-label="ساعت"
-                        t-on-change="setHour">
-                    <option t-foreach="hourOptions"
-                            t-as="item"
-                            t-key="item.value"
-                            t-att-value="item.value"
-                            t-att-selected="item.value === state.hour"
-                            t-esc="item.label"/>
-                </select>
-                <span>:</span>
-                <select class="form-select form-select-sm cas_jalali_time_select"
-                        aria-label="دقیقه"
-                        t-on-change="setMinute">
-                    <option t-foreach="minuteOptions"
-                            t-as="item"
-                            t-key="item.value"
-                            t-att-value="item.value"
-                            t-att-selected="item.value === state.minute"
-                            t-esc="item.label"/>
-                </select>
-                <t t-if="props.showSeconds">
-                    <span>:</span>
+                 class="cas_jalali_time p-2 border-top"
+                 dir="ltr"
+                 style="direction: ltr; flex-direction: row;">
+                <label class="cas_jalali_time_part"
+                       style="order: 1;">
+                    <span class="cas_jalali_time_label" dir="rtl">ساعت</span>
                     <select class="form-select form-select-sm cas_jalali_time_select"
-                            aria-label="ثانیه"
-                            t-on-change="setSecond">
-                        <option t-foreach="secondOptions"
+                            aria-label="ساعت"
+                            title="ساعت"
+                            t-on-change="setHour">
+                        <option t-foreach="hourOptions"
                                 t-as="item"
                                 t-key="item.value"
                                 t-att-value="item.value"
-                                t-att-selected="item.value === state.second"
+                                t-att-selected="item.value === state.hour"
                                 t-esc="item.label"/>
                     </select>
+                </label>
+
+                <span class="cas_jalali_time_separator"
+                      style="order: 2;">:</span>
+
+                <label class="cas_jalali_time_part"
+                       style="order: 3;">
+                    <span class="cas_jalali_time_label" dir="rtl">دقیقه</span>
+                    <select class="form-select form-select-sm cas_jalali_time_select"
+                            aria-label="دقیقه"
+                            title="دقیقه"
+                            t-on-change="setMinute">
+                        <option t-foreach="minuteOptions"
+                                t-as="item"
+                                t-key="item.value"
+                                t-att-value="item.value"
+                                t-att-selected="item.value === state.minute"
+                                t-esc="item.label"/>
+                    </select>
+                </label>
+
+                <t t-if="props.showSeconds">
+                    <span class="cas_jalali_time_separator"
+                          style="order: 4;">:</span>
+
+                    <label class="cas_jalali_time_part"
+                           style="order: 5;">
+                        <span class="cas_jalali_time_label" dir="rtl">ثانیه</span>
+                        <select class="form-select form-select-sm cas_jalali_time_select"
+                                aria-label="ثانیه"
+                                title="ثانیه"
+                                t-on-change="setSecond">
+                            <option t-foreach="secondOptions"
+                                    t-as="item"
+                                    t-key="item.value"
+                                    t-att-value="item.value"
+                                    t-att-selected="item.value === state.second"
+                                    t-esc="item.label"/>
+                        </select>
+                    </label>
                 </t>
             </div>
 

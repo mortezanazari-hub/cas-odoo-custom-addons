@@ -1,0 +1,27 @@
+/* CAS Jalali Search Bridge — plain CSS only. */
+
+.cas_jalali_search_dialog {
+    direction: rtl;
+}
+
+.cas_jalali_search_form {
+    max-width: 100%;
+}
+
+.cas_jalali_search_date,
+.cas_jalali_search_preview {
+    direction: ltr;
+    text-align: center;
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+}
+
+.cas_jalali_search_menu_item .fa {
+    color: #71639e;
+}
+
+html[dir="rtl"] .cas_jalali_search_dialog .form-select {
+    background-position: left 0.75rem center;
+    padding-right: 0.75rem;
+    padding-left: 2.25rem;
+}

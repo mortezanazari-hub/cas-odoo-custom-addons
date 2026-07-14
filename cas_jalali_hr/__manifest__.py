@@ -1,24 +1,16 @@
 {
-    "name": "CAS Jalali - Employees Bridge",
-    "summary": "Jalali integration for Employee version timeline and contracts",
-    "description": """
-Bridges CAS Jalali Calendar with Odoo Employees components that format dates
-outside the standard Date/Datetime field registry.
-""",
-    "version": "19.0.1.1.0",
-    "category": "Technical",
-    "author": "Chodan Ara Shomal",
-    "website": "https://erp.chodanara.com",
-    "license": "LGPL-3",
-    "depends": ["cas_jalali", "hr"],
-    "data": [],
-    "assets": {
-        "web.assets_backend": [
-            "cas_jalali_hr/static/src/js/versions_timeline_patch.js",
-            "cas_jalali_hr/static/src/css/hr_jalali.css",
-        ],
-    },
-    "installable": True,
-    "application": False,
-    "auto_install": True,
+    'name': 'CAS Jalali - Employees Bridge',
+    'summary': 'Jalali integration for Employee version timeline and contracts',
+    'description': '\nBridges CAS Jalali Calendar with Employees components that render dates\noutside the standard Date/Datetime field registry.\n',
+    'version': '19.0.2.1.0',
+    'category': 'Technical',
+    'author': 'Chodan Ara Shomal',
+    'website': 'https://erp.chodanara.com',
+    'license': 'LGPL-3',
+    'depends': ['cas_jalali', 'hr'],
+    'data': [],
+    'assets': {'web.assets_backend': ['cas_jalali_hr/static/src/js/versions_timeline_patch.js', 'cas_jalali_hr/static/src/css/hr_jalali.css']},
+    'installable': True,
+    'application': False,
+    'auto_install': True,
 }

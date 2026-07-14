@@ -1,0 +1,16 @@
+{
+    'name': 'CAS Jalali - Search Bridge',
+    'summary': 'Organization-wide Jalali date range filters for search views',
+    'description': '\nAdds a Jalali date filter dialog to Odoo search menus. Users may select a\nDate/Datetime field and apply Jalali quick periods or a custom Jalali range.\nThe selected range is converted into a standard Odoo domain.\n',
+    'version': '19.0.2.1.0',
+    'category': 'Technical',
+    'author': 'Chodan Ara Shomal',
+    'website': 'https://erp.chodanara.com',
+    'license': 'LGPL-3',
+    'depends': ['cas_jalali', 'web'],
+    'data': [],
+    'assets': {'web.assets_backend': ['cas_jalali_search/static/src/js/jalali_date_filter_dialog.js', 'cas_jalali_search/static/src/js/search_bar_menu_patch.js', 'cas_jalali_search/static/src/xml/jalali_date_filter_dialog.xml', 'cas_jalali_search/static/src/xml/search_bar_menu_patch.xml', 'cas_jalali_search/static/src/css/jalali_search.css']},
+    'installable': True,
+    'application': False,
+    'auto_install': True,
+}

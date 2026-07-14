@@ -23,6 +23,17 @@ _BREAKS = (
 )
 
 _PERSIAN_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
+
+_JALALI_MONTH_NAMES = (
+    "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
+    "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند",
+)
+
+_WEEKDAY_NAMES = (
+    "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه",
+    "جمعه", "شنبه", "یکشنبه",
+)
+
 _INPUT_DIGITS = str.maketrans(
     "۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩",
     "01234567890123456789",
@@ -221,3 +232,51 @@ def format_jalali_datetime(
     time_format = "%H:%M:%S" if show_seconds else "%H:%M"
     result = f"{date_part} {value.strftime(time_format)}"
     return to_persian_digits(result) if persian_digits else result
+
+
+def format_jalali_time(
+    value: datetime | None,
+    *,
+    persian_digits: bool = True,
+    show_seconds: bool = False,
+) -> str:
+    if not value:
+        return ""
+    time_format = "%H:%M:%S" if show_seconds else "%H:%M"
+    result = value.strftime(time_format)
+    return to_persian_digits(result) if persian_digits else result
+
+
+def format_jalali_date_long(
+    value: DateLike | None,
+    *,
+    persian_digits: bool = True,
+    include_weekday: bool = False,
+) -> str:
+    if not value:
+        return ""
+    jalali = to_jalali(value)
+    day = str(jalali.day)
+    year = str(jalali.year)
+    if persian_digits:
+        day = to_persian_digits(day)
+        year = to_persian_digits(year)
+    result = f"{day} {_JALALI_MONTH_NAMES[jalali.month - 1]} {year}"
+    if include_weekday:
+        result = f"{_WEEKDAY_NAMES[value.weekday()]} {result}"
+    return result
+
+
+def format_jalali_datetime_long(
+    value: datetime | None,
+    *,
+    persian_digits: bool = True,
+    include_weekday: bool = False,
+    show_seconds: bool = False,
+) -> str:
+    if not value:
+        return ""
+    return (
+        f"{format_jalali_date_long(value, persian_digits=persian_digits, include_weekday=include_weekday)}، "
+        f"{format_jalali_time(value, persian_digits=persian_digits, show_seconds=show_seconds)}"
+    )

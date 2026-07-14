@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_jalali_search.SearchBarMenuPatch"
+       t-inherit="web.SearchBarMenu"
+       t-inherit-mode="extension">
+        <xpath expr="//DropdownItem[@onSelected.bind='onAddCustomFilterClick']"
+               position="before">
+            <DropdownItem t-if="hasJalaliDateFields"
+                          class="'o_menu_item cas_jalali_search_menu_item'"
+                          onSelected.bind="onAddJalaliDateFilterClick">
+                <i class="fa fa-calendar me-2"/>
+                فیلتر تاریخ شمسی…
+            </DropdownItem>
+        </xpath>
+    </t>
+</templates>

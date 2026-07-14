@@ -1,13 +1,8 @@
 /** @odoo-module **/
 
-import {
-    Component,
-    onMounted,
-    onWillUnmount,
-    useRef,
-    useState,
-} from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
+import { usePopover } from "@web/core/popover/popover_hook";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import {
@@ -32,24 +27,25 @@ import { JalaliPicker } from "@cas_jalali/picker/jalali_picker";
 
 export class JalaliDateTimeField extends Component {
     static template = "cas_jalali.JalaliDateTimeField";
-    static components = { JalaliPicker };
     static props = DateTimeField.props;
     static defaultProps = DateTimeField.defaultProps;
 
     setup() {
         this.notification = useService("notification");
-        this.root = useRef("root");
         this.state = useState({
-            pickerOpen: false,
             activeIndex: 0,
         });
 
-        this.onDocumentPointerDown = this.onDocumentPointerDown.bind(this);
-        onMounted(() => {
-            document.addEventListener("pointerdown", this.onDocumentPointerDown, true);
-        });
-        onWillUnmount(() => {
-            document.removeEventListener("pointerdown", this.onDocumentPointerDown, true);
+        this.pickerPopover = usePopover(JalaliPicker, {
+            animation: false,
+            arrow: false,
+            closeOnClickAway: true,
+            closeOnEscape: true,
+            extendedFlipping: true,
+            fixedPosition: false,
+            popoverClass: "cas_jalali_picker_popover",
+            position: "bottom-middle",
+            setActiveElement: false,
         });
     }
 
@@ -125,46 +121,65 @@ export class JalaliDateTimeField extends Component {
         return parseJalaliDateTime(value);
     }
 
-    onDocumentPointerDown(event) {
-        if (
-            this.state.pickerOpen &&
-            this.root.el &&
-            !this.root.el.contains(event.target)
-        ) {
-            this.closePicker();
-        }
+    getPickerProps() {
+        return {
+            value: this.activeValue || false,
+            type: this.field.type,
+            minDate: this.props.minDate || false,
+            maxDate: this.props.maxDate || false,
+            rounding: this.props.rounding || 5,
+            showSeconds: this.props.showSeconds === true,
+            showTime: this.props.showTime !== false,
+            onApply: (value) => this.applyPickerValue(value),
+            onClear: () => this.clearPickerValue(),
+            onClose: () => this.closePicker(),
+        };
     }
 
     openPicker(event, valueIndex = 0) {
         event.preventDefault();
         event.stopPropagation();
+
         this.state.activeIndex = valueIndex;
-        this.state.pickerOpen = true;
+
+        const target =
+            event.currentTarget.closest(".cas_jalali_input_group") ||
+            event.currentTarget;
+
+        this.pickerPopover.open(target, this.getPickerProps());
     }
 
     closePicker() {
-        this.state.pickerOpen = false;
+        this.pickerPopover.close();
     }
 
     async applyPickerValue(value) {
-        await this.props.record.update({ [this.activeFieldName]: value });
+        await this.props.record.update({
+            [this.activeFieldName]: value,
+        });
         this.closePicker();
     }
 
     async clearPickerValue() {
-        await this.props.record.update({ [this.activeFieldName]: false });
+        await this.props.record.update({
+            [this.activeFieldName]: false,
+        });
         this.closePicker();
     }
 
     async onInputChange(event, valueIndex = 0) {
         const input = event.currentTarget;
         const fieldName =
-            this.isRange && valueIndex === 1 ? this.endFieldName : this.startFieldName;
+            this.isRange && valueIndex === 1
+                ? this.endFieldName
+                : this.startFieldName;
         const previousValue = this.props.record.data[fieldName];
 
         try {
             const parsedValue = this.parseValue(input.value);
-            await this.props.record.update({ [fieldName]: parsedValue });
+            await this.props.record.update({
+                [fieldName]: parsedValue,
+            });
             input.value = this.formatValue(parsedValue);
             input.classList.remove("is-invalid");
         } catch (error) {
@@ -172,7 +187,9 @@ export class JalaliDateTimeField extends Component {
             input.classList.add("is-invalid");
             this.notification.add(
                 error?.message ||
-                    _t("The Jalali date is invalid. Use a value such as 1405/04/23."),
+                    _t(
+                        "The Jalali date is invalid. Use a value such as 1405/04/23."
+                    ),
                 {
                     title: _t("Invalid Jalali date"),
                     type: "danger",
@@ -184,7 +201,10 @@ export class JalaliDateTimeField extends Component {
     onKeydown(event, valueIndex = 0) {
         if (event.key === "Enter") {
             event.currentTarget.blur();
-        } else if (event.key === "ArrowDown" && event.altKey) {
+        } else if (
+            event.key === "ArrowDown" &&
+            event.altKey
+        ) {
             this.openPicker(event, valueIndex);
         } else if (event.key === "Escape") {
             this.closePicker();
@@ -202,12 +222,14 @@ const originalDateTimeFormatter = formatterRegistry.get("datetime");
 function jalaliDateFormatter(value, options = {}) {
     return formatJalaliDate(value, options);
 }
-jalaliDateFormatter.extractOptions = originalDateFormatter.extractOptions;
+jalaliDateFormatter.extractOptions =
+    originalDateFormatter.extractOptions;
 
 function jalaliDateTimeFormatter(value, options = {}) {
     return formatJalaliDateTime(value, options);
 }
-jalaliDateTimeFormatter.extractOptions = originalDateTimeFormatter.extractOptions;
+jalaliDateTimeFormatter.extractOptions =
+    originalDateTimeFormatter.extractOptions;
 
 formatterRegistry
     .add("date", jalaliDateFormatter, { force: true })
@@ -218,10 +240,26 @@ parserRegistry
     .add("datetime", parseJalaliDateTime, { force: true });
 
 fieldRegistry
-    .add("date", { ...dateField, component: JalaliDateTimeField }, { force: true })
-    .add("datetime", { ...dateTimeField, component: JalaliDateTimeField }, { force: true })
-    .add("daterange", { ...dateRangeField, component: JalaliDateTimeField }, { force: true })
-    .add("list.date", { ...listDateField, component: JalaliDateTimeField }, { force: true })
+    .add(
+        "date",
+        { ...dateField, component: JalaliDateTimeField },
+        { force: true }
+    )
+    .add(
+        "datetime",
+        { ...dateTimeField, component: JalaliDateTimeField },
+        { force: true }
+    )
+    .add(
+        "daterange",
+        { ...dateRangeField, component: JalaliDateTimeField },
+        { force: true }
+    )
+    .add(
+        "list.date",
+        { ...listDateField, component: JalaliDateTimeField },
+        { force: true }
+    )
     .add(
         "list.datetime",
         { ...listDateTimeField, component: JalaliDateTimeField },

@@ -38,8 +38,14 @@ export class JalaliPicker extends Component {
     static props = {
         value: { type: [DateTime, { value: false }, { value: null }], optional: true },
         type: { type: [{ value: "date" }, { value: "datetime" }] },
-        minDate: { type: [String, { value: false }, { value: null }], optional: true },
-        maxDate: { type: [String, { value: false }, { value: null }], optional: true },
+        minDate: {
+            type: [String, DateTime, { value: false }, { value: null }],
+            optional: true,
+        },
+        maxDate: {
+            type: [String, DateTime, { value: false }, { value: null }],
+            optional: true,
+        },
         rounding: { type: Number, optional: true },
         showSeconds: { type: Boolean, optional: true },
         showTime: { type: Boolean, optional: true },
@@ -224,11 +230,17 @@ export class JalaliPicker extends Component {
         if (!value) {
             return false;
         }
-        const result =
-            value === "today"
-                ? DateTime.local()
-                : DateTime.fromISO(String(value), { zone: "default" });
-        if (!result.isValid) {
+
+        let result;
+        if (DateTime.isDateTime(value)) {
+            result = value;
+        } else if (value === "today") {
+            result = DateTime.local();
+        } else {
+            result = DateTime.fromISO(String(value), { zone: "default" });
+        }
+
+        if (!result?.isValid) {
             return false;
         }
         return endOfDay ? result.endOf("day") : result.startOf("day");

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_jalali.DateTimeInputPatch"
+       t-inherit="web.DateTimeInput"
+       t-inherit-mode="extension">
+        <xpath expr="//input[@t-ref='start-date']"
+               position="attributes">
+            <attribute name="class"
+                       add="cas_jalali_core_datetime_input"
+                       separator=" "/>
+            <attribute name="dir">ltr</attribute>
+            <attribute name="inputmode">numeric</attribute>
+            <attribute name="t-att-value">casJalaliDisplayValue</attribute>
+            <attribute name="t-on-click">onCasJalaliOpen</attribute>
+            <attribute name="t-on-change">onCasJalaliChange</attribute>
+            <attribute name="t-on-keydown">onCasJalaliKeydown</attribute>
+            <attribute name="title">انتخاب تاریخ شمسی</attribute>
+        </xpath>
+    </t>
+</templates>

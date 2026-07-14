@@ -88,17 +88,6 @@
                 </div>
             </t>
 
-            <JalaliPicker t-if="state.pickerOpen"
-                           value="activeValue"
-                           type="field.type"
-                           minDate="props.minDate || false"
-                           maxDate="props.maxDate || false"
-                           rounding="props.rounding || 5"
-                           showSeconds="props.showSeconds === true"
-                           showTime="props.showTime !== false"
-                           onApply.bind="applyPickerValue"
-                           onClear.bind="clearPickerValue"
-                           onClose.bind="closePicker"/>
         </div>
     </t>
 </templates>

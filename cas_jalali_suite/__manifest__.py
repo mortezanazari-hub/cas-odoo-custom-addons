@@ -1,0 +1,15 @@
+{
+    'name': 'CAS Jalali Suite',
+    'summary': 'Production CAS Jalali integration suite',
+    'description': '\nProduction meta module for CAS Jalali integration.\n\nThis final package contains no technical test lab, QA menu or organizational\nQuality workflow.\n',
+    'version': '19.0.2.1.0',
+    'category': 'Technical',
+    'author': 'Chodan Ara Shomal',
+    'website': 'https://erp.chodanara.com',
+    'license': 'LGPL-3',
+    'depends': ['cas_jalali', 'cas_jalali_hr', 'cas_jalali_mail', 'cas_jalali_search', 'cas_jalali_qweb'],
+    'data': [],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

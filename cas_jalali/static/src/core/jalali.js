@@ -225,7 +225,7 @@ export function normalizeDigits(value) {
     return String(value ?? "")
         .replace(/[۰-۹]/g, (digit) => String(PERSIAN_DIGITS.indexOf(digit)))
         .replace(/[٠-٩]/g, (digit) => String(ARABIC_INDIC_DIGITS.indexOf(digit)))
-        .replace(/[\u200e\u200f]/g, "")
+        .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, "")
         .trim();
 }
 
@@ -264,8 +264,19 @@ export function formatJalaliDateTime(value, options = {}) {
         const seconds = showSeconds ? `:${pad2(localValue.second)}` : "";
         parts.push(`${pad2(localValue.hour)}:${pad2(localValue.minute)}${seconds}`);
     }
-    const result = parts.join(" ");
-    return options.persianDigits === false ? result : toPersianDigits(result);
+
+    let result = parts.join(" ");
+    if (options.persianDigits !== false) {
+        result = toPersianDigits(result);
+    }
+
+    // Persian digits inside an RTL parent can visually exchange the Date and
+    // Time runs. LRI/PDI isolates the complete value as one LTR sequence:
+    // YYYY/MM/DD HH:mm[:ss]. Parsers remove these controls on typed input.
+    if (options.bidiSafe !== false && showDate && showTime) {
+        result = `\u2066${result}\u2069`;
+    }
+    return result;
 }
 
 const DATE_RE =

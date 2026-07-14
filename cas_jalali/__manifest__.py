@@ -1,32 +1,16 @@
 {
-    "name": "CAS Jalali Calendar",
-    "summary": "Organization-wide Jalali fields with native graphical picker",
-    "description": """
-CAS Jalali Calendar provides a safe Persian-calendar presentation layer.
-
-Gregorian/UTC values remain unchanged in PostgreSQL and Odoo internals.
-Release 1.3 replaces the picker stylesheet with plain CSS so no Sass
-compilation is required, and exposes shared long-date/time formatters for
-module-specific bridges.
-""",
-    "version": "19.0.1.3.0",
-    "category": "Technical",
-    "author": "Chodan Ara Shomal",
-    "website": "https://erp.chodanara.com",
-    "license": "LGPL-3",
-    "depends": ["web", "cas_core"],
-    "data": [],
-    "assets": {
-        "web.assets_backend": [
-            "cas_jalali/static/src/core/jalali.js",
-            "cas_jalali/static/src/picker/jalali_picker.js",
-            "cas_jalali/static/src/fields/jalali_datetime_field.js",
-            "cas_jalali/static/src/picker/jalali_picker.xml",
-            "cas_jalali/static/src/fields/jalali_datetime_field.xml",
-            "cas_jalali/static/src/css/jalali.css",
-        ],
-    },
-    "installable": True,
-    "application": False,
-    "auto_install": False,
+    'name': 'CAS Jalali Calendar',
+    'summary': 'Production Jalali calendar for Odoo 19',
+    'description': "\nProduction Jalali presentation and input layer for Odoo 19 Community.\n\nIt provides Jalali Date/Datetime fields, graphical picker, RTL-safe display,\noverlay placement and support for Odoo's shared DateTimeInput used by Custom\nFilter and technical date editors. Gregorian/UTC storage remains unchanged.\n",
+    'version': '19.0.2.1.0',
+    'category': 'Technical',
+    'author': 'Chodan Ara Shomal',
+    'website': 'https://erp.chodanara.com',
+    'license': 'LGPL-3',
+    'depends': ['web', 'cas_core'],
+    'data': [],
+    'assets': {'web.assets_backend': ['cas_jalali/static/src/core/jalali.js', 'cas_jalali/static/src/picker/jalali_picker.js', 'cas_jalali/static/src/fields/jalali_datetime_field.js', 'cas_jalali/static/src/core/datetime_input_patch.js', 'cas_jalali/static/src/picker/jalali_picker.xml', 'cas_jalali/static/src/fields/jalali_datetime_field.xml', 'cas_jalali/static/src/core/datetime_input_patch.xml', 'cas_jalali/static/src/css/jalali.css']},
+    'installable': True,
+    'application': False,
+    'auto_install': False,
 }

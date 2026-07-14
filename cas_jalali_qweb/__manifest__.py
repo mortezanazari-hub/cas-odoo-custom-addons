@@ -1,0 +1,15 @@
+{
+    'name': 'CAS Jalali - QWeb & Reports Bridge',
+    'summary': 'Jalali Date/Datetime t-field rendering in QWeb and reports',
+    'description': '\nMakes standard QWeb Date and Datetime t-field output Jalali. This covers PDF\nreports, portal pages and email templates that use Odoo field widgets.\nA deliberate cas_gregorian option remains available for machine-facing cases.\n',
+    'version': '19.0.2.1.0',
+    'category': 'Technical',
+    'author': 'Chodan Ara Shomal',
+    'website': 'https://erp.chodanara.com',
+    'license': 'LGPL-3',
+    'depends': ['cas_jalali', 'base'],
+    'data': [],
+    'installable': True,
+    'application': False,
+    'auto_install': True,
+}
