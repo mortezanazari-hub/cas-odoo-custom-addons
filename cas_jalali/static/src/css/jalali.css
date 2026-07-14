@@ -1,0 +1,290 @@
+/* CAS Jalali Calendar 1.3
+   Plain CSS: this file bypasses the Odoo Sass compiler completely. */
+
+.cas_jalali_field,
+.cas_jalali_field *,
+.cas_jalali_picker,
+.cas_jalali_picker * {
+    box-sizing: border-box;
+}
+
+.cas_jalali_field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    direction: ltr;
+}
+
+.cas_jalali_value,
+.cas_jalali_input {
+    min-width: 0;
+    max-width: 100%;
+    direction: ltr;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+}
+
+.cas_jalali_value {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.cas_jalali_input_group {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+}
+
+.cas_jalali_input {
+    width: 100%;
+    padding-right: 2rem !important;
+}
+
+html[dir="rtl"] .cas_jalali_input {
+    padding-right: 0.5rem !important;
+    padding-left: 2rem !important;
+}
+
+.cas_jalali_picker_button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2rem;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    color: #71639e;
+    background: transparent;
+    z-index: 2;
+}
+
+html[dir="rtl"] .cas_jalali_picker_button {
+    right: auto;
+    left: 0;
+}
+
+.cas_jalali_range,
+.cas_jalali_range_inputs {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    direction: ltr;
+}
+
+.cas_jalali_range_inputs {
+    column-gap: 0.35rem;
+}
+
+.cas_jalali_range_inputs .cas_jalali_input_group {
+    min-width: 0;
+    flex: 1 1 0;
+}
+
+.cas_jalali_range_separator {
+    flex: 0 0 auto;
+    direction: rtl;
+    white-space: nowrap;
+}
+
+/* Graphical picker */
+.cas_jalali_picker {
+    position: absolute !important;
+    top: calc(100% + 6px) !important;
+    right: 0 !important;
+    left: auto !important;
+    width: 320px !important;
+    min-width: 320px !important;
+    max-width: 320px !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    direction: rtl !important;
+    overflow: visible !important;
+    color: #212529;
+    background: #ffffff;
+    border: 1px solid #d8dadd;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    z-index: 2000 !important;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+html[dir="rtl"] .cas_jalali_picker {
+    right: auto !important;
+    left: 0 !important;
+}
+
+.cas_jalali_picker_header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 44px;
+    padding: 6px;
+    column-gap: 6px;
+    direction: rtl;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.cas_jalali_picker_header .btn {
+    min-height: 32px;
+}
+
+.cas_jalali_nav {
+    flex: 0 0 34px;
+    width: 34px;
+}
+
+.cas_jalali_weekdays,
+.cas_jalali_days {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    width: 100% !important;
+    direction: rtl !important;
+}
+
+.cas_jalali_weekdays {
+    padding: 6px 8px 2px;
+}
+
+.cas_jalali_weekday {
+    display: block;
+    width: auto;
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.cas_jalali_days {
+    padding: 2px 8px 8px;
+    gap: 2px;
+}
+
+.cas_jalali_day {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    direction: ltr;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    background: transparent;
+}
+
+.cas_jalali_day:hover:not(:disabled) {
+    background: rgba(113, 99, 158, 0.13) !important;
+}
+
+.cas_jalali_day.is-other-month {
+    color: #a8adb3;
+}
+
+.cas_jalali_day.is-today {
+    box-shadow: inset 0 0 0 1px #71639e;
+}
+
+.cas_jalali_day.is-selected {
+    color: #ffffff !important;
+    background: #71639e !important;
+}
+
+.cas_jalali_day.is-disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.cas_jalali_month_grid,
+.cas_jalali_year_grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    width: 100%;
+    padding: 8px;
+    gap: 6px;
+}
+
+.cas_jalali_month,
+.cas_jalali_year {
+    min-height: 42px;
+}
+
+.cas_jalali_month.is-selected,
+.cas_jalali_year.is-selected {
+    color: #ffffff !important;
+    background: #71639e !important;
+}
+
+.cas_jalali_time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    column-gap: 4px;
+    direction: ltr;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cas_jalali_time_select {
+    width: 72px;
+    direction: ltr;
+    text-align: center;
+}
+
+.cas_jalali_picker_footer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 7px;
+    column-gap: 6px;
+    direction: rtl;
+    border-top: 1px solid #e5e7eb;
+}
+
+html[dir="rtl"] .o_row > .o_field_widget.o_field_date,
+html[dir="rtl"] .o_row > .o_field_widget.o_field_datetime,
+html[dir="rtl"] .o_row > .o_field_widget.o_field_daterange {
+    min-width: 0 !important;
+    max-width: 100%;
+}
+
+/* Hide only Odoo's original Gregorian calendar icon. */
+.o_input_group_date_icon {
+    display: none !important;
+}
+
+@media (max-width: 576px) {
+    .cas_jalali_picker,
+    html[dir="rtl"] .cas_jalali_picker {
+        position: fixed !important;
+        top: 50% !important;
+        right: 8px !important;
+        left: 8px !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        max-height: calc(100vh - 16px);
+        overflow-y: auto !important;
+        transform: translateY(-50%);
+    }
+
+    .cas_jalali_day {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+    }
+}

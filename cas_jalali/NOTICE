@@ -1,0 +1,5 @@
+CAS Jalali Calendar is distributed under LGPL-3.0.
+
+The Jalali conversion approach follows the commonly used break-year/Borkowski
+method found in established Jalali calendar implementations. The addon is
+dependency-free and contains an independent implementation for Odoo.

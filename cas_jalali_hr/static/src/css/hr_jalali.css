@@ -1,0 +1,25 @@
+/* Employee-specific Jalali and RTL layout fixes. */
+
+.o_field_widget.o_field_versions_timeline .o_arrow_button,
+.o_field_widget.o_field_versions_timeline .dropdown-item {
+    unicode-bidi: isolate;
+}
+
+.o_field_widget.o_field_versions_timeline .o_arrow_button {
+    direction: ltr;
+    font-variant-numeric: tabular-nums;
+}
+
+.o_hr_employee_form_view .o_row .o_hr_narrow_field.o_field_date,
+.o_hr_employee_form_view .o_row .o_hr_narrow_field.o_field_datetime {
+    min-width: 0 !important;
+    max-width: 152px;
+    flex: 0 1 152px;
+}
+
+html[dir="rtl"] .o_hr_employee_form_view .o_row > span {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+}

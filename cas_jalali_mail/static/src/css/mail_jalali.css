@@ -1,0 +1,14 @@
+/* Chatter date values must stay visually ordered in RTL pages. */
+
+.o-mail-Message-date,
+.o-mail-Message .o-mail-Message-date,
+.o-mail-Message .o-mail-TrackingValue,
+.o-mail-Message .o-mail-TrackingValue-value {
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+}
+
+.o-mail-Message .o-mail-TrackingValue,
+.o-mail-Message .o-mail-TrackingValue-value {
+    direction: rtl;
+}

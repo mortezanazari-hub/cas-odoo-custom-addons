@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_jalali.JalaliPicker">
+        <div class="cas_jalali_picker shadow border rounded bg-white"
+             dir="rtl"
+             role="dialog"
+             aria-label="انتخاب تاریخ شمسی"
+             t-on-click.stop="">
+            <div class="cas_jalali_picker_header d-flex align-items-center gap-2 p-2 border-bottom">
+                <button type="button"
+                        class="btn btn-sm btn-light cas_jalali_nav"
+                        title="ماه یا دوره قبل"
+                        t-on-click="previous">
+                    <i class="fa fa-chevron-right"/>
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-light flex-grow-1 fw-bold"
+                        t-on-click="openHigherView"
+                        t-esc="title"/>
+                <button type="button"
+                        class="btn btn-sm btn-light cas_jalali_nav"
+                        title="ماه یا دوره بعد"
+                        t-on-click="next">
+                    <i class="fa fa-chevron-left"/>
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-light"
+                        title="بستن"
+                        t-on-click="props.onClose">
+                    <i class="fa fa-times"/>
+                </button>
+            </div>
+
+            <t t-if="state.viewMode === 'days'">
+                <div class="cas_jalali_weekdays">
+                    <div t-foreach="weekdays"
+                         t-as="weekday"
+                         t-key="weekday.long"
+                         class="cas_jalali_weekday"
+                         t-att-title="weekday.long"
+                         t-esc="weekday.short"/>
+                </div>
+
+                <div class="cas_jalali_days">
+                    <button t-foreach="calendarDays"
+                            t-as="item"
+                            t-key="item.key"
+                            type="button"
+                            class="cas_jalali_day btn"
+                            t-att-class="{
+                                'is-other-month': !item.inCurrentMonth,
+                                'is-today': item.isToday,
+                                'is-selected': item.isSelected,
+                                'is-disabled': item.disabled,
+                            }"
+                            t-att-disabled="item.disabled"
+                            t-on-click="() => this.selectDay(item)"
+                            t-esc="item.label"/>
+                </div>
+            </t>
+
+            <div t-elif="state.viewMode === 'months'"
+                 class="cas_jalali_month_grid p-2">
+                <button t-foreach="months"
+                        t-as="item"
+                        t-key="item.month"
+                        type="button"
+                        class="btn btn-light cas_jalali_month"
+                        t-att-class="{ 'is-selected': item.selected }"
+                        t-on-click="() => this.selectMonth(item.month)"
+                        t-esc="item.name"/>
+            </div>
+
+            <div t-else=""
+                 class="cas_jalali_year_grid p-2">
+                <button t-foreach="years"
+                        t-as="item"
+                        t-key="item.year"
+                        type="button"
+                        class="btn btn-light cas_jalali_year"
+                        t-att-class="{ 'is-selected': item.selected }"
+                        t-on-click="() => this.selectYear(item.year)"
+                        t-esc="item.label"/>
+            </div>
+
+            <div t-if="props.type === 'datetime' and props.showTime !== false"
+                 class="cas_jalali_time d-flex align-items-center justify-content-center gap-1 p-2 border-top"
+                 dir="ltr">
+                <select class="form-select form-select-sm cas_jalali_time_select"
+                        aria-label="ساعت"
+                        t-on-change="setHour">
+                    <option t-foreach="hourOptions"
+                            t-as="item"
+                            t-key="item.value"
+                            t-att-value="item.value"
+                            t-att-selected="item.value === state.hour"
+                            t-esc="item.label"/>
+                </select>
+                <span>:</span>
+                <select class="form-select form-select-sm cas_jalali_time_select"
+                        aria-label="دقیقه"
+                        t-on-change="setMinute">
+                    <option t-foreach="minuteOptions"
+                            t-as="item"
+                            t-key="item.value"
+                            t-att-value="item.value"
+                            t-att-selected="item.value === state.minute"
+                            t-esc="item.label"/>
+                </select>
+                <t t-if="props.showSeconds">
+                    <span>:</span>
+                    <select class="form-select form-select-sm cas_jalali_time_select"
+                            aria-label="ثانیه"
+                            t-on-change="setSecond">
+                        <option t-foreach="secondOptions"
+                                t-as="item"
+                                t-key="item.value"
+                                t-att-value="item.value"
+                                t-att-selected="item.value === state.second"
+                                t-esc="item.label"/>
+                    </select>
+                </t>
+            </div>
+
+            <div class="cas_jalali_picker_footer d-flex align-items-center gap-2 p-2 border-top">
+                <button type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        t-on-click="today">
+                    امروز
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-outline-danger"
+                        t-on-click="props.onClear">
+                    پاک‌کردن
+                </button>
+                <span class="flex-grow-1 text-center small text-muted"
+                      dir="ltr"
+                      t-esc="selectedLabel()"/>
+                <button t-if="props.type === 'datetime' and props.showTime !== false"
+                        type="button"
+                        class="btn btn-sm btn-primary"
+                        t-on-click="apply">
+                    اعمال
+                </button>
+            </div>
+        </div>
+    </t>
+</templates>

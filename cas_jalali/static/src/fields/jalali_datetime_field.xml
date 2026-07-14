@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_jalali.JalaliDateTimeField">
+        <div t-ref="root"
+             class="cas_jalali_field d-flex align-items-center gap-1 w-100 position-relative">
+            <t t-if="props.readonly">
+                <span t-if="isRange"
+                      class="cas_jalali_range d-flex align-items-center gap-1 text-truncate">
+                    <span class="cas_jalali_value text-truncate"
+                          dir="ltr"
+                          t-esc="formattedStart"/>
+                    <span class="cas_jalali_range_separator">تا</span>
+                    <span class="cas_jalali_value text-truncate"
+                          dir="ltr"
+                          t-esc="formattedEnd"/>
+                </span>
+                <span t-else=""
+                      class="cas_jalali_value text-truncate"
+                      dir="ltr"
+                      t-esc="formattedStart"/>
+            </t>
+
+            <t t-else="">
+                <div t-if="isRange"
+                     class="cas_jalali_range_inputs d-flex align-items-center gap-1 w-100">
+                    <div class="cas_jalali_input_group position-relative">
+                        <input
+                            type="text"
+                            class="o_input cas_jalali_input"
+                            dir="ltr"
+                            autocomplete="off"
+                            inputmode="numeric"
+                            t-att-id="props.id"
+                            t-att-placeholder="placeholder"
+                            t-att-value="formattedStart"
+                            t-on-change="(ev) => this.onInputChange(ev, 0)"
+                            t-on-keydown="(ev) => this.onKeydown(ev, 0)"
+                        />
+                        <button type="button"
+                                class="btn btn-link cas_jalali_picker_button"
+                                title="انتخاب تاریخ شمسی"
+                                t-on-click="(ev) => this.openPicker(ev, 0)">
+                            <i class="fa fa-calendar"/>
+                        </button>
+                    </div>
+                    <span class="cas_jalali_range_separator">تا</span>
+                    <div class="cas_jalali_input_group position-relative">
+                        <input
+                            type="text"
+                            class="o_input cas_jalali_input"
+                            dir="ltr"
+                            autocomplete="off"
+                            inputmode="numeric"
+                            t-att-placeholder="placeholder"
+                            t-att-value="formattedEnd"
+                            t-on-change="(ev) => this.onInputChange(ev, 1)"
+                            t-on-keydown="(ev) => this.onKeydown(ev, 1)"
+                        />
+                        <button type="button"
+                                class="btn btn-link cas_jalali_picker_button"
+                                title="انتخاب تاریخ شمسی"
+                                t-on-click="(ev) => this.openPicker(ev, 1)">
+                            <i class="fa fa-calendar"/>
+                        </button>
+                    </div>
+                </div>
+
+                <div t-else=""
+                     class="cas_jalali_input_group position-relative w-100">
+                    <input
+                        type="text"
+                        class="o_input cas_jalali_input"
+                        dir="ltr"
+                        autocomplete="off"
+                        inputmode="numeric"
+                        t-att-id="props.id"
+                        t-att-placeholder="placeholder"
+                        t-att-value="formattedStart"
+                        t-on-change="(ev) => this.onInputChange(ev, 0)"
+                        t-on-keydown="(ev) => this.onKeydown(ev, 0)"
+                    />
+                    <button type="button"
+                            class="btn btn-link cas_jalali_picker_button"
+                            title="انتخاب تاریخ شمسی"
+                            t-on-click="(ev) => this.openPicker(ev, 0)">
+                        <i class="fa fa-calendar"/>
+                    </button>
+                </div>
+            </t>
+
+            <JalaliPicker t-if="state.pickerOpen"
+                           value="activeValue"
+                           type="field.type"
+                           minDate="props.minDate || false"
+                           maxDate="props.maxDate || false"
+                           rounding="props.rounding || 5"
+                           showSeconds="props.showSeconds === true"
+                           showTime="props.showTime !== false"
+                           onApply.bind="applyPickerValue"
+                           onClear.bind="clearPickerValue"
+                           onClose.bind="closePicker"/>
+        </div>
+    </t>
+</templates>
