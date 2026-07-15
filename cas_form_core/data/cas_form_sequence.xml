@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_cas_form_submission" model="ir.sequence">
+        <field name="name">شماره رهگیری ثبت فرم</field>
+        <field name="code">cas.form.submission</field>
+        <field name="prefix">FRM/%(year)s/</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>
+

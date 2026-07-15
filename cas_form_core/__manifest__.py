@@ -5,10 +5,11 @@
 Technical foundation for CAS organizational forms.
 
 It provides stable form identities, immutable published revisions, typed field
-metadata, layout nodes and controlled publication. Runtime submissions,
+metadata, layout nodes, controlled publication, version-pinned submissions,
+typed answers, server validation and immutable final snapshots. Dynamic UI,
 workflow and business-specific forms live in separate modules.
 """,
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.1.0",
     "category": "Technical",
     "author": "Chodan Ara Shomal",
     "website": "https://erp.chodanara.com",
@@ -17,8 +18,10 @@ workflow and business-specific forms live in separate modules.
     "data": [
         "security/cas_form_security.xml",
         "security/ir.model.access.csv",
+        "data/cas_form_sequence.xml",
         "views/cas_form_definition_views.xml",
         "views/cas_form_version_views.xml",
+        "views/cas_form_submission_views.xml",
         "views/cas_form_menus.xml",
     ],
     "installable": True,

@@ -11,6 +11,18 @@ from odoo.exceptions import ValidationError
 
 TECHNICAL_KEY_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 OPTION_FIELD_TYPES = {"single_select", "multi_select", "radio", "dropdown", "tag"}
+BASE_ALLOWED_REFERENCE_MODELS = {
+    "res.users",
+    "res.company",
+    "res.partner",
+    "hr.employee",
+    "hr.department",
+    "hr.job",
+    "product.product",
+    "stock.warehouse",
+    "project.project",
+    "account.analytic.account",
+}
 
 
 class CasFormVersionedMixin(models.AbstractModel):
@@ -156,6 +168,11 @@ class CasFormField(models.Model):
             raise ValidationError(_("شناسه پایدار فیلد قابل تغییر نیست."))
         return super().write(vals)
 
+    @api.model
+    def _get_allowed_reference_models(self):
+        """Extension point for trusted business modules to add safe models."""
+        return set(BASE_ALLOWED_REFERENCE_MODELS)
+
     @api.constrains("technical_key")
     def _check_technical_key(self):
         for record in self:
@@ -175,6 +192,14 @@ class CasFormField(models.Model):
             if record.allowed_model and record.field_type != "record_reference":
                 raise ValidationError(
                     _("مدل مجاز فقط برای فیلد «رکورد مرتبط» قابل تعیین است.")
+                )
+            if (
+                record.field_type == "record_reference"
+                and record.allowed_model
+                and record.allowed_model not in record._get_allowed_reference_models()
+            ):
+                raise ValidationError(
+                    _("مدل «%s» در فهرست مجاز فرم‌ها نیست.", record.allowed_model)
                 )
 
     def _validate_definition(self):

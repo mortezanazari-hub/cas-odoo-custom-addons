@@ -5,6 +5,13 @@
               sequence="45"
               groups="cas_form_core.group_cas_form_user"/>
 
+    <menuitem id="menu_cas_form_submissions"
+              name="ثبت‌های فرم"
+              parent="menu_cas_forms_root"
+              action="action_cas_form_submission"
+              sequence="10"
+              groups="cas_form_core.group_cas_form_user"/>
+
     <menuitem id="menu_cas_forms_configuration"
               name="طراحی و پیکربندی"
               parent="menu_cas_forms_root"
@@ -23,4 +30,3 @@
               action="action_cas_form_version"
               sequence="20"/>
 </odoo>
-

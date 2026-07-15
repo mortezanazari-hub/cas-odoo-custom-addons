@@ -11,4 +11,6 @@ access_cas_form_field_option_designer,cas.form.field.option designer,model_cas_f
 access_cas_form_node_designer,cas.form.node designer,model_cas_form_node,group_cas_form_designer,1,1,1,1
 access_cas_form_definition_manager,cas.form.definition manager,model_cas_form_definition,group_cas_form_manager,1,1,1,1
 access_cas_form_version_manager,cas.form.version manager,model_cas_form_version,group_cas_form_manager,1,1,1,1
-
+access_cas_form_submission_user,cas.form.submission user,model_cas_form_submission,group_cas_form_user,1,1,1,1
+access_cas_form_submission_manager,cas.form.submission manager,model_cas_form_submission,group_cas_form_manager,1,1,1,1
+access_cas_form_answer_manager,cas.form.answer manager,model_cas_form_answer,group_cas_form_manager,1,1,1,1

@@ -98,3 +98,15 @@ class TestCasFormVersioning(TransactionCase):
         system_group = self.env.ref("base.group_system")
         form_manager_group = self.env.ref("cas_form_core.group_cas_form_manager")
         self.assertIn(form_manager_group, system_group.implied_ids)
+
+    def test_unsafe_reference_model_is_rejected(self):
+        with self.assertRaises(ValidationError):
+            self.env["cas.form.field"].create(
+                {
+                    "version_id": self.version.id,
+                    "technical_key": "unsafe_reference",
+                    "label": "ارجاع غیرمجاز",
+                    "field_type": "record_reference",
+                    "allowed_model": "ir.config_parameter",
+                }
+            )

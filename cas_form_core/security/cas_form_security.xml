@@ -61,4 +61,25 @@
         <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
+
+    <record id="rule_cas_form_submission_user_own" model="ir.rule">
+        <field name="name">ثبت فرم: مالک یا ایجادکننده</field>
+        <field name="model_id" ref="model_cas_form_submission"/>
+        <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('owner_user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_cas_form_submission_manager_company" model="ir.rule">
+        <field name="name">ثبت فرم: مدیر در محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_form_submission"/>
+        <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_cas_form_answer_manager_company" model="ir.rule">
+        <field name="name">پاسخ فرم: مدیر در محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_form_answer"/>
+        <field name="groups" eval="[(4, ref('cas_form_core.group_cas_form_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
 </odoo>

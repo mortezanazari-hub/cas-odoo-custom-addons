@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_form_submission_list" model="ir.ui.view">
+        <field name="name">cas.form.submission.list</field>
+        <field name="model">cas.form.submission</field>
+        <field name="arch" type="xml">
+            <list string="ثبت‌های فرم">
+                <field name="number"/>
+                <field name="definition_id"/>
+                <field name="version_id"/>
+                <field name="owner_user_id"/>
+                <field name="state"/>
+                <field name="submitted_at"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_form_submission_form" model="ir.ui.view">
+        <field name="name">cas.form.submission.form</field>
+        <field name="model">cas.form.submission</field>
+        <field name="arch" type="xml">
+            <form string="ثبت فرم">
+                <header>
+                    <button name="action_submit"
+                            type="object"
+                            string="ارسال"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_cancel"
+                            type="object"
+                            string="لغو"
+                            invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="number"/>
+                        <h1><field name="number" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="definition_id" readonly="1"/>
+                            <field name="version_id" readonly="state != 'draft'"/>
+                            <field name="owner_user_id" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                            <field name="submitted_at" readonly="1"/>
+                            <field name="submitted_by_id" readonly="1"/>
+                            <field name="reopen_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="پاسخ‌های Typed" groups="cas_form_core.group_cas_form_manager">
+                            <div class="alert alert-info" role="alert" invisible="state != 'draft'">
+                                رابط تکمیل پویای پاسخ‌ها در ماژول Runtime افزوده می‌شود. این صفحه فعلاً برای بازبینی فنی داده است.
+                            </div>
+                            <field name="answer_ids" readonly="1">
+                                <list>
+                                    <field name="field_sequence" optional="hide"/>
+                                    <field name="field_key"/>
+                                    <field name="field_type"/>
+                                    <field name="value_char" optional="show"/>
+                                    <field name="value_text" optional="hide"/>
+                                    <field name="value_integer" optional="hide"/>
+                                    <field name="value_float" optional="show"/>
+                                    <field name="value_boolean" optional="hide"/>
+                                    <field name="value_date" optional="hide"/>
+                                    <field name="value_datetime" optional="hide"/>
+                                    <field name="value_option_id" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Snapshot نهایی" groups="cas_form_core.group_cas_form_manager">
+                            <field name="snapshot_json" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_form_submission_search" model="ir.ui.view">
+        <field name="name">cas.form.submission.search</field>
+        <field name="model">cas.form.submission</field>
+        <field name="arch" type="xml">
+            <search string="جست‌وجوی ثبت‌ها">
+                <field name="number"/>
+                <field name="definition_id"/>
+                <field name="owner_user_id"/>
+                <filter name="draft" string="پیش‌نویس" domain="[('state', '=', 'draft')]"/>
+                <filter name="submitted" string="ارسال‌شده" domain="[('state', '=', 'submitted')]"/>
+                <filter name="group_form" string="گروه‌بندی بر اساس فرم" context="{'group_by': 'definition_id'}"/>
+                <filter name="group_state" string="گروه‌بندی بر اساس وضعیت" context="{'group_by': 'state'}"/>
+                <filter name="group_owner" string="گروه‌بندی بر اساس مالک" context="{'group_by': 'owner_user_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cas_form_submission" model="ir.actions.act_window">
+        <field name="name">ثبت‌های فرم</field>
+        <field name="res_model">cas.form.submission</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cas_form_submission_search"/>
+    </record>
+</odoo>
