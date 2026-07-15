@@ -9,7 +9,7 @@ transitions, version-pinned runtime instances, current responsibility, SLA
 deadlines and append-only transition history. Approval policies remain in a
 separate extension module.
 """,
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "category": "Productivity",
     "author": "Chodan Ara Shomal",
     "website": "https://erp.chodanara.com",

@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cas_work_station_user,cas.work.station user,model_cas_work_station,group_cas_work_report_user,1,0,0,0
+access_cas_work_station_manager,cas.work.station manager,model_cas_work_station,group_cas_work_report_manager,1,1,1,0
+access_cas_work_report_user,cas.work.report user,model_cas_work_report,group_cas_work_report_user,1,1,1,0
+access_cas_work_report_manager,cas.work.report manager,model_cas_work_report,group_cas_work_report_manager,1,1,1,0
+access_cas_work_report_delegation_user,cas.work.report.delegation user,model_cas_work_report_delegation,group_cas_work_report_user,1,0,0,0
+access_cas_work_report_delegation_manager,cas.work.report.delegation manager,model_cas_work_report_delegation,group_cas_work_report_manager,1,1,1,0
+access_cas_work_report_export_wizard,cas.work.report.export.wizard,model_cas_work_report_export_wizard,group_cas_work_report_user,1,1,1,1

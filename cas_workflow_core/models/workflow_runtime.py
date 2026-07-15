@@ -114,10 +114,16 @@ class CasWorkflowInstance(models.Model):
         ).exists()
         if not responsible or not responsible.active:
             raise ValidationError(_("مسئول جاری معتبر و فعال نیست."))
+        delegated_assignment = bool(
+            responsible != self.env.user
+            and hasattr(resource, "_cas_workflow_authorize_responsible_assignment")
+            and resource._cas_workflow_authorize_responsible_assignment(responsible)
+        )
         if (
             responsible != self.env.user
             and not self.env.is_superuser()
             and not self.env.user.has_group("cas_workflow_core.group_cas_workflow_manager")
+            and not delegated_assignment
         ):
             raise AccessError(_("تعیین مسئول دیگر فقط برای مدیر گردش‌کار مجاز است."))
         if responsible.company_id not in self.env.companies:
@@ -165,7 +171,16 @@ class CasWorkflowInstance(models.Model):
         ):
             return True
         if self.responsible_user_id != self.env.user:
-            return False
+            resource = self.env[self.resource_model].browse(self.resource_id).exists()
+            delegated_execution = bool(
+                resource
+                and hasattr(resource, "_cas_workflow_user_can_execute_transition")
+                and resource._cas_workflow_user_can_execute_transition(
+                    self, transition, self.env.user
+                )
+            )
+            if not delegated_execution:
+                return False
         if not transition.allowed_group_ids:
             return True
         return bool(transition.allowed_group_ids & self.env.user.all_group_ids)

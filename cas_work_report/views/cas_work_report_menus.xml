@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_work_report_root" name="گزارش کار" sequence="25" groups="group_cas_work_report_user"/>
+    <menuitem id="menu_cas_my_work_report" name="گزارش‌های من" parent="menu_cas_work_report_root" action="action_cas_my_work_report" sequence="10"/>
+    <menuitem id="menu_cas_work_report_all" name="گزارش‌های حوزه من" parent="menu_cas_work_report_root" action="action_cas_work_report" sequence="20"/>
+    <menuitem id="menu_cas_work_report_export" name="خروجی Excel" parent="menu_cas_work_report_root" action="action_cas_work_report_export" sequence="30"/>
+    <menuitem id="menu_cas_work_report_config" name="پیکربندی" parent="menu_cas_work_report_root" sequence="90" groups="group_cas_work_report_manager"/>
+    <menuitem id="menu_cas_work_station" name="ایستگاه‌های کاری" parent="menu_cas_work_report_config" action="action_cas_work_station" sequence="10"/>
+    <menuitem id="menu_cas_work_report_delegation" name="مجوزهای نمایندگی" parent="menu_cas_work_report_config" action="action_cas_work_report_delegation" sequence="20"/>
+</odoo>

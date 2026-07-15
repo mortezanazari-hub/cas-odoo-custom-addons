@@ -1,0 +1,22 @@
+{
+    "name": "CAS Daily Work Reports",
+    "summary": "Daily employee work reports with stations, representation, approval and Excel",
+    "version": "19.0.1.0.0",
+    "category": "Human Resources",
+    "author": "Chodan Ara Shomal",
+    "license": "LGPL-3",
+    "depends": ["hr", "mail", "cas_workflow_core", "cas_approval_core"],
+    "data": [
+        "security/cas_work_report_security.xml",
+        "security/ir.model.access.csv",
+        "data/cas_work_report_sequence.xml",
+        "views/cas_work_station_views.xml",
+        "views/cas_work_report_delegation_views.xml",
+        "views/cas_work_report_views.xml",
+        "views/cas_work_report_export_views.xml",
+        "views/cas_work_report_menus.xml",
+    ],
+    "post_init_hook": "post_init_hook",
+    "application": True,
+    "installable": True,
+}

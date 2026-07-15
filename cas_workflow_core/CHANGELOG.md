@@ -13,3 +13,9 @@
 
 - change the workflow target-model deletion policy to the Odoo-supported mode;
 - install the initial versioned and auditable workflow foundation.
+# 19.0.1.0.3
+
+- Added target-model authorization hooks for safely assigning a business-specific
+  responsible user and executing explicitly delegated transitions.
+- Kept the default workflow permission contract unchanged for models that do not
+  implement these server-side hooks.

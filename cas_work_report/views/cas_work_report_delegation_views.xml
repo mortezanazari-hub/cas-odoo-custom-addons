@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_work_report_delegation_list" model="ir.ui.view">
+        <field name="name">cas.work.report.delegation.list</field>
+        <field name="model">cas.work.report.delegation</field>
+        <field name="arch" type="xml">
+            <list string="مجوزهای ثبت به نمایندگی">
+                <field name="representative_user_id"/>
+                <field name="scope"/>
+                <field name="department_ids" widget="many2many_tags" optional="show"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_cas_work_report_delegation_form" model="ir.ui.view">
+        <field name="name">cas.work.report.delegation.form</field>
+        <field name="model">cas.work.report.delegation</field>
+        <field name="arch" type="xml">
+            <form string="مجوز ثبت گزارش به نمایندگی">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="representative_user_id" domain="[('active', '=', True), ('share', '=', False)]"/>
+                            <field name="scope"/>
+                            <field name="department_ids" widget="many2many_tags" invisible="scope != 'departments'" required="scope == 'departments'"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <field name="reason" placeholder="دلیل و محدوده نمایندگی را ثبت کنید..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_cas_work_report_delegation" model="ir.actions.act_window">
+        <field name="name">مجوزهای ثبت به نمایندگی</field>
+        <field name="res_model">cas.work.report.delegation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
