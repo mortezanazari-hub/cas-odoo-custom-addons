@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_approval_inbox"
+              name="کارتابل تأیید"
+              parent="cas_form_core.menu_cas_forms_root"
+              action="action_cas_approval_inbox"
+              sequence="31"
+              groups="cas_approval_core.group_cas_approval_user"/>
+    <menuitem id="menu_cas_approval_requests"
+              name="درخواست‌های تأیید"
+              parent="cas_form_core.menu_cas_forms_root"
+              action="action_cas_approval_request"
+              sequence="32"
+              groups="cas_approval_core.group_cas_approval_user"/>
+    <menuitem id="menu_cas_approval_policies"
+              name="سیاست‌های تأیید"
+              parent="cas_workflow_core.menu_cas_workflow_configuration"
+              action="action_cas_approval_policy"
+              sequence="30"
+              groups="cas_workflow_core.group_cas_workflow_designer"/>
+</odoo>

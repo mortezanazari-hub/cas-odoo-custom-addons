@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_approval_request_list" model="ir.ui.view">
+        <field name="name">cas.approval.request.list</field>
+        <field name="model">cas.approval.request</field>
+        <field name="arch" type="xml">
+            <list string="درخواست‌های تأیید" create="0" delete="0" edit="0">
+                <field name="number"/>
+                <field name="instance_id"/>
+                <field name="state_id"/>
+                <field name="status"/>
+                <field name="execution_mode"/>
+                <field name="decision_rule"/>
+                <field name="requested_at"/>
+                <field name="completed_at" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_approval_request_form" model="ir.ui.view">
+        <field name="name">cas.approval.request.form</field>
+        <field name="model">cas.approval.request</field>
+        <field name="arch" type="xml">
+            <form string="درخواست تأیید" create="0" delete="0" edit="0">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="pending,approved,rejected,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="number"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="instance_id"/>
+                            <field name="policy_id"/>
+                            <field name="state_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="execution_mode"/>
+                            <field name="decision_rule"/>
+                            <field name="quorum_count" invisible="decision_rule != 'quorum'"/>
+                            <field name="requested_at"/>
+                            <field name="completed_at"/>
+                            <field name="outcome_transition_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="تصمیم‌ها">
+                            <field name="line_ids">
+                                <list create="0" delete="0" edit="0">
+                                    <field name="sequence"/>
+                                    <field name="role_label"/>
+                                    <field name="approver_user_id"/>
+                                    <field name="delegate_user_id" optional="show"/>
+                                    <field name="decision_user_id"/>
+                                    <field name="status"/>
+                                    <field name="assigned_at"/>
+                                    <field name="deadline"/>
+                                    <field name="decided_at"/>
+                                    <field name="delay_hours" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="تاریخچه">
+                            <field name="history_ids">
+                                <list create="0" delete="0" edit="0">
+                                    <field name="event_at"/>
+                                    <field name="event_type"/>
+                                    <field name="line_id"/>
+                                    <field name="actor_user_id"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_approval_line_list" model="ir.ui.view">
+        <field name="name">cas.approval.line.list</field>
+        <field name="model">cas.approval.line</field>
+        <field name="arch" type="xml">
+            <list string="کارتابل تأیید" create="0" delete="0" edit="0">
+                <field name="request_id"/>
+                <field name="instance_id"/>
+                <field name="state_id"/>
+                <field name="role_label"/>
+                <field name="approver_user_id"/>
+                <field name="status"/>
+                <field name="assigned_at"/>
+                <field name="deadline"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_approval_line_form" model="ir.ui.view">
+        <field name="name">cas.approval.line.form</field>
+        <field name="model">cas.approval.line</field>
+        <field name="arch" type="xml">
+            <form string="تصمیم تأیید" create="0" delete="0" edit="0">
+                <header>
+                    <button name="action_approve" type="object" string="تأیید"
+                            class="btn-primary" invisible="status != 'pending'"/>
+                    <button name="action_open_reject_wizard" type="object" string="رد"
+                            class="btn-secondary" invisible="status != 'pending'"/>
+                    <field name="status" widget="statusbar" statusbar_visible="waiting,pending,approved,rejected,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="role_label"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="request_id"/>
+                            <field name="instance_id"/>
+                            <field name="state_id"/>
+                            <field name="approver_user_id"/>
+                            <field name="delegate_user_id"/>
+                        </group>
+                        <group>
+                            <field name="decision_user_id"/>
+                            <field name="assigned_at"/>
+                            <field name="deadline"/>
+                            <field name="decided_at"/>
+                            <field name="delay_hours"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="comment"/>
+                        <field name="rejection_reason"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_approval_reject_wizard_form" model="ir.ui.view">
+        <field name="name">cas.approval.reject.wizard.form</field>
+        <field name="model">cas.approval.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="رد درخواست تأیید">
+                <group>
+                    <field name="line_id"/>
+                    <field name="reason" placeholder="دلیل رد را دقیق ثبت کنید..."/>
+                    <field name="comment"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="ثبت رد" class="btn-primary"/>
+                    <button string="انصراف" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_workflow_instance_approval_form" model="ir.ui.view">
+        <field name="name">cas.workflow.instance.approval.form</field>
+        <field name="model">cas.workflow.instance</field>
+        <field name="inherit_id" ref="cas_workflow_core.view_cas_workflow_instance_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='history_ids']/ancestor::page[1]" position="after">
+                <page string="تأییدها">
+                    <field name="approval_request_ids">
+                        <list create="0" delete="0" edit="0">
+                            <field name="number"/>
+                            <field name="state_id"/>
+                            <field name="status"/>
+                            <field name="requested_at"/>
+                            <field name="completed_at"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_cas_approval_line_search" model="ir.ui.view">
+        <field name="name">cas.approval.line.search</field>
+        <field name="model">cas.approval.line</field>
+        <field name="arch" type="xml">
+            <search string="جست‌وجوی کارتابل تأیید">
+                <field name="request_id"/>
+                <field name="instance_id"/>
+                <field name="approver_user_id"/>
+                <field name="state_id"/>
+                <filter name="pending" string="در انتظار تصمیم" domain="[('status', '=', 'pending')]"/>
+                <filter name="my_approvals" string="تأییدهای من" domain="[('approver_user_id', '=', uid)]"/>
+                <filter name="group_status" string="گروه‌بندی بر اساس وضعیت" context="{'group_by': 'status'}"/>
+                <filter name="group_approver" string="گروه‌بندی بر اساس تأییدکننده" context="{'group_by': 'approver_user_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_cas_approval_request" model="ir.actions.act_window">
+        <field name="name">درخواست‌های تأیید</field>
+        <field name="res_model">cas.approval.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_cas_approval_inbox" model="ir.actions.act_window">
+        <field name="name">کارتابل تأیید</field>
+        <field name="res_model">cas.approval.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cas_approval_line_search"/>
+        <field name="context">{'search_default_pending': 1, 'search_default_my_approvals': 1}</field>
+    </record>
+</odoo>

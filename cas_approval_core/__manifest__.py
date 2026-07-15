@@ -1,0 +1,21 @@
+{
+    "name": "CAS Approval Core",
+    "summary": "Versioned approval policies and auditable decisions for CAS workflows",
+    "version": "19.0.1.0.1",
+    "category": "Productivity",
+    "author": "Chodan Ara Shomal",
+    "website": "https://erp.chodanara.com",
+    "license": "LGPL-3",
+    "depends": ["cas_workflow_core", "mail"],
+    "data": [
+        "data/cas_approval_sequence.xml",
+        "security/cas_approval_security.xml",
+        "security/ir.model.access.csv",
+        "views/cas_approval_policy_views.xml",
+        "views/cas_approval_runtime_views.xml",
+        "views/cas_approval_menus.xml",
+    ],
+    "installable": True,
+    "application": False,
+    "auto_install": False,
+}

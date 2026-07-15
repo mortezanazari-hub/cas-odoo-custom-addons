@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_approval_policy_list" model="ir.ui.view">
+        <field name="name">cas.approval.policy.list</field>
+        <field name="model">cas.approval.policy</field>
+        <field name="arch" type="xml">
+            <list string="سیاست‌های تأیید">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="version_id"/>
+                <field name="state_id"/>
+                <field name="execution_mode"/>
+                <field name="decision_rule"/>
+                <field name="quorum_count" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_approval_policy_form" model="ir.ui.view">
+        <field name="name">cas.approval.policy.form</field>
+        <field name="model">cas.approval.policy</field>
+        <field name="arch" type="xml">
+            <form string="سیاست تأیید">
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="version_id"/>
+                            <field name="state_id" domain="[('version_id', '=', version_id), ('kind', 'not in', ['final', 'cancelled'])]"/>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="approve_transition_id" domain="[('version_id', '=', version_id), ('from_state_id', '=', state_id)]"/>
+                            <field name="reject_transition_id" domain="[('version_id', '=', version_id), ('from_state_id', '=', state_id)]"/>
+                            <field name="execution_mode"/>
+                            <field name="decision_rule"/>
+                            <field name="quorum_count" invisible="decision_rule != 'quorum'"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="تأییدکنندگان">
+                            <field name="step_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="role_label"/>
+                                    <field name="approver_type"/>
+                                    <field name="approver_user_id" invisible="approver_type != 'user'"/>
+                                    <field name="approver_group_id" invisible="approver_type != 'group'"/>
+                                    <field name="deadline_hours"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_workflow_version_approval_form" model="ir.ui.view">
+        <field name="name">cas.workflow.version.approval.form</field>
+        <field name="model">cas.workflow.version</field>
+        <field name="inherit_id" ref="cas_workflow_core.view_cas_workflow_version_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='transition_ids']/ancestor::page[1]" position="after">
+                <page string="سیاست‌های تأیید">
+                    <field name="approval_policy_ids" readonly="state != 'draft'">
+                        <list>
+                            <field name="sequence" widget="handle"/>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="state_id"/>
+                            <field name="execution_mode"/>
+                            <field name="decision_rule"/>
+                            <field name="approve_transition_id"/>
+                            <field name="reject_transition_id"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_cas_approval_policy" model="ir.actions.act_window">
+        <field name="name">سیاست‌های تأیید</field>
+        <field name="res_model">cas.approval.policy</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

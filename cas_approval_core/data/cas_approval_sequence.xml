@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_cas_approval_request" model="ir.sequence">
+        <field name="name">درخواست تأیید CAS</field>
+        <field name="code">cas.approval.request</field>
+        <field name="prefix">APR/%(year)s/</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>
