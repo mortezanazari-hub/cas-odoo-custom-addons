@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_approval_delegation_list" model="ir.ui.view">
+        <field name="name">cas.approval.delegation.list</field>
+        <field name="model">cas.approval.delegation</field>
+        <field name="arch" type="xml">
+            <list string="جانشینی تأییدها">
+                <field name="delegator_user_id"/>
+                <field name="delegate_user_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="policy_ids" widget="many2many_tags" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_cas_approval_delegation_form" model="ir.ui.view">
+        <field name="name">cas.approval.delegation.form</field>
+        <field name="model">cas.approval.delegation</field>
+        <field name="arch" type="xml">
+            <form string="جانشینی تأیید">
+                <sheet>
+                    <div class="oe_title"><h1>جانشینی تأیید</h1></div>
+                    <group>
+                        <group>
+                            <field name="delegator_user_id"/>
+                            <field name="delegate_user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <field name="policy_ids" widget="many2many_tags" domain="[('company_id', '=', company_id)]"/>
+                    <field name="reason" placeholder="دلیل و محدوده جانشینی را ثبت کنید..."/>
+                    <notebook>
+                        <page string="تصمیم‌های استفاده‌شده">
+                            <field name="decision_line_ids" readonly="1">
+                                <list create="0" delete="0" edit="0">
+                                    <field name="request_id"/>
+                                    <field name="role_label"/>
+                                    <field name="approver_user_id"/>
+                                    <field name="delegate_user_id"/>
+                                    <field name="status"/>
+                                    <field name="decided_at"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_cas_approval_delegation" model="ir.actions.act_window">
+        <field name="name">جانشینی تأییدها</field>
+        <field name="res_model">cas.approval.delegation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

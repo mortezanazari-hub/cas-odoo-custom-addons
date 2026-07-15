@@ -52,6 +52,7 @@
                                     <field name="role_label"/>
                                     <field name="approver_user_id"/>
                                     <field name="delegate_user_id" optional="show"/>
+                                    <field name="delegation_id" optional="show"/>
                                     <field name="decision_user_id"/>
                                     <field name="status"/>
                                     <field name="assigned_at"/>
@@ -118,6 +119,7 @@
                             <field name="state_id"/>
                             <field name="approver_user_id"/>
                             <field name="delegate_user_id"/>
+                            <field name="delegation_id"/>
                         </group>
                         <group>
                             <field name="decision_user_id"/>

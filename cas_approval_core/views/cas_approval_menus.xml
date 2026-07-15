@@ -18,4 +18,10 @@
               action="action_cas_approval_policy"
               sequence="30"
               groups="cas_workflow_core.group_cas_workflow_designer"/>
+    <menuitem id="menu_cas_approval_delegations"
+              name="جانشینی تأییدها"
+              parent="cas_workflow_core.menu_cas_workflow_configuration"
+              action="action_cas_approval_delegation"
+              sequence="40"
+              groups="cas_approval_core.group_cas_approval_manager"/>
 </odoo>

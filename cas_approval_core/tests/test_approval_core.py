@@ -1,3 +1,6 @@
+from datetime import timedelta
+
+from odoo import fields
 from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase
 
@@ -32,8 +35,14 @@ class TestCasApprovalCore(TransactionCase):
         decision_rule="all",
         quorum_count=1,
         sequences=None,
+        approver_types=None,
+        delegate_users=None,
+        responsible_user=None,
     ):
         sequences = sequences or [10, 10]
+        approver_types = approver_types or ["user"] * len(sequences)
+        delegate_users = delegate_users or {}
+        responsible_user = responsible_user or self.approvers[0]
         definition = self.env["cas.workflow.definition"].create(
             {
                 "name": f"Approval Workflow {suffix}",
@@ -107,23 +116,35 @@ class TestCasApprovalCore(TransactionCase):
             }
         )
         for index, sequence in enumerate(sequences):
-            self.env["cas.approval.step"].create(
-                {
+            step_values = {
                     "policy_id": policy.id,
                     "sequence": sequence,
                     "name": f"گام {index + 1}",
                     "role_label": f"تأییدکننده {index + 1}",
-                    "approver_type": "user",
-                    "approver_user_id": self.approvers[index].id,
+                    "approver_type": approver_types[index],
                     "deadline_hours": 4,
+            }
+            if approver_types[index] == "user":
+                step_values["approver_user_id"] = self.approvers[index].id
+            self.env["cas.approval.step"].create(step_values)
+        version.action_publish()
+        delegations = self.env["cas.approval.delegation"]
+        for index, delegate_user in delegate_users.items():
+            delegations |= self.env["cas.approval.delegation"].create(
+                {
+                    "delegator_user_id": self.approvers[index].id,
+                    "delegate_user_id": delegate_user.id,
+                    "company_id": self.env.company.id,
+                    "date_from": fields.Date.context_today(self.env.user),
+                    "policy_ids": [(6, 0, [policy.id])],
+                    "reason": "جانشینی تست خودکار",
                 }
             )
-        version.action_publish()
         partner = self.env["res.partner"].create(
             {"name": f"Approval Target {suffix}"}
         )
         payload = definition.action_start(
-            partner.id, responsible_user_id=self.approvers[0].id
+            partner.id, responsible_user_id=responsible_user.id
         )
         instance = self.env["cas.workflow.instance"].browse(payload["instance_id"])
         request = instance.approval_request_ids
@@ -139,6 +160,7 @@ class TestCasApprovalCore(TransactionCase):
             "policy": policy,
             "instance": instance,
             "request": request,
+            "delegations": delegations,
         }
 
     def _line_for(self, request, user):
@@ -295,3 +317,101 @@ class TestCasApprovalCore(TransactionCase):
             cloned.approve_transition_id.code, policy.approve_transition_id.code
         )
         self.assertEqual(len(cloned.step_ids), len(policy.step_ids))
+
+    def test_active_delegation_routes_activity_and_records_actual_decider(self):
+        data = self._build_and_start(
+            "delegation",
+            sequences=[10],
+            delegate_users={0: self.approvers[1]},
+        )
+        line = data["request"].line_ids
+        delegation = data["delegations"]
+        self.assertEqual(line.approver_user_id, self.approvers[0])
+        self.assertEqual(line.delegate_user_id, self.approvers[1])
+        self.assertEqual(line.delegation_id, delegation)
+        self.assertEqual(line.activity_ids.user_id, self.approvers[1])
+
+        line.with_user(self.approvers[1]).action_approve("تصمیم توسط جانشین")
+        self.assertEqual(line.decision_user_id, self.approvers[1])
+        self.assertEqual(data["request"].status, "approved")
+        with self.assertRaises(ValidationError):
+            delegation.write({"reason": "بازنویسی سابقه"})
+        with self.assertRaises(ValidationError):
+            delegation.unlink()
+
+    def test_overlapping_delegation_is_rejected(self):
+        today = fields.Date.context_today(self.env.user)
+        self.env["cas.approval.delegation"].create(
+            {
+                "delegator_user_id": self.approvers[0].id,
+                "delegate_user_id": self.approvers[1].id,
+                "company_id": self.env.company.id,
+                "date_from": today,
+                "date_to": today + timedelta(days=5),
+                "reason": "جانشینی اول",
+            }
+        )
+        with self.assertRaises(ValidationError):
+            self.env["cas.approval.delegation"].create(
+                {
+                    "delegator_user_id": self.approvers[0].id,
+                    "delegate_user_id": self.approvers[2].id,
+                    "company_id": self.env.company.id,
+                    "date_from": today + timedelta(days=1),
+                    "date_to": today + timedelta(days=2),
+                    "reason": "جانشینی هم‌پوشان",
+                }
+            )
+
+    def test_manager_resolver_uses_direct_and_department_fallback(self):
+        self.env["hr.employee"].with_context(active_test=False).search(
+            [("user_id", "in", [user.id for user in self.approvers])]
+        ).unlink()
+        department = self.env["hr.department"].create(
+            {"name": "Approval Test Department", "company_id": self.env.company.id}
+        )
+        manager = self.env["hr.employee"].create(
+            {
+                "name": "Approval Test Manager",
+                "user_id": self.approvers[1].id,
+                "company_id": self.env.company.id,
+                "department_id": department.id,
+            }
+        )
+        department.manager_id = manager
+        self.env["hr.employee"].create(
+            {
+                "name": "Approval Test Direct Report",
+                "user_id": self.approvers[0].id,
+                "company_id": self.env.company.id,
+                "department_id": department.id,
+                "parent_id": manager.id,
+            }
+        )
+        self.env["hr.employee"].create(
+            {
+                "name": "Approval Test Department Report",
+                "user_id": self.approvers[2].id,
+                "company_id": self.env.company.id,
+                "department_id": department.id,
+            }
+        )
+
+        direct = self._build_and_start(
+            "direct_manager",
+            sequences=[10],
+            approver_types=["workflow_responsible_manager"],
+            responsible_user=self.approvers[0],
+        )
+        self.assertEqual(
+            direct["request"].line_ids.approver_user_id, self.approvers[1]
+        )
+        fallback = self._build_and_start(
+            "department_manager",
+            sequences=[10],
+            approver_types=["workflow_responsible_manager"],
+            responsible_user=self.approvers[2],
+        )
+        self.assertEqual(
+            fallback["request"].line_ids.approver_user_id, self.approvers[1]
+        )

@@ -24,11 +24,23 @@
         <field name="groups" eval="[(4, ref('cas_approval_core.group_cas_approval_user'))]"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
+    <record id="rule_approval_delegation_user" model="ir.rule">
+        <field name="name">جانشینی تأیید: تفویض‌کننده یا جانشین</field>
+        <field name="model_id" ref="model_cas_approval_delegation"/>
+        <field name="groups" eval="[(4, ref('cas_approval_core.group_cas_approval_user'))]"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('delegator_user_id', '=', user.id), ('delegate_user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_approval_delegation_manager" model="ir.rule">
+        <field name="name">جانشینی تأیید: مدیر شرکت</field>
+        <field name="model_id" ref="model_cas_approval_delegation"/>
+        <field name="groups" eval="[(4, ref('cas_approval_core.group_cas_approval_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
     <record id="rule_approval_request_user" model="ir.rule">
         <field name="name">درخواست تأیید: ذی‌نفع یا تأییدکننده</field>
         <field name="model_id" ref="model_cas_approval_request"/>
         <field name="groups" eval="[(4, ref('cas_approval_core.group_cas_approval_user'))]"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', '|', ('instance_id.started_by_id', '=', user.id), ('instance_id.responsible_user_id', '=', user.id), ('line_ids.approver_user_id', '=', user.id)]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', '|', '|', ('instance_id.started_by_id', '=', user.id), ('instance_id.responsible_user_id', '=', user.id), ('line_ids.approver_user_id', '=', user.id), ('line_ids.delegate_user_id', '=', user.id)]</field>
     </record>
     <record id="rule_approval_request_manager" model="ir.rule">
         <field name="name">درخواست تأیید: مدیر شرکت</field>
@@ -40,7 +52,7 @@
         <field name="name">خط تأیید: ذی‌نفع یا تأییدکننده</field>
         <field name="model_id" ref="model_cas_approval_line"/>
         <field name="groups" eval="[(4, ref('cas_approval_core.group_cas_approval_user'))]"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', '|', ('approver_user_id', '=', user.id), ('instance_id.started_by_id', '=', user.id), ('instance_id.responsible_user_id', '=', user.id)]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', '|', '|', ('approver_user_id', '=', user.id), ('delegate_user_id', '=', user.id), ('instance_id.started_by_id', '=', user.id), ('instance_id.responsible_user_id', '=', user.id)]</field>
     </record>
     <record id="rule_approval_line_manager" model="ir.rule">
         <field name="name">خط تأیید: مدیر شرکت</field>
@@ -52,7 +64,7 @@
         <field name="name">تاریخچه تأیید: درخواست قابل مشاهده</field>
         <field name="model_id" ref="model_cas_approval_history"/>
         <field name="groups" eval="[(4, ref('cas_approval_core.group_cas_approval_user'))]"/>
-        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', '|', ('request_id.instance_id.started_by_id', '=', user.id), ('request_id.instance_id.responsible_user_id', '=', user.id), ('request_id.line_ids.approver_user_id', '=', user.id)]</field>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', '|', '|', ('request_id.instance_id.started_by_id', '=', user.id), ('request_id.instance_id.responsible_user_id', '=', user.id), ('request_id.line_ids.approver_user_id', '=', user.id), ('request_id.line_ids.delegate_user_id', '=', user.id)]</field>
     </record>
     <record id="rule_approval_history_manager" model="ir.rule">
         <field name="name">تاریخچه تأیید: مدیر شرکت</field>

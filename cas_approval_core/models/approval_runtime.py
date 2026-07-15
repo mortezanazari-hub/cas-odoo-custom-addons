@@ -128,6 +128,8 @@ class CasApprovalRequest(models.Model):
         first_sequence = min(step.sequence for step, _user in resolved)
         line_values = []
         for step, user in resolved:
+            delegation = self.env["cas.approval.delegation"]._find_for(policy, user)
+            delegate = delegation.delegate_user_id if delegation else False
             pending = policy.execution_mode == "parallel" or step.sequence == first_sequence
             assigned_at = now if pending else False
             deadline = (
@@ -142,6 +144,8 @@ class CasApprovalRequest(models.Model):
                     "sequence": step.sequence,
                     "role_label": step.role_label,
                     "approver_user_id": user.id,
+                    "delegate_user_id": delegate.id if delegate else False,
+                    "delegation_id": delegation.id if delegation else False,
                     "status": "pending" if pending else "waiting",
                     "assigned_at": assigned_at,
                     "deadline": deadline,
@@ -166,6 +170,12 @@ class CasApprovalRequest(models.Model):
             users = instance.responsible_user_id
         elif step.approver_type == "instance_starter":
             users = instance.started_by_id
+        elif step.approver_type == "workflow_responsible_manager":
+            users = self._resolve_manager_user(
+                instance.responsible_user_id, instance.company_id
+            )
+        elif step.approver_type == "instance_starter_manager":
+            users = self._resolve_manager_user(instance.started_by_id, instance.company_id)
         else:
             users = Users.search(
                 [
@@ -182,6 +192,43 @@ class CasApprovalRequest(models.Model):
             and instance.company_id in user.company_ids
         )
         return users
+
+    @api.model
+    def _resolve_manager_user(self, source_user, company):
+        employees = source_user.sudo().employee_ids.with_context(active_test=False).filtered(
+            lambda employee: employee.active and employee.company_id == company
+        )
+        if len(employees) != 1:
+            raise ValidationError(
+                _("برای کاربر %s باید دقیقاً یک کارمند فعال در شرکت وجود داشته باشد.", source_user.name)
+            )
+        employee = employees
+        visited = set()
+        manager = employee.parent_id
+        while manager and manager.id not in visited:
+            visited.add(manager.id)
+            user = manager.user_id.with_context(active_test=False)
+            if user and user.active and not user.share and company in user.company_ids:
+                return user
+            manager = manager.parent_id
+
+        department = employee.department_id
+        visited_departments = set()
+        while department and department.id not in visited_departments:
+            visited_departments.add(department.id)
+            user = department.manager_id.user_id.with_context(active_test=False)
+            if (
+                user
+                and user != source_user
+                and user.active
+                and not user.share
+                and company in user.company_ids
+            ):
+                return user
+            department = department.parent_id
+        raise ValidationError(
+            _("برای کاربر %s مدیر مستقیم، بالادست یا مدیر واحد معتبر پیدا نشد.", source_user.name)
+        )
 
     def _activate_next_sequence(self):
         self.ensure_one()
@@ -304,6 +351,9 @@ class CasApprovalLine(models.Model):
     )
     delegate_user_id = fields.Many2one(
         "res.users", string="جانشین", readonly=True, ondelete="restrict"
+    )
+    delegation_id = fields.Many2one(
+        "cas.approval.delegation", string="مجوز جانشینی", readonly=True, ondelete="restrict"
     )
     decision_user_id = fields.Many2one(
         "res.users", string="تصمیم‌گیرنده واقعی", readonly=True, ondelete="restrict", index=True
@@ -433,7 +483,7 @@ class CasApprovalLine(models.Model):
                 "activity_type_id": self.env.ref("mail.mail_activity_data_todo").id,
                 "res_model_id": model_id,
                 "res_id": self.id,
-                "user_id": self.approver_user_id.id,
+                "user_id": (self.delegate_user_id or self.approver_user_id).id,
                 "summary": _("تصمیم لازم: %s", self.role_label),
                 "note": _(
                     "درخواست %s برای گردش‌کار %s در مرحله %s",

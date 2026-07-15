@@ -149,6 +149,8 @@ class CasApprovalStep(models.Model):
             ("group", "اعضای گروه"),
             ("workflow_responsible", "مسئول جاری گردش‌کار"),
             ("instance_starter", "آغازکننده گردش‌کار"),
+            ("workflow_responsible_manager", "مدیر مسئول جاری"),
+            ("instance_starter_manager", "مدیر آغازکننده"),
         ],
         string="نوع تأییدکننده",
         required=True,
