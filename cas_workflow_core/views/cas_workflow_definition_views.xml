@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_workflow_definition_list" model="ir.ui.view">
+        <field name="name">cas.workflow.definition.list</field>
+        <field name="model">cas.workflow.definition</field>
+        <field name="arch" type="xml">
+            <list string="تعریف گردش‌کارها">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="target_model_id"/>
+                <field name="current_version_id"/>
+                <field name="owner_user_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_workflow_definition_form" model="ir.ui.view">
+        <field name="name">cas.workflow.definition.form</field>
+        <field name="model">cas.workflow.definition</field>
+        <field name="arch" type="xml">
+            <form string="تعریف گردش‌کار">
+                <header>
+                    <button name="action_create_initial_version"
+                            type="object"
+                            string="ساخت نسخه اولیه"
+                            class="btn-primary"
+                            groups="cas_workflow_core.group_cas_workflow_designer"
+                            invisible="version_ids"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="target_model_id"/>
+                            <field name="owner_user_id"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="current_version_id" readonly="1"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
+                    <notebook>
+                        <page string="نسخه‌ها">
+                            <field name="version_ids" readonly="1">
+                                <list>
+                                    <field name="revision"/>
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                    <field name="published_at"/>
+                                    <field name="published_by_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_workflow_version_list" model="ir.ui.view">
+        <field name="name">cas.workflow.version.list</field>
+        <field name="model">cas.workflow.version</field>
+        <field name="arch" type="xml">
+            <list string="نسخه‌های گردش‌کار">
+                <field name="definition_id"/>
+                <field name="revision"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="published_at"/>
+                <field name="schema_hash" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_workflow_version_form" model="ir.ui.view">
+        <field name="name">cas.workflow.version.form</field>
+        <field name="model">cas.workflow.version</field>
+        <field name="arch" type="xml">
+            <form string="نسخه گردش‌کار">
+                <header>
+                    <button name="action_publish" type="object" string="انتشار"
+                            class="btn-primary"
+                            groups="cas_workflow_core.group_cas_workflow_publisher"
+                            invisible="state != 'draft'"/>
+                    <button name="action_new_revision" type="object" string="بازنگری جدید"
+                            groups="cas_workflow_core.group_cas_workflow_designer"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,published,archived"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="definition_id" readonly="state != 'draft'"/>
+                            <field name="revision" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="published_at" readonly="1"/>
+                            <field name="published_by_id" readonly="1"/>
+                            <field name="schema_hash" readonly="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="وضعیت‌ها">
+                            <field name="state_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="kind"/>
+                                    <field name="sla_hours"/>
+                                    <field name="fold"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="انتقال‌ها">
+                            <field name="transition_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="from_state_id"/>
+                                    <field name="to_state_id"/>
+                                    <field name="responsible_mode"/>
+                                    <field name="note_required"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="یادداشت"><field name="notes" readonly="state != 'draft'"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cas_workflow_transition_form" model="ir.ui.view">
+        <field name="name">cas.workflow.transition.form</field>
+        <field name="model">cas.workflow.transition</field>
+        <field name="arch" type="xml">
+            <form string="انتقال گردش‌کار">
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="version_id" readonly="1"/>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="from_state_id"/>
+                            <field name="to_state_id"/>
+                        </group>
+                        <group>
+                            <field name="responsible_mode"/>
+                            <field name="note_required"/>
+                            <field name="allowed_group_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group groups="cas_workflow_core.group_cas_workflow_manager">
+                        <field name="condition_config"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cas_workflow_definition" model="ir.actions.act_window">
+        <field name="name">تعریف گردش‌کارها</field>
+        <field name="res_model">cas.workflow.definition</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_cas_workflow_version" model="ir.actions.act_window">
+        <field name="name">نسخه‌های گردش‌کار</field>
+        <field name="res_model">cas.workflow.version</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

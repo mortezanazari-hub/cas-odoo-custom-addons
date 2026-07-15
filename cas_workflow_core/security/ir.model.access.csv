@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_workflow_definition_user,workflow.definition.user,model_cas_workflow_definition,group_cas_workflow_user,1,0,0,0
+access_workflow_version_user,workflow.version.user,model_cas_workflow_version,group_cas_workflow_user,1,0,0,0
+access_workflow_state_user,workflow.state.user,model_cas_workflow_state,group_cas_workflow_user,1,0,0,0
+access_workflow_transition_user,workflow.transition.user,model_cas_workflow_transition,group_cas_workflow_user,1,0,0,0
+access_workflow_instance_user,workflow.instance.user,model_cas_workflow_instance,group_cas_workflow_user,1,1,0,0
+access_workflow_history_user,workflow.history.user,model_cas_workflow_history,group_cas_workflow_user,1,0,0,0
+access_workflow_definition_designer,workflow.definition.designer,model_cas_workflow_definition,group_cas_workflow_designer,1,1,1,1
+access_workflow_version_designer,workflow.version.designer,model_cas_workflow_version,group_cas_workflow_designer,1,1,1,1
+access_workflow_state_designer,workflow.state.designer,model_cas_workflow_state,group_cas_workflow_designer,1,1,1,1
+access_workflow_transition_designer,workflow.transition.designer,model_cas_workflow_transition,group_cas_workflow_designer,1,1,1,1
+access_workflow_instance_manager,workflow.instance.manager,model_cas_workflow_instance,group_cas_workflow_manager,1,1,0,0
+access_workflow_history_manager,workflow.history.manager,model_cas_workflow_history,group_cas_workflow_manager,1,0,0,0

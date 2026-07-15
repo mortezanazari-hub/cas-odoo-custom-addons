@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_cas_workflow_user" model="res.groups">
+        <field name="name">کاربر گردش‌کار سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('cas_form_core.group_cas_form_user'))]"/>
+    </record>
+    <record id="group_cas_workflow_designer" model="res.groups">
+        <field name="name">طراح گردش‌کار سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('cas_workflow_core.group_cas_workflow_user'))]"/>
+    </record>
+    <record id="group_cas_workflow_publisher" model="res.groups">
+        <field name="name">منتشرکننده گردش‌کار سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('cas_workflow_core.group_cas_workflow_designer'))]"/>
+    </record>
+    <record id="group_cas_workflow_manager" model="res.groups">
+        <field name="name">مدیر گردش‌کار سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('cas_workflow_core.group_cas_workflow_publisher'))]"/>
+    </record>
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('cas_workflow_core.group_cas_workflow_manager'))]"/>
+    </record>
+
+    <record id="rule_workflow_definition_company" model="ir.rule">
+        <field name="name">گردش‌کار: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_workflow_definition"/>
+        <field name="groups" eval="[(4, ref('cas_workflow_core.group_cas_workflow_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_workflow_version_company" model="ir.rule">
+        <field name="name">نسخه گردش‌کار: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_workflow_version"/>
+        <field name="groups" eval="[(4, ref('cas_workflow_core.group_cas_workflow_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_workflow_state_company" model="ir.rule">
+        <field name="name">وضعیت گردش‌کار: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_workflow_state"/>
+        <field name="groups" eval="[(4, ref('cas_workflow_core.group_cas_workflow_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_workflow_transition_company" model="ir.rule">
+        <field name="name">انتقال گردش‌کار: محدوده شرکت</field>
+        <field name="model_id" ref="model_cas_workflow_transition"/>
+        <field name="groups" eval="[(4, ref('cas_workflow_core.group_cas_workflow_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_workflow_instance_personal" model="ir.rule">
+        <field name="name">نمونه گردش‌کار: آغازکننده یا مسئول</field>
+        <field name="model_id" ref="model_cas_workflow_instance"/>
+        <field name="groups" eval="[(4, ref('cas_workflow_core.group_cas_workflow_user'))]"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('started_by_id', '=', user.id), ('responsible_user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_workflow_instance_manager" model="ir.rule">
+        <field name="name">نمونه گردش‌کار: مدیر شرکت</field>
+        <field name="model_id" ref="model_cas_workflow_instance"/>
+        <field name="groups" eval="[(4, ref('cas_workflow_core.group_cas_workflow_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_workflow_history_personal" model="ir.rule">
+        <field name="name">تاریخچه گردش‌کار: نمونه قابل مشاهده</field>
+        <field name="model_id" ref="model_cas_workflow_history"/>
+        <field name="groups" eval="[(4, ref('cas_workflow_core.group_cas_workflow_user'))]"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', ('instance_id.started_by_id', '=', user.id), ('instance_id.responsible_user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_workflow_history_manager" model="ir.rule">
+        <field name="name">تاریخچه گردش‌کار: مدیر شرکت</field>
+        <field name="model_id" ref="model_cas_workflow_history"/>
+        <field name="groups" eval="[(4, ref('cas_workflow_core.group_cas_workflow_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

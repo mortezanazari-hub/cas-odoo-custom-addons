@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_workflow_instances"
+              name="کارتابل گردش‌کار"
+              parent="cas_form_core.menu_cas_forms_root"
+              action="action_cas_workflow_instance"
+              sequence="30"
+              groups="cas_workflow_core.group_cas_workflow_user"/>
+
+    <menuitem id="menu_cas_workflow_configuration"
+              name="گردش‌کارها"
+              parent="cas_form_core.menu_cas_forms_configuration"
+              sequence="40"
+              groups="cas_workflow_core.group_cas_workflow_designer"/>
+    <menuitem id="menu_cas_workflow_definitions"
+              name="تعریف گردش‌کارها"
+              parent="menu_cas_workflow_configuration"
+              action="action_cas_workflow_definition"
+              sequence="10"/>
+    <menuitem id="menu_cas_workflow_versions"
+              name="نسخه‌های گردش‌کار"
+              parent="menu_cas_workflow_configuration"
+              action="action_cas_workflow_version"
+              sequence="20"/>
+</odoo>
