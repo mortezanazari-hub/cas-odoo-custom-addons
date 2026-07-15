@@ -1,0 +1,532 @@
+.o_action.cas_dynamic_form_app {
+    --cas-primary: #245c45;
+    --cas-primary-soft: #e9f3ee;
+    --cas-border: #dce4df;
+    --cas-surface: #ffffff;
+    --cas-page: #f4f7f5;
+    // Odoo's action manager is a bounded flex container. The runtime must
+    // own its vertical scroll area; min-height alone leaves long catalogs
+    // clipped behind the action manager with no browser scrollbar.
+    position: relative;
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100% !important;
+    max-height: 100% !important;
+    min-width: 0;
+    min-height: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    background: var(--cas-page);
+    color: #24332c;
+    font-family: inherit;
+
+    .cas_runtime_loading {
+        min-height: 55vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        color: var(--cas-primary);
+    }
+
+    .cas_catalog_header,
+    .cas_runtime_header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+        padding: 1.25rem 2rem;
+        background: rgba(255, 255, 255, 0.97);
+        border-bottom: 1px solid var(--cas-border);
+        box-shadow: 0 2px 12px rgba(25, 58, 43, 0.05);
+        backdrop-filter: blur(8px);
+
+        h1 {
+            margin: 0 0 0.25rem;
+            font-size: 1.55rem;
+            font-weight: 750;
+        }
+
+        p {
+            margin: 0;
+            color: #607068;
+        }
+    }
+
+    .cas_catalog_body,
+    .cas_runtime_body {
+        width: calc(100% - 2rem);
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 1.5rem 0 6rem;
+    }
+
+    .cas_catalog_section {
+        margin-bottom: 2rem;
+    }
+
+    .cas_section_title {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+        color: var(--cas-primary);
+
+        h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+    }
+
+    .cas_card_grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .cas_form_card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 210px;
+        padding: 1.25rem;
+        border: 1px solid var(--cas-border);
+        border-radius: 14px;
+        background: var(--cas-surface);
+        box-shadow: 0 5px 18px rgba(25, 58, 43, 0.05);
+        transition: transform 150ms ease, box-shadow 150ms ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(25, 58, 43, 0.09);
+        }
+
+        h3 {
+            margin: 0 0 0.6rem;
+            font-size: 1.08rem;
+            font-weight: 700;
+        }
+
+        p {
+            flex: 1;
+            margin-bottom: 0.8rem;
+            color: #65746d;
+            line-height: 1.8;
+        }
+
+        small {
+            margin-bottom: 0.8rem;
+            color: #77867f;
+        }
+
+        .btn-primary {
+            background: var(--cas-primary);
+            border-color: var(--cas-primary);
+        }
+    }
+
+    .cas_draft_card {
+        border-color: #e3c777;
+        background: #fffdf6;
+    }
+
+    .cas_card_badge {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        background: #fff1bd;
+        color: #765900;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+
+    .cas_tracking {
+        direction: ltr;
+        text-align: right;
+        font-family: monospace;
+    }
+
+    .cas_recent_list {
+        overflow: hidden;
+        border: 1px solid var(--cas-border);
+        border-radius: 12px;
+        background: #fff;
+    }
+
+    .cas_recent_item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.9rem 1rem;
+        border: 0;
+        border-bottom: 1px solid var(--cas-border);
+        background: transparent;
+        text-align: right;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        &:hover {
+            background: var(--cas-primary-soft);
+        }
+
+        span {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        small {
+            direction: ltr;
+            color: #6b7a73;
+        }
+    }
+
+    .cas_empty_state {
+        padding: 2.5rem;
+        border: 1px dashed #b8c8bf;
+        border-radius: 12px;
+        background: #fff;
+        text-align: center;
+        color: #6c7b74;
+    }
+
+    .cas_runtime_header {
+        justify-content: flex-start;
+    }
+
+    .cas_runtime_title {
+        flex: 1;
+    }
+
+    .cas_runtime_meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        color: #6b7a73;
+        font-size: 0.82rem;
+
+        > span:first-child {
+            direction: ltr;
+            font-family: monospace;
+        }
+    }
+
+    .cas_state_badge {
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+        font-weight: 700;
+    }
+
+    .cas_state_draft {
+        background: #fff0b8;
+        color: #735700;
+    }
+
+    .cas_state_submitted {
+        background: #dff3e7;
+        color: #17643e;
+    }
+
+    .cas_state_cancelled {
+        background: #f3e1e1;
+        color: #8b2929;
+    }
+
+    .cas_progress_box {
+        width: 25vw;
+        max-width: 240px;
+        font-size: 0.78rem;
+
+        .progress {
+            height: 6px;
+            margin-top: 0.4rem;
+        }
+
+        .progress-bar {
+            background: var(--cas-primary);
+        }
+    }
+
+    .cas_form_description {
+        padding: 1rem 1.2rem;
+        border-right: 4px solid var(--cas-primary);
+        border-radius: 8px;
+        background: var(--cas-primary-soft);
+        line-height: 1.9;
+    }
+
+    .cas_layout_node {
+        margin-bottom: 1rem;
+        padding: 1.25rem;
+        border: 1px solid var(--cas-border);
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 4px 16px rgba(25, 58, 43, 0.04);
+    }
+
+    .cas_node_group {
+        padding: 1rem;
+        border-style: dashed;
+        box-shadow: none;
+    }
+
+    .cas_node_header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid #edf1ef;
+
+        h2 {
+            margin: 0 0 0.35rem;
+            font-size: 1.08rem;
+            font-weight: 750;
+            color: var(--cas-primary);
+        }
+
+        p {
+            margin: 0;
+            color: #6b7a73;
+        }
+    }
+
+    .cas_node_children {
+        display: grid;
+        grid-template-columns: repeat(var(--cas-grid-columns, 1), minmax(0, 1fr));
+        gap: 1rem 1.25rem;
+    }
+
+    .cas_dynamic_field {
+        grid-column: span var(--cas-field-span, 1);
+        min-width: 0;
+    }
+
+    .cas_field_label {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-weight: 650;
+    }
+
+    .cas_required {
+        margin-right: 0.25rem;
+        color: #c52f2f;
+    }
+
+    .cas_field_help {
+        display: block;
+        margin: -0.15rem 0 0.5rem;
+        color: #718079;
+        line-height: 1.65;
+    }
+
+    .cas_field_error .form-control,
+    .cas_field_error .form-select {
+        border-color: #dc3545;
+    }
+
+    .cas_option_group {
+        padding: 0.65rem 0.85rem;
+        border: 1px solid var(--cas-border);
+        border-radius: 9px;
+        background: #fbfcfb;
+    }
+
+    .cas_boolean_control {
+        width: 100%;
+        min-height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.75rem;
+        padding: 0.6rem 0.8rem;
+        border: 1px solid var(--cas-border);
+        border-radius: 9px;
+        background: #fbfcfb;
+        color: #34473e;
+        text-align: right;
+
+        &:hover:not(:disabled) {
+            border-color: #9bb8aa;
+            background: #f5faf7;
+        }
+
+        &:focus-visible {
+            outline: 3px solid rgba(36, 92, 69, 0.2);
+            outline-offset: 1px;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+    }
+
+    .cas_boolean_track {
+        position: relative;
+        flex: 0 0 44px;
+        width: 44px;
+        height: 24px;
+        border-radius: 999px;
+        background: #aab6b0;
+        transition: background 150ms ease;
+    }
+
+    .cas_boolean_thumb {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+        transition: transform 150ms ease;
+    }
+
+    .cas_boolean_control.is_on {
+        .cas_boolean_track {
+            background: var(--cas-primary);
+        }
+
+        .cas_boolean_thumb {
+            transform: translateX(-20px);
+        }
+    }
+
+    .cas_boolean_label {
+        font-weight: 650;
+    }
+
+    .cas_global_date_picker_backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 1300;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background: rgba(18, 30, 24, 0.38);
+        backdrop-filter: blur(2px);
+    }
+
+    .cas_global_date_picker_shell {
+        max-width: calc(100vw - 2rem);
+        max-height: calc(100vh - 2rem);
+        overflow: auto;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 18px 55px rgba(0, 0, 0, 0.24);
+    }
+
+    .cas_option_group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.4rem;
+    }
+
+    .cas_option_item {
+        margin: 0;
+    }
+
+    .cas_node_text {
+        grid-column: 1 / -1;
+        padding: 1rem;
+        border-radius: 10px;
+        background: #eef5fa;
+        color: #365468;
+    }
+
+    .cas_node_separator {
+        grid-column: 1 / -1;
+    }
+
+    .cas_final_alert {
+        font-size: 1rem;
+    }
+
+    .cas_runtime_footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem 2rem;
+        border-top: 1px solid var(--cas-border);
+        background: rgba(255, 255, 255, 0.97);
+        box-shadow: 0 -5px 18px rgba(25, 58, 43, 0.06);
+        backdrop-filter: blur(8px);
+    }
+
+    .cas_dirty_status {
+        font-size: 0.82rem;
+    }
+
+    .cas_footer_actions {
+        display: flex;
+        gap: 0.75rem;
+
+        .btn-primary {
+            background: var(--cas-primary);
+            border-color: var(--cas-primary);
+        }
+    }
+}
+
+@media (max-width: 767.98px) {
+    .o_action.cas_dynamic_form_app {
+        .cas_catalog_header,
+        .cas_runtime_header {
+            position: static;
+            align-items: stretch;
+            flex-direction: column;
+            padding: 1rem;
+        }
+
+        .cas_runtime_header {
+            .cas_back_button {
+                align-self: flex-start;
+            }
+        }
+
+        .cas_progress_box {
+            width: 100%;
+        }
+
+        .cas_catalog_body,
+        .cas_runtime_body {
+            width: calc(100% - 1rem);
+            padding-top: 0.75rem;
+        }
+
+        .cas_node_children {
+            grid-template-columns: 1fr;
+        }
+
+        .cas_dynamic_field {
+            grid-column: 1;
+        }
+
+        .cas_runtime_footer {
+            align-items: stretch;
+            flex-direction: column;
+            padding: 0.75rem;
+        }
+
+        .cas_footer_actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+}

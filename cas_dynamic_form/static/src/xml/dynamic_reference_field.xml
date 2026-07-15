@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_dynamic_form.DynamicReferenceField">
+        <div class="cas_dynamic_reference">
+            <input type="search"
+                   class="form-control form-control-sm mb-2"
+                   placeholder="جست‌وجوی رکورد..."
+                   t-att-disabled="props.readonly"
+                   t-on-input="onSearch"/>
+            <select class="form-select"
+                    t-att-disabled="props.readonly || state.loading"
+                    t-on-change="onSelect">
+                <option value="">انتخاب کنید...</option>
+                <option t-foreach="state.options"
+                        t-as="option"
+                        t-key="option.id"
+                        t-att-value="option.id"
+                        t-att-selected="option.id === selectedId">
+                    <t t-esc="option.name"/>
+                </option>
+            </select>
+            <small t-if="state.loading" class="text-muted">در حال دریافت گزینه‌ها...</small>
+        </div>
+    </t>
+</templates>

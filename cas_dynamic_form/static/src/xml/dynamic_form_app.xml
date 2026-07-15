@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_dynamic_form.DynamicFormApp">
+        <div class="o_action cas_dynamic_form_app" dir="rtl">
+            <div t-if="state.loading" class="cas_runtime_loading">
+                <i class="fa fa-spinner fa-spin fa-2x"/>
+                <span>در حال بارگذاری فرم‌ها...</span>
+            </div>
+
+            <t t-elif="state.mode === 'catalog'">
+                <header class="cas_catalog_header">
+                    <div>
+                        <h1>فرم‌های سازمانی</h1>
+                        <p>فرم موردنظر را انتخاب کنید یا تکمیل یک پیش‌نویس را ادامه دهید.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" t-on-click="openHistory">
+                        <i class="fa fa-list ms-1"/> همه ثبت‌های من
+                    </button>
+                </header>
+
+                <main class="cas_catalog_body">
+                    <section t-if="state.catalog.drafts.length" class="cas_catalog_section">
+                        <div class="cas_section_title">
+                            <i class="fa fa-pencil-square-o"/>
+                            <h2>پیش‌نویس‌های من</h2>
+                        </div>
+                        <div class="cas_card_grid">
+                            <article t-foreach="state.catalog.drafts"
+                                     t-as="draft"
+                                     t-key="draft.id"
+                                     class="cas_form_card cas_draft_card">
+                                <span class="cas_card_badge">پیش‌نویس</span>
+                                <h3 t-esc="draft.form_name"/>
+                                <p class="cas_tracking" t-esc="draft.number"/>
+                                <small>بازنگری <t t-esc="draft.revision"/></small>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        t-att-disabled="state.busy"
+                                        t-on-click="() => this.openSubmission(draft.id)">
+                                    ادامه تکمیل
+                                </button>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="cas_catalog_section">
+                        <div class="cas_section_title">
+                            <i class="fa fa-file-text-o"/>
+                            <h2>فرم‌های قابل ثبت</h2>
+                        </div>
+                        <div t-if="state.catalog.forms.length" class="cas_card_grid">
+                            <article t-foreach="state.catalog.forms"
+                                     t-as="form"
+                                     t-key="form.id"
+                                     class="cas_form_card">
+                                <h3 t-esc="form.name"/>
+                                <p t-esc="form.description || 'بدون توضیح'"/>
+                                <small>نسخه <t t-esc="form.revision"/></small>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        t-att-disabled="state.busy"
+                                        t-on-click="() => this.startForm(form.id)">
+                                    شروع ثبت جدید
+                                </button>
+                            </article>
+                        </div>
+                        <div t-else="" class="cas_empty_state">
+                            هیچ فرم منتشرشده‌ای برای ثبت وجود ندارد.
+                        </div>
+                    </section>
+
+                    <section t-if="state.catalog.recent.length" class="cas_catalog_section">
+                        <div class="cas_section_title">
+                            <i class="fa fa-check-circle-o"/>
+                            <h2>ارسال‌های اخیر من</h2>
+                        </div>
+                        <div class="cas_recent_list">
+                            <button t-foreach="state.catalog.recent"
+                                    t-as="recent"
+                                    t-key="recent.id"
+                                    type="button"
+                                    class="cas_recent_item"
+                                    t-on-click="() => this.openSubmission(recent.id)">
+                                <span>
+                                    <strong t-esc="recent.form_name"/>
+                                    <small t-esc="recent.number"/>
+                                </span>
+                                <i class="fa fa-chevron-left"/>
+                            </button>
+                        </div>
+                    </section>
+                </main>
+            </t>
+
+            <t t-elif="state.mode === 'form'">
+                <header class="cas_runtime_header">
+                    <button type="button"
+                            class="btn btn-light cas_back_button"
+                            t-on-click="loadCatalog">
+                        <i class="fa fa-arrow-right ms-1"/> بازگشت
+                    </button>
+                    <div class="cas_runtime_title">
+                        <h1 t-esc="schema.form_name"/>
+                        <div class="cas_runtime_meta">
+                            <span t-esc="submission.number"/>
+                            <span>بازنگری <t t-esc="schema.revision"/></span>
+                            <span t-att-class="'cas_state_badge cas_state_' + submission.state">
+                                <t t-if="submission.state === 'draft'">پیش‌نویس</t>
+                                <t t-elif="submission.state === 'submitted'">ارسال‌شده</t>
+                                <t t-else="">لغوشده</t>
+                            </span>
+                        </div>
+                    </div>
+                    <div t-if="submission.state === 'draft'" class="cas_progress_box">
+                        <span>تکمیل الزامات: <strong><t t-esc="completionPercent"/>٪</strong></span>
+                        <div class="progress">
+                            <div class="progress-bar"
+                                 role="progressbar"
+                                 t-att-style="'width:' + completionPercent + '%'"/>
+                        </div>
+                    </div>
+                </header>
+
+                <main class="cas_runtime_body">
+                    <div t-if="submission.state === 'submitted'" class="alert alert-success cas_final_alert">
+                        <i class="fa fa-check-circle ms-2"/>
+                        این فرم نهایی شده و با شماره رهگیری
+                        <strong t-esc="submission.number"/> ثبت شده است.
+                    </div>
+                    <p t-if="schema.description" class="cas_form_description" t-esc="schema.description"/>
+
+                    <t t-foreach="schema.layout" t-as="node" t-key="node.key">
+                        <t t-call="cas_dynamic_form.RuntimeNode"/>
+                    </t>
+                </main>
+
+                <footer t-if="submission.state === 'draft'" class="cas_runtime_footer">
+                    <div class="cas_dirty_status">
+                        <i t-if="state.dirty" class="fa fa-circle text-warning"/>
+                        <span t-if="state.dirty">تغییرات ذخیره‌نشده</span>
+                        <span t-else="" class="text-success">
+                            <i class="fa fa-check"/> ذخیره شده
+                        </span>
+                    </div>
+                    <div class="cas_footer_actions">
+                        <button type="button"
+                                class="btn btn-outline-primary"
+                                t-att-disabled="state.busy"
+                                t-on-click="saveDraft">
+                            <i class="fa fa-save ms-1"/> ذخیره پیش‌نویس
+                        </button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                t-att-disabled="state.busy"
+                                t-on-click="submitForm">
+                            <i class="fa fa-paper-plane ms-1"/> ارسال نهایی
+                        </button>
+                    </div>
+                </footer>
+
+                <div t-if="activeDatePickerField"
+                     class="cas_global_date_picker_backdrop"
+                     t-on-click="closeDatePicker">
+                    <div class="cas_global_date_picker_shell" t-on-click.stop="">
+                        <JalaliPicker value="activeDatePickerValue"
+                                       type="activeDatePickerType"
+                                       showTime="activeDatePickerType === 'datetime'"
+                                       showSeconds="false"
+                                       rounding="5"
+                                       onApply="(value) => this.applyDatePicker(value)"
+                                       onClear="() => this.clearDatePicker()"
+                                       onClose="() => this.closeDatePicker()"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="cas_dynamic_form.RuntimeNode">
+        <t t-if="node.type === 'field'">
+            <t t-set="field" t-value="fieldByUuid[node.field_uuid]"/>
+            <div t-if="field"
+                 class="cas_dynamic_field"
+                 t-att-class="{'cas_field_error': state.errors[field.key]}"
+                 t-att-style="fieldSpanStyle(node)">
+                <label class="cas_field_label">
+                    <t t-esc="field.label"/>
+                    <span t-if="field.required" class="cas_required">*</span>
+                </label>
+                <small t-if="field.help_text" class="cas_field_help" t-esc="field.help_text"/>
+
+                <input t-if="field.type === 'short_text'"
+                       type="text"
+                       class="form-control"
+                       t-att-value="scalarValue(field)"
+                       t-att-placeholder="field.placeholder"
+                       t-att-disabled="fieldReadonly(field)"
+                       t-on-input="(event) => this.onTextInput(field, event)"/>
+
+                <textarea t-elif="['long_text', 'rich_text'].includes(field.type)"
+                          class="form-control"
+                          rows="4"
+                          t-att-value="scalarValue(field)"
+                          t-att-placeholder="field.placeholder"
+                          t-att-disabled="fieldReadonly(field)"
+                          t-on-input="(event) => this.onTextInput(field, event)"/>
+
+                <div t-elif="['integer', 'decimal', 'percentage', 'monetary'].includes(field.type)"
+                     class="input-group">
+                    <input type="number"
+                           class="form-control"
+                           t-att-step="field.type === 'integer' ? '1' : 'any'"
+                           t-att-value="scalarValue(field)"
+                           t-att-placeholder="field.placeholder"
+                           t-att-disabled="fieldReadonly(field)"
+                           t-on-input="(event) => this.onNumberInput(field, event)"/>
+                    <span t-if="field.type === 'percentage'" class="input-group-text">٪</span>
+                    <span t-if="field.type === 'monetary'" class="input-group-text">مبلغ</span>
+                </div>
+
+                <button t-elif="field.type === 'boolean'"
+                        type="button"
+                        role="switch"
+                        class="cas_boolean_control"
+                        t-att-class="{'is_on': fieldValue(field)}"
+                        t-att-aria-checked="fieldValue(field) ? 'true' : 'false'"
+                        t-att-disabled="fieldReadonly(field)"
+                        t-on-click="() => this.onBooleanToggle(field)">
+                    <span class="cas_boolean_track" aria-hidden="true">
+                        <span class="cas_boolean_thumb"/>
+                    </span>
+                    <span class="cas_boolean_label">
+                        <t t-if="fieldValue(field)">بله</t>
+                        <t t-else="">خیر</t>
+                    </span>
+                </button>
+
+                <select t-elif="['single_select', 'dropdown', 'tag'].includes(field.type)"
+                        class="form-select"
+                        t-att-disabled="fieldReadonly(field)"
+                        t-on-change="(event) => this.onSelectInput(field, event)">
+                    <option value="">انتخاب کنید...</option>
+                    <option t-foreach="field.options"
+                            t-as="option"
+                            t-key="option.key"
+                            t-att-value="option.key"
+                            t-att-selected="fieldValue(field) === option.key">
+                        <t t-esc="option.label"/>
+                    </option>
+                </select>
+
+                <div t-elif="field.type === 'radio'" class="cas_option_group">
+                    <label t-foreach="field.options"
+                           t-as="option"
+                           t-key="option.key"
+                           class="form-check cas_option_item">
+                        <input class="form-check-input"
+                               type="radio"
+                               t-att-name="'cas_' + submission.id + '_' + field.key"
+                               t-att-value="option.key"
+                               t-att-checked="fieldValue(field) === option.key"
+                               t-att-disabled="fieldReadonly(field)"
+                               t-on-change="(event) => this.onSelectInput(field, event)"/>
+                        <span class="form-check-label" t-esc="option.label"/>
+                    </label>
+                </div>
+
+                <div t-elif="field.type === 'multi_select'" class="cas_option_group">
+                    <label t-foreach="field.options"
+                           t-as="option"
+                           t-key="option.key"
+                           class="form-check cas_option_item">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               t-att-checked="isOptionSelected(field, option.key)"
+                               t-att-disabled="fieldReadonly(field)"
+                               t-on-change="(event) => this.onMultiToggle(field, option.key, event)"/>
+                        <span class="form-check-label" t-esc="option.label"/>
+                    </label>
+                </div>
+
+                <div t-elif="['date', 'datetime'].includes(field.type)"
+                     class="input-group cas_inline_jalali_group">
+                    <input type="text"
+                           class="form-control cas_inline_jalali_input"
+                           dir="ltr"
+                           t-att-value="dateDisplayValue(field)"
+                           t-att-placeholder="datePlaceholder(field)"
+                           t-att-disabled="fieldReadonly(field)"
+                           t-on-blur="(event) => this.onDateBlur(field, event)"
+                           t-on-keydown="(event) => event.key === 'Enter' &amp;&amp; event.currentTarget.blur()"/>
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            title="انتخاب تاریخ شمسی"
+                            t-att-disabled="fieldReadonly(field)"
+                            t-on-click="(event) => this.openDatePicker(field, event)">
+                        <i class="fa fa-calendar"/>
+                    </button>
+                </div>
+
+                <input t-elif="field.type === 'time'"
+                       type="time"
+                       class="form-control"
+                       dir="ltr"
+                       t-att-value="scalarValue(field)"
+                       t-att-disabled="fieldReadonly(field)"
+                       t-on-input="(event) => this.onTextInput(field, event)"/>
+
+                <DynamicReferenceField t-elif="isReference(field)"
+                                       field="field"
+                                       value="fieldValue(field)"
+                                       readonly="fieldReadonly(field)"
+                                       onChange="(value) => this.setValue(field, value)"/>
+
+                <div t-else="" class="alert alert-secondary mb-0">
+                    نوع فیلد «<t t-esc="field.type"/>» در این نسخه Runtime ورودی ندارد.
+                </div>
+
+                <div t-if="state.errors[field.key]" class="invalid-feedback d-block">
+                    <t t-esc="state.errors[field.key]"/>
+                </div>
+            </div>
+        </t>
+
+        <hr t-elif="node.type === 'separator'" class="cas_node_separator"/>
+
+        <div t-elif="node.type === 'text'" class="cas_node_text">
+            <h3 t-if="node.title" t-esc="node.title"/>
+            <p t-if="node.help_text" t-esc="node.help_text"/>
+        </div>
+
+        <section t-else=""
+                 t-att-class="'cas_layout_node cas_node_' + node.type"
+                 t-att-style="nodeGridStyle(node)">
+            <header t-if="node.title or node.help_text" class="cas_node_header">
+                <h2 t-if="node.title" t-esc="node.title"/>
+                <p t-if="node.help_text" t-esc="node.help_text"/>
+            </header>
+            <div class="cas_node_children">
+                <t t-foreach="node.children" t-as="child" t-key="child.key">
+                    <t t-set="node" t-value="child"/>
+                    <t t-call="cas_dynamic_form.RuntimeNode"/>
+                </t>
+            </div>
+        </section>
+    </t>
+</templates>

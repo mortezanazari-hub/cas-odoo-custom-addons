@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_dynamic_form_runtime"
+              name="فرم‌های قابل ثبت"
+              parent="cas_form_core.menu_cas_forms_root"
+              action="action_cas_dynamic_form_runtime"
+              sequence="1"
+              groups="cas_form_core.group_cas_form_user"/>
+</odoo>

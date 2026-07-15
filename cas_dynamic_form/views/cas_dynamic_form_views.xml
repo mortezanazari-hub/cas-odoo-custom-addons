@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_form_definition_runtime_inherit" model="ir.ui.view">
+        <field name="name">cas.form.definition.runtime.inherit</field>
+        <field name="model">cas.form.definition</field>
+        <field name="inherit_id" ref="cas_form_core.view_cas_form_definition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_dynamic_runtime"
+                        type="object"
+                        string="اجرای فرم"
+                        class="btn-primary"
+                        invisible="not active or not current_version_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_cas_form_submission_runtime_inherit" model="ir.ui.view">
+        <field name="name">cas.form.submission.runtime.inherit</field>
+        <field name="model">cas.form.submission</field>
+        <field name="inherit_id" ref="cas_form_core.view_cas_form_submission_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_dynamic_runtime"
+                        type="object"
+                        string="بازکردن فرم پویا"
+                        class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

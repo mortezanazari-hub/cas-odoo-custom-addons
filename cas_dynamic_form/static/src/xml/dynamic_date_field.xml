@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_dynamic_form.DynamicDateField">
+        <div class="cas_dynamic_date_input input-group">
+            <input type="text"
+                   class="form-control"
+                   dir="ltr"
+                   t-att-value="displayValue"
+                   t-att-placeholder="placeholder"
+                   t-att-disabled="props.readonly"
+                   t-on-blur="onBlur"
+                   t-on-keydown="(event) => event.key === 'Enter' &amp;&amp; event.currentTarget.blur()"/>
+            <button type="button"
+                    class="btn btn-outline-secondary"
+                    title="انتخاب تاریخ شمسی"
+                    t-att-disabled="props.readonly"
+                    t-on-click="openPicker">
+                <i class="fa fa-calendar"/>
+            </button>
+            <div t-if="state.pickerOpen" class="cas_dynamic_date_picker_panel">
+                <JalaliPicker value="dateTimeValue || false"
+                               type="props.field.type"
+                               showTime="props.field.type === 'datetime'"
+                               showSeconds="false"
+                               rounding="5"
+                               onApply="(value) => this.applyPickerValue(value)"
+                               onClear="() => this.clearPickerValue()"
+                               onClose="() => this.closePicker()"/>
+            </div>
+        </div>
+    </t>
+</templates>

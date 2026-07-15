@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_cas_dynamic_form_runtime" model="ir.actions.client">
+        <field name="name">فرم‌های قابل ثبت</field>
+        <field name="tag">cas_dynamic_form.Runtime</field>
+    </record>
+</odoo>
