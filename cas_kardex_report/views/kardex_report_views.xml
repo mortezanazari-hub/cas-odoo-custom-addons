@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_kardex_report_wizard_form" model="ir.ui.view"><field name="name">cas.kardex.report.wizard.form</field><field name="model">cas.kardex.report.wizard</field><field name="arch" type="xml"><form><sheet><group><group><field name="date_from"/><field name="date_to"/><field name="employee_id"/><field name="department_id"/></group><group><field name="include_detail"/><field name="include_summary"/><field name="include_draft"/></group></group><footer><button name="action_export" type="object" string="دریافت Excel" class="btn-primary"/><button string="انصراف" special="cancel" class="btn-secondary"/></footer></sheet></form></field></record>
+    <record id="action_cas_kardex_report_wizard" model="ir.actions.act_window"><field name="name">گزارش Excel کاردکس</field><field name="res_model">cas.kardex.report.wizard</field><field name="view_mode">form</field><field name="target">new</field></record>
+    <menuitem id="menu_cas_kardex_report" name="گزارش Excel کاردکس" parent="cas_kardex_management.menu_cas_kardex_operations" action="action_cas_kardex_report_wizard" sequence="70" groups="cas_kardex_management.group_cas_kardex_supervisor"/>
+</odoo>
+

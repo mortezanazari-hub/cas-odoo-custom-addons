@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cas_kardex_report_wizard,cas.kardex.report.wizard,model_cas_kardex_report_wizard,cas_kardex_management.group_cas_kardex_supervisor,1,1,1,1
+
