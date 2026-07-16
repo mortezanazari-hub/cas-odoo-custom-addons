@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_cas_attendance_user" model="res.groups">
+        <field name="name">کاربر حضور و غیاب</field>
+        <field name="implied_ids" eval="[(4, ref('cas_shift_management.group_cas_shift_user'))]"/>
+    </record>
+    <record id="group_cas_attendance_guard" model="res.groups">
+        <field name="name">ثبت‌کننده نگهبانی</field>
+        <field name="implied_ids" eval="[(4, ref('group_cas_attendance_user'))]"/>
+    </record>
+    <record id="group_cas_attendance_supervisor" model="res.groups">
+        <field name="name">سرپرست حضور و غیاب</field>
+        <field name="implied_ids" eval="[(4, ref('group_cas_attendance_user'))]"/>
+    </record>
+    <record id="group_cas_attendance_manager" model="res.groups">
+        <field name="name">مدیر حضور و غیاب</field>
+        <field name="implied_ids" eval="[(4, ref('group_cas_attendance_supervisor')), (4, ref('group_cas_attendance_guard'))]"/>
+    </record>
+    <record id="group_cas_attendance_device_importer" model="res.groups">
+        <field name="name">دریافت‌کننده رخداد دستگاه</field>
+    </record>
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('cas_attendance_core.group_cas_attendance_manager'))]"/>
+    </record>
+
+    <record id="rule_cas_attendance_site_company" model="ir.rule"><field name="name">محل‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_site"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_attendance_device_company" model="ir.rule"><field name="name">دستگاه‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_device"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_attendance_outage_company" model="ir.rule"><field name="name">خرابی‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_outage"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_attendance_event_company" model="ir.rule"><field name="name">رخدادهای شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_event"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_attendance_day_company" model="ir.rule"><field name="name">روزهای شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_day"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_attendance_interval_company" model="ir.rule"><field name="name">بازه‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_interval"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+
+    <record id="rule_cas_attendance_event_own" model="ir.rule"><field name="name">رخدادهای خود کاربر</field><field name="model_id" ref="model_cas_attendance_event"/><field name="groups" eval="[(4, ref('group_cas_attendance_user'))]"/><field name="domain_force">[('employee_id.user_id','=',user.id)]</field></record>
+    <record id="rule_cas_attendance_event_guard" model="ir.rule"><field name="name">رخدادهای نگهبانی</field><field name="model_id" ref="model_cas_attendance_event"/><field name="groups" eval="[(4, ref('group_cas_attendance_guard'))]"/><field name="domain_force">[(1,'=',1)]</field></record>
+    <record id="rule_cas_attendance_event_supervisor" model="ir.rule"><field name="name">رخدادهای قابل رسیدگی سرپرست</field><field name="model_id" ref="model_cas_attendance_event"/><field name="groups" eval="[(4, ref('group_cas_attendance_supervisor'))]"/><field name="domain_force">[(1,'=',1)]</field></record>
+    <record id="rule_cas_attendance_day_own" model="ir.rule"><field name="name">روزهای حضور خود کاربر</field><field name="model_id" ref="model_cas_attendance_day"/><field name="groups" eval="[(4, ref('group_cas_attendance_user'))]"/><field name="domain_force">[('employee_id.user_id','=',user.id)]</field></record>
+    <record id="rule_cas_attendance_day_supervisor" model="ir.rule"><field name="name">روزهای قابل رسیدگی سرپرست</field><field name="model_id" ref="model_cas_attendance_day"/><field name="groups" eval="[(4, ref('group_cas_attendance_supervisor'))]"/><field name="domain_force">[(1,'=',1)]</field></record>
+    <record id="rule_cas_attendance_interval_own" model="ir.rule"><field name="name">بازه‌های خود کاربر</field><field name="model_id" ref="model_cas_attendance_interval"/><field name="groups" eval="[(4, ref('group_cas_attendance_user'))]"/><field name="domain_force">[('employee_id.user_id','=',user.id)]</field></record>
+    <record id="rule_cas_attendance_interval_supervisor" model="ir.rule"><field name="name">بازه‌های قابل رسیدگی سرپرست</field><field name="model_id" ref="model_cas_attendance_interval"/><field name="groups" eval="[(4, ref('group_cas_attendance_supervisor'))]"/><field name="domain_force">[(1,'=',1)]</field></record>
+</odoo>
+

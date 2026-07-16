@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_my_attendance" name="حضور من" parent="cas_shift_management.menu_cas_shift_root" action="action_cas_my_attendance_day" sequence="15" groups="group_cas_attendance_user"/>
+    <menuitem id="menu_cas_my_attendance_events" name="ورود و خروج‌های من" parent="cas_shift_management.menu_cas_shift_root" action="action_cas_my_attendance_event" sequence="16" groups="group_cas_attendance_user"/>
+    <menuitem id="menu_cas_attendance_operations" name="ثبت و رسیدگی حضور" parent="cas_shift_management.menu_cas_shift_root" sequence="20" groups="group_cas_attendance_guard,group_cas_attendance_supervisor"/>
+    <menuitem id="menu_cas_attendance_events" name="رخدادهای ورود و خروج" parent="menu_cas_attendance_operations" action="action_cas_attendance_event" sequence="10"/>
+    <menuitem id="menu_cas_attendance_days" name="روزهای حضور" parent="menu_cas_attendance_operations" action="action_cas_attendance_day" sequence="20" groups="group_cas_attendance_supervisor"/>
+    <menuitem id="menu_cas_attendance_outages" name="خرابی دستگاه" parent="menu_cas_attendance_operations" action="action_cas_attendance_outage" sequence="30"/>
+    <menuitem id="menu_cas_attendance_sites" name="ساختمان‌ها و محل‌ها" parent="cas_shift_management.menu_cas_shift_config" action="action_cas_attendance_site" sequence="50" groups="group_cas_attendance_manager"/>
+    <menuitem id="menu_cas_attendance_devices" name="دستگاه‌های حضور" parent="cas_shift_management.menu_cas_shift_config" action="action_cas_attendance_device" sequence="60" groups="group_cas_attendance_manager"/>
+</odoo>
+

@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cas_attendance_site_user,cas.attendance.site user,model_cas_attendance_site,group_cas_attendance_user,1,0,0,0
+access_cas_attendance_site_manager,cas.attendance.site manager,model_cas_attendance_site,group_cas_attendance_manager,1,1,1,0
+access_cas_attendance_device_user,cas.attendance.device user,model_cas_attendance_device,group_cas_attendance_user,1,0,0,0
+access_cas_attendance_device_manager,cas.attendance.device manager,model_cas_attendance_device,group_cas_attendance_manager,1,1,1,0
+access_cas_attendance_outage_user,cas.attendance.outage user,model_cas_attendance_outage,group_cas_attendance_user,1,0,0,0
+access_cas_attendance_outage_guard,cas.attendance.outage guard,model_cas_attendance_outage,group_cas_attendance_guard,1,1,1,0
+access_cas_attendance_outage_manager,cas.attendance.outage manager,model_cas_attendance_outage,group_cas_attendance_manager,1,1,1,0
+access_cas_attendance_event_user,cas.attendance.event user,model_cas_attendance_event,group_cas_attendance_user,1,0,0,0
+access_cas_attendance_event_guard,cas.attendance.event guard,model_cas_attendance_event,group_cas_attendance_guard,1,0,1,0
+access_cas_attendance_event_supervisor,cas.attendance.event supervisor,model_cas_attendance_event,group_cas_attendance_supervisor,1,1,1,0
+access_cas_attendance_event_importer,cas.attendance.event importer,model_cas_attendance_event,group_cas_attendance_device_importer,1,0,1,0
+access_cas_attendance_day_user,cas.attendance.day user,model_cas_attendance_day,group_cas_attendance_user,1,0,0,0
+access_cas_attendance_day_supervisor,cas.attendance.day supervisor,model_cas_attendance_day,group_cas_attendance_supervisor,1,1,0,0
+access_cas_attendance_interval_user,cas.attendance.interval user,model_cas_attendance_interval,group_cas_attendance_user,1,0,0,0
+access_cas_attendance_interval_supervisor,cas.attendance.interval supervisor,model_cas_attendance_interval,group_cas_attendance_supervisor,1,0,0,0
+
