@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cas_attendance_policy_user,cas.attendance.policy user,model_cas_attendance_policy,group_cas_shift_user,1,0,0,0
+access_cas_attendance_policy_manager,cas.attendance.policy manager,model_cas_attendance_policy,group_cas_shift_manager,1,1,1,0
+access_cas_shift_template_user,cas.shift.template user,model_cas_shift_template,group_cas_shift_user,1,0,0,0
+access_cas_shift_template_planner,cas.shift.template planner,model_cas_shift_template,group_cas_shift_planner,1,1,1,0
+access_cas_shift_pattern_user,cas.shift.pattern user,model_cas_shift_pattern,group_cas_shift_user,1,0,0,0
+access_cas_shift_pattern_planner,cas.shift.pattern planner,model_cas_shift_pattern,group_cas_shift_planner,1,1,1,0
+access_cas_shift_pattern_line_user,cas.shift.pattern.line user,model_cas_shift_pattern_line,group_cas_shift_user,1,0,0,0
+access_cas_shift_pattern_line_planner,cas.shift.pattern.line planner,model_cas_shift_pattern_line,group_cas_shift_planner,1,1,1,1
+access_cas_shift_assignment_user,cas.shift.assignment user,model_cas_shift_assignment,group_cas_shift_user,1,0,0,0
+access_cas_shift_assignment_planner,cas.shift.assignment planner,model_cas_shift_assignment,group_cas_shift_planner,1,1,1,0
+access_cas_shift_day_user,cas.shift.day user,model_cas_shift_day,group_cas_shift_user,1,0,0,0
+access_cas_shift_day_planner,cas.shift.day planner,model_cas_shift_day,group_cas_shift_planner,1,0,0,0
+access_cas_official_holiday_user,cas.official.holiday user,model_cas_official_holiday,group_cas_shift_user,1,0,0,0
+access_cas_official_holiday_manager,cas.official.holiday manager,model_cas_official_holiday,group_cas_shift_manager,1,1,1,0
+access_cas_shift_swap_planner,cas.shift.swap planner,model_cas_shift_swap,group_cas_shift_planner,1,1,1,0
+access_cas_shift_swap_manager,cas.shift.swap manager,model_cas_shift_swap,group_cas_shift_manager,1,1,1,0

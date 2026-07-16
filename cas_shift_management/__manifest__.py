@@ -1,0 +1,23 @@
+{
+    "name": "CAS Shift Management",
+    "summary": "Effective-dated attendance policies, shift patterns and daily schedules",
+    "version": "19.0.1.0.3",
+    "category": "Human Resources",
+    "author": "Chodan Ara Shomal",
+    "license": "LGPL-3",
+    "depends": ["hr", "mail"],
+    "data": [
+        "security/cas_shift_security.xml",
+        "security/ir.model.access.csv",
+        "data/cas_shift_sequences.xml",
+        "views/cas_shift_template_views.xml",
+        "views/cas_shift_policy_views.xml",
+        "views/cas_shift_pattern_views.xml",
+        "views/cas_shift_assignment_views.xml",
+        "views/cas_shift_day_views.xml",
+        "views/cas_shift_swap_views.xml",
+        "views/cas_shift_menus.xml",
+    ],
+    "application": True,
+    "installable": True,
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_shift_root" name="شیفت و حضور" sequence="26" groups="group_cas_shift_user"/>
+    <menuitem id="menu_cas_my_shift_days" name="برنامه من" parent="menu_cas_shift_root" action="action_cas_my_shift_day" sequence="10"/>
+    <menuitem id="menu_cas_shift_operations" name="برنامه‌ریزی" parent="menu_cas_shift_root" sequence="30" groups="group_cas_shift_planner"/>
+    <menuitem id="menu_cas_shift_assignments" name="انتساب‌های تاریخ‌دار" parent="menu_cas_shift_operations" action="action_cas_shift_assignment" sequence="10"/>
+    <menuitem id="menu_cas_shift_days" name="برنامه روزانه" parent="menu_cas_shift_operations" action="action_cas_shift_day" sequence="20"/>
+    <menuitem id="menu_cas_shift_swaps" name="جابه‌جایی روزها" parent="menu_cas_shift_operations" action="action_cas_shift_swap" sequence="30"/>
+    <menuitem id="menu_cas_shift_config" name="تنظیمات" parent="menu_cas_shift_root" sequence="60" groups="group_cas_shift_planner"/>
+    <menuitem id="menu_cas_shift_templates" name="شیفت‌ها" parent="menu_cas_shift_config" action="action_cas_shift_template" sequence="10"/>
+    <menuitem id="menu_cas_shift_patterns" name="الگوهای گردشی" parent="menu_cas_shift_config" action="action_cas_shift_pattern" sequence="20"/>
+    <menuitem id="menu_cas_attendance_policies" name="سیاست‌های حضور" parent="menu_cas_shift_config" action="action_cas_attendance_policy" sequence="30" groups="group_cas_shift_manager"/>
+    <menuitem id="menu_cas_official_holidays" name="تعطیلات رسمی" parent="menu_cas_shift_config" action="action_cas_official_holiday" sequence="40" groups="group_cas_shift_manager"/>
+</odoo>
