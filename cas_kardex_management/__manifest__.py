@@ -1,0 +1,21 @@
+{
+    "name": "CAS Kardex Management",
+    "summary": "Minute-accurate attendance kardex, requests, overtime and monthly locks",
+    "version": "19.0.1.0.1",
+    "category": "Human Resources",
+    "author": "Chodan Ara Shomal",
+    "license": "LGPL-3",
+    "depends": ["cas_attendance_core", "mail"],
+    "data": [
+        "security/cas_kardex_security.xml",
+        "security/ir.model.access.csv",
+        "data/cas_kardex_cron.xml",
+        "views/company_views.xml",
+        "views/request_views.xml",
+        "views/overtime_views.xml",
+        "views/kardex_views.xml",
+        "views/kardex_menus.xml",
+    ],
+    "application": True,
+    "installable": True,
+}

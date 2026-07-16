@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cas_attendance_request_user,cas.attendance.request user,model_cas_attendance_request,group_cas_kardex_user,1,1,1,1
+access_cas_attendance_request_supervisor,cas.attendance.request supervisor,model_cas_attendance_request,group_cas_kardex_supervisor,1,1,1,0
+access_cas_overtime_request_user,cas.overtime.request user,model_cas_overtime_request,group_cas_kardex_user,1,1,1,1
+access_cas_overtime_request_supervisor,cas.overtime.request supervisor,model_cas_overtime_request,group_cas_kardex_supervisor,1,1,1,0
+access_cas_overtime_authorization_manager,cas.overtime.authorization manager,model_cas_overtime_authorization,group_cas_kardex_manager,1,0,0,0
+access_cas_overtime_authorization_ceo,cas.overtime.authorization ceo,model_cas_overtime_authorization,group_cas_kardex_ceo,1,1,1,0
+access_cas_kardex_day_user,cas.kardex.day user,model_cas_kardex_day,group_cas_kardex_user,1,0,0,0
+access_cas_kardex_day_supervisor,cas.kardex.day supervisor,model_cas_kardex_day,group_cas_kardex_supervisor,1,1,0,0
+access_cas_kardex_period_user,cas.kardex.period user,model_cas_kardex_period,group_cas_kardex_user,1,0,0,0
+access_cas_kardex_period_manager,cas.kardex.period manager,model_cas_kardex_period,group_cas_kardex_manager,1,1,1,0
+access_cas_kardex_reopen_manager,cas.kardex.reopen manager,model_cas_kardex_reopen,group_cas_kardex_manager,1,0,0,0
+access_cas_kardex_reopen_ceo,cas.kardex.reopen ceo,model_cas_kardex_reopen,group_cas_kardex_ceo,1,1,1,0

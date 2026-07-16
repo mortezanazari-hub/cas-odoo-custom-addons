@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_cas_kardex_user" model="res.groups"><field name="name">کاربر کاردکس</field><field name="implied_ids" eval="[(4, ref('cas_attendance_core.group_cas_attendance_user'))]"/></record>
+    <record id="group_cas_kardex_supervisor" model="res.groups"><field name="name">سرپرست کاردکس</field><field name="implied_ids" eval="[(4, ref('group_cas_kardex_user')), (4, ref('cas_attendance_core.group_cas_attendance_supervisor'))]"/></record>
+    <record id="group_cas_kardex_manager" model="res.groups"><field name="name">مدیر کاردکس</field><field name="implied_ids" eval="[(4, ref('group_cas_kardex_supervisor'))]"/></record>
+    <record id="group_cas_kardex_ceo" model="res.groups"><field name="name">مدیرعامل کاردکس</field><field name="implied_ids" eval="[(4, ref('group_cas_kardex_manager'))]"/></record>
+    <record id="base.group_system" model="res.groups"><field name="implied_ids" eval="[(4, ref('cas_kardex_management.group_cas_kardex_manager'))]"/></record>
+
+    <record id="rule_cas_attendance_request_company" model="ir.rule"><field name="name">درخواست‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_request"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_attendance_request_own" model="ir.rule"><field name="name">درخواست‌های خود کاربر</field><field name="model_id" ref="model_cas_attendance_request"/><field name="groups" eval="[(4, ref('group_cas_kardex_user'))]"/><field name="domain_force">[('employee_id.user_id','=',user.id)]</field></record>
+    <record id="rule_cas_attendance_request_supervisor" model="ir.rule"><field name="name">درخواست‌های قابل رسیدگی</field><field name="model_id" ref="model_cas_attendance_request"/><field name="groups" eval="[(4, ref('group_cas_kardex_supervisor'))]"/><field name="domain_force">[(1,'=',1)]</field></record>
+    <record id="rule_cas_overtime_request_company" model="ir.rule"><field name="name">اضافه‌کاری‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_overtime_request"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_overtime_request_own" model="ir.rule"><field name="name">اضافه‌کاری خود کاربر</field><field name="model_id" ref="model_cas_overtime_request"/><field name="groups" eval="[(4, ref('group_cas_kardex_user'))]"/><field name="domain_force">[('employee_id.user_id','=',user.id)]</field></record>
+    <record id="rule_cas_overtime_request_supervisor" model="ir.rule"><field name="name">اضافه‌کاری‌های قابل رسیدگی</field><field name="model_id" ref="model_cas_overtime_request"/><field name="groups" eval="[(4, ref('group_cas_kardex_supervisor'))]"/><field name="domain_force">[(1,'=',1)]</field></record>
+    <record id="rule_cas_overtime_authorization_company" model="ir.rule"><field name="name">مجوزهای شرکت‌های مجاز</field><field name="model_id" ref="model_cas_overtime_authorization"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_kardex_day_company" model="ir.rule"><field name="name">کاردکس شرکت‌های مجاز</field><field name="model_id" ref="model_cas_kardex_day"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_kardex_day_own" model="ir.rule"><field name="name">کاردکس خود کاربر</field><field name="model_id" ref="model_cas_kardex_day"/><field name="groups" eval="[(4, ref('group_cas_kardex_user'))]"/><field name="domain_force">[('employee_id.user_id','=',user.id)]</field></record>
+    <record id="rule_cas_kardex_day_supervisor" model="ir.rule"><field name="name">کاردکس قابل رسیدگی</field><field name="model_id" ref="model_cas_kardex_day"/><field name="groups" eval="[(4, ref('group_cas_kardex_supervisor'))]"/><field name="domain_force">[(1,'=',1)]</field></record>
+    <record id="rule_cas_kardex_period_company" model="ir.rule"><field name="name">دوره‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_kardex_period"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_kardex_reopen_company" model="ir.rule"><field name="name">بازگشایی‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_kardex_reopen"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+</odoo>
+

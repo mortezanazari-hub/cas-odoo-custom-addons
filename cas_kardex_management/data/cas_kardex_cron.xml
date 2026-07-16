@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_cas_attendance_request" model="ir.sequence"><field name="name">درخواست مرخصی و مأموریت</field><field name="code">cas.attendance.request</field><field name="prefix">ATR/%(year)s/</field><field name="padding">6</field><field name="company_id" eval="False"/></record>
+    <record id="seq_cas_overtime_request" model="ir.sequence"><field name="name">درخواست اضافه‌کاری</field><field name="code">cas.overtime.request</field><field name="prefix">OT/%(year)s/</field><field name="padding">6</field><field name="company_id" eval="False"/></record>
+    <record id="ir_cron_cas_kardex_lock" model="ir.cron">
+        <field name="name">قفل خودکار دوره‌های کاردکس</field>
+        <field name="model_id" ref="model_cas_kardex_period"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_lock_due_periods()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field><field name="active">True</field>
+    </record>
+</odoo>
+

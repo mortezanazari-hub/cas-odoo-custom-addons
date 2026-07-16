@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_cas_kardex" model="ir.ui.view">
+        <field name="name">res.company.form.cas.kardex</field><field name="model">res.company</field><field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml"><xpath expr="//sheet" position="inside"><group string="تنظیمات کاردکس CAS" groups="cas_kardex_management.group_cas_kardex_manager"><field name="cas_ceo_user_id"/><field name="cas_kardex_lock_day"/></group></xpath></field>
+    </record>
+</odoo>
+

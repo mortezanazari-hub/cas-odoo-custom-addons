@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_my_kardex" name="کاردکس من" parent="cas_shift_management.menu_cas_shift_root" action="action_cas_my_kardex_day" sequence="17" groups="group_cas_kardex_user"/>
+    <menuitem id="menu_cas_my_requests" name="درخواست‌های من" parent="cas_shift_management.menu_cas_shift_root" action="action_cas_my_attendance_request" sequence="18" groups="group_cas_kardex_user"/>
+    <menuitem id="menu_cas_kardex_operations" name="کاردکس و درخواست‌ها" parent="cas_shift_management.menu_cas_shift_root" sequence="25" groups="group_cas_kardex_supervisor"/>
+    <menuitem id="menu_cas_kardex_days" name="کاردکس روزانه" parent="menu_cas_kardex_operations" action="action_cas_kardex_day" sequence="10"/>
+    <menuitem id="menu_cas_request_review" name="مرخصی و مأموریت" parent="menu_cas_kardex_operations" action="action_cas_attendance_request_review" sequence="20"/>
+    <menuitem id="menu_cas_overtime_requests" name="اضافه‌کاری‌های انجام‌شده" parent="menu_cas_kardex_operations" action="action_cas_overtime_request" sequence="30"/>
+    <menuitem id="menu_cas_kardex_periods" name="دوره‌ها و قفل ماه" parent="menu_cas_kardex_operations" action="action_cas_kardex_period" sequence="40" groups="group_cas_kardex_manager"/>
+    <menuitem id="menu_cas_kardex_reopens" name="بازگشایی کاردکس" parent="menu_cas_kardex_operations" action="action_cas_kardex_reopen" sequence="50" groups="group_cas_kardex_ceo"/>
+    <menuitem id="menu_cas_overtime_authorizations" name="مجوز خودکار اضافه‌کاری" parent="menu_cas_kardex_operations" action="action_cas_overtime_authorization" sequence="60" groups="group_cas_kardex_ceo"/>
+</odoo>
+
