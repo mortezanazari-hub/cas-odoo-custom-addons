@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_guard_batch" name="ثبت گروهی نگهبانی" parent="cas_attendance_core.menu_cas_attendance_operations" action="action_cas_guard_batch" sequence="5" groups="cas_attendance_core.group_cas_attendance_guard"/>
+    <menuitem id="menu_cas_attendance_import" name="ورود فایل دستگاه و نگهبانی" parent="cas_attendance_core.menu_cas_attendance_operations" action="action_cas_attendance_import" sequence="40" groups="cas_attendance_core.group_cas_attendance_supervisor"/>
+    <menuitem id="menu_cas_attendance_identity" name="نگاشت شناسه‌های خارجی" parent="cas_shift_management.menu_cas_shift_config" action="action_cas_attendance_identity" sequence="70" groups="cas_attendance_core.group_cas_attendance_manager"/>
+</odoo>
+

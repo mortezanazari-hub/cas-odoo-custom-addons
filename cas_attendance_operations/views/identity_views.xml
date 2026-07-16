@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_attendance_identity_list" model="ir.ui.view"><field name="name">cas.attendance.identity.list</field><field name="model">cas.attendance.identity</field><field name="arch" type="xml"><list delete="0"><field name="source_type"/><field name="external_key"/><field name="employee_id"/><field name="company_id" groups="base.group_multi_company"/><field name="active"/></list></field></record>
+    <record id="view_cas_attendance_identity_form" model="ir.ui.view"><field name="name">cas.attendance.identity.form</field><field name="model">cas.attendance.identity</field><field name="arch" type="xml"><form delete="0"><sheet><group><field name="source_type"/><field name="external_key"/><field name="employee_id"/><field name="company_id" groups="base.group_multi_company"/><field name="active"/></group><field name="note"/></sheet><chatter/></form></field></record>
+    <record id="action_cas_attendance_identity" model="ir.actions.act_window"><field name="name">نگاشت شناسه‌های خارجی</field><field name="res_model">cas.attendance.identity</field><field name="view_mode">list,form</field></record>
+</odoo>
+

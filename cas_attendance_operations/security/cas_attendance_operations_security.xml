@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_cas_attendance_identity_company" model="ir.rule"><field name="name">شناسه‌های حضور شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_identity"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_attendance_import_company" model="ir.rule"><field name="name">ورودی‌های حضور شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_import"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_attendance_import_line_company" model="ir.rule"><field name="name">ردیف‌های ورودی شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_import_line"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_guard_batch_company" model="ir.rule"><field name="name">بچ‌های نگهبانی شرکت‌های مجاز</field><field name="model_id" ref="model_cas_guard_batch"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+    <record id="rule_cas_guard_batch_line_company" model="ir.rule"><field name="name">ردیف‌های نگهبانی شرکت‌های مجاز</field><field name="model_id" ref="model_cas_guard_batch_line"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
+</odoo>
+

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cas_attendance_identity_manager,cas.attendance.identity manager,model_cas_attendance_identity,cas_attendance_core.group_cas_attendance_manager,1,1,1,0
+access_cas_attendance_import_supervisor,cas.attendance.import supervisor,model_cas_attendance_import,cas_attendance_core.group_cas_attendance_supervisor,1,1,1,1
+access_cas_attendance_import_line_supervisor,cas.attendance.import.line supervisor,model_cas_attendance_import_line,cas_attendance_core.group_cas_attendance_supervisor,1,1,1,0
+access_cas_guard_batch_guard,cas.guard.batch guard,model_cas_guard_batch,cas_attendance_core.group_cas_attendance_guard,1,1,1,1
+access_cas_guard_batch_line_guard,cas.guard.batch.line guard,model_cas_guard_batch_line,cas_attendance_core.group_cas_attendance_guard,1,1,1,1
+
