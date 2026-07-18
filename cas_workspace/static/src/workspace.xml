@@ -1,137 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="cas_workspace.OrganizationalWorkspace">
-        <div class="cas-workspace" dir="rtl">
-            <aside class="cas-workspace__sidebar">
-                <div class="cas-workspace__brand" aria-label="فضای کار سازمانی">
-                    <img src="/cas_workspace/static/description/icon.png" alt="CAS"/>
+        <div t-att-class="'cas-workspace ' + (state.sidebarCollapsed ? 'is-sidebar-collapsed ' : '') + (state.mobileOpen ? 'is-mobile-open' : '')" dir="rtl">
+            <button type="button" class="cas-workspace__mobile-toggle" aria-label="بازکردن منوی سامانه" t-on-click="() => this.state.mobileOpen = true">
+                <i class="fa fa-bars" aria-hidden="true"/>
+            </button>
+
+            <aside class="cas-workspace__sidebar" aria-label="ناوبری اصلی سامانه">
+                <div class="cas-workspace__brand-row">
+                    <button type="button" class="cas-workspace__brand" title="کارتابل من" t-on-click="() => this.navigate('dashboard')">
+                        <img src="/cas_workspace/static/description/icon.png" alt="CAS"/>
+                        <span><strong>فضای کار سازمانی</strong><small>سامانه یکپارچه CAS</small></span>
+                    </button>
+                    <button type="button" class="cas-workspace__collapse" t-att-title="state.sidebarCollapsed ? 'بازکردن ستون' : 'جمع‌کردن ستون'" t-on-click="toggleSidebar">
+                        <i t-att-class="'fa ' + (state.sidebarCollapsed ? 'fa-angle-double-left' : 'fa-angle-double-right')" aria-hidden="true"/>
+                    </button>
                 </div>
 
-                <nav class="cas-workspace__nav" aria-label="بخش‌های فضای کار">
-                    <t t-foreach="navItems" t-as="item" t-key="item.key">
-                        <button type="button"
-                                t-att-class="'cas-workspace__nav-item ' + (item.active ? 'is-active' : '')"
-                                t-att-title="item.label"
-                                t-on-click="() => this.navigate(item)">
-                            <i t-att-class="'fa ' + item.icon" aria-hidden="true"/>
-                            <span t-esc="item.label"/>
-                            <span t-if="item.key === 'urgent' &amp;&amp; state.data.stats.urgent" class="cas-workspace__nav-badge" t-esc="state.data.stats.urgent"/>
-                        </button>
-                    </t>
-                </nav>
+                <div class="cas-workspace__sidebar-scroll">
+                    <section t-foreach="navGroups" t-as="group" t-key="group.key" class="cas-workspace__nav-group">
+                        <h2 t-esc="group.label"/>
+                        <nav>
+                            <button t-foreach="group.items" t-as="item" t-key="item.key" type="button"
+                                    t-att-class="'cas-workspace__nav-item ' + (state.route === item.key ? 'is-active' : '')"
+                                    t-att-title="item.label" t-att-aria-current="state.route === item.key ? 'page' : false"
+                                    t-on-click="() => this.navigate(item.key)">
+                                <i t-att-class="'fa ' + item.icon" aria-hidden="true"/><span t-esc="item.label"/>
+                                <b t-if="item.key === 'urgent' &amp;&amp; state.data.stats.urgent" class="cas-workspace__nav-badge" t-esc="state.data.stats.urgent"/>
+                            </button>
+                        </nav>
+                    </section>
+                </div>
 
-                <div class="cas-workspace__nav cas-workspace__nav--footer">
-                    <button type="button" class="cas-workspace__nav-item" title="تنظیمات" t-on-click="() => this.action.doAction('base.action_res_users')">
-                        <i class="fa fa-cog" aria-hidden="true"/><span>تنظیمات</span>
+                <div class="cas-workspace__sidebar-footer">
+                    <button t-if="settingsItem" type="button" t-att-class="'cas-workspace__nav-item ' + (state.route === 'settings' ? 'is-active' : '')" title="تنظیمات" t-on-click="() => this.navigate('settings')">
+                        <i class="fa fa-cog" aria-hidden="true"/><span>تنظیمات سامانه</span>
                     </button>
-                    <button type="button" class="cas-workspace__nav-item" title="راهنما">
-                        <i class="fa fa-question-circle-o" aria-hidden="true"/><span>راهنما</span>
-                    </button>
-                    <button type="button" class="cas-workspace__nav-item cas-workspace__logout" title="خروج" t-on-click="logout">
-                        <i class="fa fa-sign-out" aria-hidden="true"/><span>خروج</span>
+                    <button type="button" class="cas-workspace__nav-item is-danger" title="خروج" t-on-click="logout">
+                        <i class="fa fa-sign-out" aria-hidden="true"/><span>خروج از حساب</span>
                     </button>
                 </div>
             </aside>
+            <div class="cas-workspace__backdrop" t-on-click="() => this.state.mobileOpen = false"/>
 
             <main class="cas-workspace__main">
                 <header class="cas-workspace__topbar">
-                    <div class="cas-workspace__title">فضای کار سازمانی</div>
-                    <label class="cas-workspace__search">
+                    <div class="cas-workspace__page-identity">
+                        <span class="cas-workspace__page-icon"><i t-att-class="'fa ' + (state.route === 'dashboard' ? 'fa-inbox' : state.page.icon)"/></span>
+                        <span><strong t-esc="state.route === 'dashboard' ? 'کارتابل من' : (state.page.title || 'فضای کار سازمانی')"/><small t-esc="state.route === 'dashboard' ? 'نمای امروز و کارهای در انتظار شما' : state.page.subtitle"/></span>
+                    </div>
+                    <form class="cas-workspace__search" t-on-submit.prevent="submitSearch">
                         <i class="fa fa-search" aria-hidden="true"/>
-                        <input t-ref="searchInput"
-                               type="search"
-                               placeholder="جست‌وجو یا اجرای دستور"
-                               t-model="state.query"
-                               aria-label="جست‌وجو در فضای کار"/>
+                        <input t-ref="searchInput" type="search" t-model="state.query" placeholder="جست‌وجو در این بخش…" aria-label="جست‌وجو در فضای کار"/>
                         <kbd>Ctrl K</kbd>
-                    </label>
+                    </form>
                     <div class="cas-workspace__top-actions">
-                        <button type="button" title="پیام‌ها" t-on-click="showAllLetters"><i class="fa fa-comment-o"/></button>
-                        <button type="button" title="تقویم"><i class="fa fa-calendar"/></button>
-                        <button type="button" class="cas-workspace__notification" title="اعلان‌ها" t-on-click="() => this.state.priority = 'immediate'">
-                            <i class="fa fa-bell-o"/><span t-if="state.data.stats.urgent" t-esc="state.data.stats.urgent"/>
-                        </button>
-                        <span class="cas-workspace__divider"/>
+                        <button type="button" title="اقدام‌های فوری" t-on-click="() => this.navigate('urgent')"><i class="fa fa-bell-o"/><b t-if="state.data.stats.urgent" t-esc="state.data.stats.urgent"/></button>
+                        <button type="button" title="مکاتبات" t-on-click="() => this.navigate('letters')"><i class="fa fa-envelope-o"/></button>
                         <div class="cas-workspace__profile-wrap">
                             <button type="button" class="cas-workspace__profile" t-on-click="() => this.state.userMenu = !this.state.userMenu" t-att-aria-expanded="state.userMenu">
                                 <span t-esc="state.data.user.initials || 'ک'"/><i class="fa fa-angle-down"/>
                             </button>
                             <div t-if="state.userMenu" class="cas-workspace__profile-menu">
                                 <strong t-esc="state.data.user.name"/><small t-esc="state.data.user.company"/>
-                                <button type="button" t-on-click="logout"><i class="fa fa-sign-out"/> خروج از حساب</button>
+                                <button type="button" t-on-click="() => this.navigate('settings')"><i class="fa fa-cog"/> تنظیمات سامانه</button>
+                                <button type="button" class="is-danger" t-on-click="logout"><i class="fa fa-sign-out"/> خروج از حساب</button>
                             </div>
                         </div>
                     </div>
                 </header>
 
                 <div t-if="state.loading" class="cas-workspace__loading" role="status">
-                    <img src="/cas_workspace/static/description/icon.png" alt=""/>
-                    <i class="fa fa-spinner fa-spin"/><span>در حال آماده‌سازی فضای کار شما…</span>
+                    <img src="/cas_workspace/static/description/icon.png" alt=""/><i class="fa fa-spinner fa-spin"/><span>در حال آماده‌سازی فضای کار شما…</span>
                 </div>
 
-                <div t-else="" class="cas-workspace__content">
-                    <section class="cas-workspace__section cas-workspace__actions-section">
-                        <div class="cas-workspace__section-heading">
-                            <div class="cas-workspace__heading-title"><span class="cas-workspace__heading-icon"><i class="fa fa-bell-o"/></span><h1>اقدام‌های فوری</h1></div>
-                            <div class="cas-workspace__heading-tools">
-                                <div class="cas-workspace__filters" role="group" aria-label="فیلتر اولویت">
-                                    <button t-att-class="state.priority === 'all' ? 'is-selected' : ''" t-on-click="() => this.state.priority = 'all'">همه</button>
-                                    <button t-att-class="state.priority === 'immediate' ? 'is-selected' : ''" t-on-click="() => this.state.priority = 'immediate'">خیلی بالا</button>
-                                    <button t-att-class="state.priority === 'urgent' ? 'is-selected' : ''" t-on-click="() => this.state.priority = 'urgent'">بالا</button>
+                <div t-else="" class="cas-workspace__scroll">
+                    <div t-if="state.route === 'dashboard'" class="cas-workspace__content cas-workspace__dashboard">
+                        <section class="cas-workspace__welcome">
+                            <div><small t-esc="persianToday"/><h1>سلام <t t-esc="state.data.user.name"/>، روز خوبی داشته باشید</h1><p>کارهای مهم، مکاتبات تازه و وضعیت امروز شما در یک نگاه.</p></div>
+                            <button type="button" t-on-click="() => this.loadDashboard(true)" t-att-disabled="state.refreshing"><i t-att-class="'fa fa-refresh ' + (state.refreshing ? 'fa-spin' : '')"/> به‌روزرسانی</button>
+                        </section>
+
+                        <section class="cas-workspace__metric-grid" aria-label="خلاصه کارها">
+                            <button type="button" class="cas-workspace__metric is-primary" t-on-click="() => this.navigate('actions')"><span><i class="fa fa-tasks"/></span><div><small>کارهای باز من</small><strong t-esc="state.data.stats.open || 0"/></div><i class="fa fa-angle-left"/></button>
+                            <button type="button" class="cas-workspace__metric is-warning" t-on-click="() => this.navigate('urgent')"><span><i class="fa fa-bell-o"/></span><div><small>فوری و مهم</small><strong t-esc="state.data.stats.urgent || 0"/></div><i class="fa fa-angle-left"/></button>
+                            <button type="button" class="cas-workspace__metric is-danger" t-on-click="() => this.navigate('actions')"><span><i class="fa fa-exclamation-triangle"/></span><div><small>سررسیدشده</small><strong t-esc="state.data.stats.overdue || 0"/></div><i class="fa fa-angle-left"/></button>
+                            <article class="cas-workspace__metric is-success"><span><i class="fa fa-check"/></span><div><small>تکمیل امروز</small><strong><t t-esc="state.data.stats.progress || 0"/>٪</strong></div></article>
+                        </section>
+
+                        <section class="cas-workspace__dashboard-grid">
+                            <article class="cas-workspace__panel cas-workspace__actions-panel">
+                                <header><div><span class="cas-workspace__panel-icon"><i class="fa fa-bell-o"/></span><span><h2>اقدام‌های نزدیک</h2><small>اولویت‌بندی‌شده بر اساس مهلت</small></span></div><button type="button" t-on-click="() => this.navigate('urgent')">مشاهده همه <i class="fa fa-angle-left"/></button></header>
+                                <div class="cas-workspace__action-list">
+                                    <button t-foreach="state.data.actions" t-as="item" t-key="item.id" type="button" class="cas-workspace__action-card" t-on-click="() => this.openDashboardAction(item)">
+                                        <span class="cas-workspace__action-source"><i t-att-class="'fa ' + item.source_icon"/></span>
+                                        <span class="cas-workspace__action-copy"><strong t-esc="item.title"/><small><t t-esc="item.source"/> · <t t-esc="item.owner"/></small></span>
+                                        <span t-att-class="'cas-workspace__chip is-' + item.priority" t-esc="item.priority_label"/>
+                                        <time t-att-class="item.is_overdue ? 'is-overdue' : ''"><i class="fa fa-calendar-o"/> <t t-esc="formatDate(item.deadline)"/></time>
+                                        <i class="fa fa-angle-left"/>
+                                    </button>
+                                    <div t-if="!state.data.actions.length" class="cas-workspace__empty"><span><i class="fa fa-check"/></span><strong>کاری در انتظار شما نیست</strong><small>همه چیز مرتب است.</small></div>
                                 </div>
-                                <button class="cas-workspace__refresh" type="button" title="به‌روزرسانی" t-on-click="() => this.load(true)" t-att-disabled="state.refreshing"><i t-att-class="'fa fa-refresh ' + (state.refreshing ? 'fa-spin' : '')"/></button>
-                                <button class="cas-workspace__text-link" type="button" t-on-click="showAllActions">مشاهده همه <i class="fa fa-angle-left"/></button>
-                            </div>
-                        </div>
+                            </article>
 
-                        <div class="cas-workspace__table-card">
-                            <div class="cas-workspace__table-head">
-                                <span>منبع</span><span>عنوان</span><span>مالک</span><span>مهلت (جلالی)</span><span>اولویت</span><span>اقدام</span>
-                            </div>
-                            <button t-foreach="filteredActions" t-as="item" t-key="item.id" type="button" class="cas-workspace__table-row" t-on-click="() => this.openItem(item)">
-                                <span class="cas-workspace__source"><i t-att-class="'fa ' + item.source_icon"/><span t-esc="item.source"/></span>
-                                <strong t-esc="item.title"/>
-                                <span class="cas-workspace__owner"><i class="fa fa-user-o"/><span t-esc="item.owner"/></span>
-                                <span t-att-class="'cas-workspace__deadline ' + (item.is_overdue ? 'is-overdue' : '')"><i class="fa fa-calendar-o"/><span t-esc="formatDate(item.deadline)"/></span>
-                                <span t-att-class="'cas-workspace__priority is-' + item.priority"><i class="fa fa-circle"/><span t-esc="item.priority_label"/></span>
-                                <span class="cas-workspace__action-button">بازکردن <i class="fa fa-angle-down"/></span>
-                            </button>
-                            <div t-if="!filteredActions.length" class="cas-workspace__empty">
-                                <i class="fa fa-check-circle-o"/><strong>اقدامی پیدا نشد</strong><span>فیلترها را پاک کنید یا از زمان آزاد لذت ببرید.</span>
-                                <button t-if="state.query || state.priority !== 'all'" type="button" t-on-click="clearFilters">پاک‌کردن فیلترها</button>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="cas-workspace__summary-grid">
-                        <article class="cas-workspace__card cas-workspace__letters-card">
-                            <div class="cas-workspace__card-head"><h2>آخرین مکاتبات</h2><button type="button" class="cas-workspace__text-link" t-on-click="showAllLetters">مشاهده همه <i class="fa fa-angle-left"/></button></div>
-                            <button t-if="state.data.letters.length" type="button" class="cas-workspace__letter" t-on-click="() => this.openLetter(state.data.letters[0])">
-                                <span class="cas-workspace__letter-icon"><i class="fa fa-envelope-o"/></span>
-                                <span class="cas-workspace__letter-copy"><strong t-esc="state.data.letters[0].subject"/><small>از: <t t-esc="state.data.letters[0].sender"/> · شماره <t t-esc="state.data.letters[0].number"/></small><time t-esc="formatDate(state.data.letters[0].date, true)"/></span>
-                                <i class="fa fa-angle-left"/>
-                            </button>
-                            <div t-else="" class="cas-workspace__card-empty"><i class="fa fa-envelope-open-o"/> مکاتبه‌ای برای نمایش نیست.</div>
-                        </article>
-
-                        <article class="cas-workspace__card cas-workspace__progress-card">
-                            <h2 t-esc="persianToday"/>
-                            <div class="cas-workspace__progress-body">
-                                <div class="cas-workspace__ring" aria-label="درصد تکمیل کارها">
-                                    <i class="fa fa-circle-o-notch" aria-hidden="true"/>
-                                    <strong><t t-esc="state.data.stats.progress"/>٪</strong><span>تکمیل‌شده</span>
+                            <article class="cas-workspace__panel cas-workspace__letters-panel">
+                                <header><div><span class="cas-workspace__panel-icon"><i class="fa fa-envelope-o"/></span><span><h2>مکاتبات تازه</h2><small>آخرین نامه‌ها و ارجاع‌ها</small></span></div><button type="button" t-on-click="() => this.navigate('letters')">همه مکاتبات <i class="fa fa-angle-left"/></button></header>
+                                <div class="cas-workspace__letter-list">
+                                    <button t-foreach="state.data.letters" t-as="letter" t-key="letter.id" type="button" t-on-click="() => this.openDashboardLetter(letter)">
+                                        <span><i class="fa fa-envelope-o"/></span><div><strong t-esc="letter.subject"/><small>از <t t-esc="letter.sender"/> · <t t-esc="letter.number"/></small></div><time t-esc="formatDate(letter.date, true)"/><i class="fa fa-angle-left"/>
+                                    </button>
+                                    <div t-if="!state.data.letters.length" class="cas-workspace__empty"><span><i class="fa fa-envelope-open-o"/></span><strong>مکاتبه تازه‌ای نیست</strong></div>
                                 </div>
-                                <dl class="cas-workspace__stats">
-                                    <div><dt><i class="fa fa-clipboard"/> کل کارها</dt><dd t-esc="state.data.stats.total"/></div>
-                                    <div><dt><i class="fa fa-check-circle-o"/> تکمیل‌شده</dt><dd t-esc="state.data.stats.completed"/></div>
-                                    <div><dt><i class="fa fa-bell-o"/> در انتظار من</dt><dd t-esc="state.data.stats.open"/></div>
-                                    <div class="is-danger"><dt><i class="fa fa-exclamation-triangle"/> سررسیدشده</dt><dd t-esc="state.data.stats.overdue"/></div>
-                                </dl>
+                            </article>
+                        </section>
+
+                        <section class="cas-workspace__quick-access">
+                            <header><h2>دسترسی سریع به سامانه</h2><small>همه ماژول‌های CAS در همین فضای اختصاصی</small></header>
+                            <div>
+                                <button t-foreach="navGroups.slice(1).flatMap((group) => group.items)" t-as="item" t-key="item.key" type="button" t-on-click="() => this.navigate(item.key)">
+                                    <span><i t-att-class="'fa ' + item.icon"/></span><strong t-esc="item.label"/><i class="fa fa-angle-left"/>
+                                </button>
                             </div>
-                        </article>
-                    </section>
+                        </section>
+                    </div>
+
+                    <div t-else="" class="cas-workspace__content cas-workspace__page">
+                        <section class="cas-workspace__page-head">
+                            <div><h1 t-esc="state.page.title"/><p t-esc="state.page.subtitle"/></div>
+                            <div class="cas-workspace__page-actions">
+                                <button type="button" class="is-secondary" t-on-click="loadPage" t-att-disabled="state.pageLoading"><i t-att-class="'fa fa-refresh ' + (state.pageLoading ? 'fa-spin' : '')"/> تازه‌سازی</button>
+                                <button t-if="state.route === 'form_builder' || state.route === 'workflow_builder'" type="button" class="is-primary"><i class="fa fa-plus"/> تعریف جدید</button>
+                            </div>
+                        </section>
+
+                        <section t-if="state.route === 'settings'" class="cas-workspace__settings-summary">
+                            <article><span><i class="fa fa-cubes"/></span><div><strong t-esc="state.navigation.installed_modules.length"/><small>ماژول CAS نصب‌شده</small></div></article>
+                            <article><span><i class="fa fa-users"/></span><div><strong t-esc="state.page.total"/><small>کاربر داخلی</small></div></article>
+                            <article><span><i class="fa fa-shield"/></span><div><strong>فعال</strong><small>کنترل دسترسی اودو</small></div></article>
+                        </section>
+
+                        <section class="cas-workspace__data-panel">
+                            <header>
+                                <div><strong><t t-esc="state.page.total"/> رکورد</strong><small>نمایش صفحه <t t-esc="currentPage"/> از <t t-esc="totalPages"/></small></div>
+                                <form t-on-submit.prevent="submitSearch"><i class="fa fa-search"/><input type="search" t-model="state.query" placeholder="جست‌وجو در رکوردها…"/><button type="submit">جست‌وجو</button></form>
+                            </header>
+
+                            <div t-if="state.pageLoading" class="cas-workspace__table-loading"><i class="fa fa-spinner fa-spin"/> در حال دریافت اطلاعات…</div>
+                            <div t-elif="!state.page.available" class="cas-workspace__module-unavailable"><span><i class="fa fa-cube"/></span><h2>این ماژول روی پایگاه فعلی فعال نیست</h2><p>صفحه اختصاصی آماده است و پس از نصب ماژول، داده‌ها همین‌جا نمایش داده می‌شوند.</p></div>
+                            <div t-elif="!state.page.rows.length" class="cas-workspace__module-unavailable"><span><i class="fa fa-inbox"/></span><h2>رکوردی برای نمایش نیست</h2><p>فیلتر جست‌وجو را تغییر دهید یا اولین رکورد این بخش را ایجاد کنید.</p></div>
+                            <div t-else="" class="cas-workspace__table-wrap">
+                                <table>
+                                    <thead><tr><th t-foreach="state.page.columns" t-as="column" t-key="column.key" t-esc="column.label"/><th aria-label="جزئیات"/></tr></thead>
+                                    <tbody>
+                                        <tr t-foreach="state.page.rows" t-as="row" t-key="row.id" tabindex="0" t-on-click="() => this.openDetail(state.route, row.id)" t-on-keydown.enter="() => this.openDetail(state.route, row.id)">
+                                            <td t-foreach="row.cells" t-as="cell" t-key="cell.key"><span t-att-class="'cas-workspace__cell ' + (cell.tone !== 'default' ? 'is-' + cell.tone : '')" t-esc="cell.text"/></td>
+                                            <td><button type="button" title="نمایش جزئیات"><i class="fa fa-angle-left"/></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <footer t-if="state.page.available &amp;&amp; state.page.total">
+                                <span>رکوردهای <t t-esc="state.page.offset + 1"/> تا <t t-esc="Math.min(state.page.offset + state.page.rows.length, state.page.total)"/> از <t t-esc="state.page.total"/></span>
+                                <div><button type="button" t-on-click="() => this.changePage(-1)" t-att-disabled="state.page.offset === 0"><i class="fa fa-angle-right"/> قبلی</button><b><t t-esc="currentPage"/> / <t t-esc="totalPages"/></b><button type="button" t-on-click="() => this.changePage(1)" t-att-disabled="state.page.offset + state.page.limit >= state.page.total">بعدی <i class="fa fa-angle-left"/></button></div>
+                            </footer>
+                        </section>
+
+                        <section t-if="state.route === 'settings'" class="cas-workspace__module-grid">
+                            <header><h2>ماژول‌های فعال CAS</h2><small>نسخه نصب‌شده روی پایگاه داده</small></header>
+                            <div><article t-foreach="state.navigation.installed_modules" t-as="module" t-key="module.name"><span><i class="fa fa-cube"/></span><div><strong t-esc="module.shortdesc || module.name"/><small t-esc="module.name"/></div><b t-esc="module.installed_version"/></article></div>
+                        </section>
+                    </div>
                 </div>
             </main>
+
+            <div t-if="state.detail" class="cas-workspace__drawer-layer" t-on-click.self="() => this.state.detail = null">
+                <aside class="cas-workspace__drawer" aria-label="جزئیات رکورد">
+                    <header><div><small>جزئیات رکورد</small><h2 t-esc="state.detail.title"/></div><button type="button" aria-label="بستن" t-on-click="() => this.state.detail = null"><i class="fa fa-times"/></button></header>
+                    <div t-if="state.detail.loading" class="cas-workspace__drawer-loading"><i class="fa fa-spinner fa-spin"/></div>
+                    <dl t-else=""><div t-foreach="state.detail.fields" t-as="field" t-key="field.label"><dt t-esc="field.label"/><dd t-esc="field.value"/></div></dl>
+                </aside>
+            </div>
         </div>
     </t>
 </templates>

@@ -1,7 +1,7 @@
 {
     "name": "CAS Organizational Workspace",
     "summary": "A fully custom RTL operational workspace for CAS on Odoo",
-    "version": "19.0.1.3.0",
+    "version": "19.0.2.0.0",
     "category": "Productivity",
     "author": "Chodan Ara Shomal",
     "website": "https://erp.chodanara.com",
@@ -12,9 +12,6 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "cas_workspace/static/src/global_shell.js",
-            "cas_workspace/static/src/global_shell.xml",
-            "cas_workspace/static/src/global_theme.scss",
             "cas_workspace/static/src/workspace.js",
             "cas_workspace/static/src/workspace.xml",
             "cas_workspace/static/src/workspace.scss",
