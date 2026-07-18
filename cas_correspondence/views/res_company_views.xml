@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_correspondence" model="ir.ui.view">
+        <field name="name">res.company.form.cas.correspondence</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="تنظیمات مکاتبات سازمانی" groups="cas_correspondence.group_cas_correspondence_manager">
+                    <field name="cas_correspondence_ceo_user_id"/>
+                    <field name="cas_correspondence_sequence_id" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

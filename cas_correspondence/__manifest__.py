@@ -1,0 +1,23 @@
+{
+    "name": "CAS Internal Correspondence",
+    "summary": "Secure, auditable internal organizational correspondence",
+    "version": "19.0.1.0.0",
+    "category": "Productivity",
+    "author": "Chodan Ara Shomal",
+    "website": "https://erp.chodanara.com",
+    "license": "LGPL-3",
+    "depends": ["cas_core", "mail", "hr"],
+    "data": [
+        "security/cas_correspondence_security.xml",
+        "security/ir.model.access.csv",
+        "views/res_company_views.xml",
+        "views/correspondence_letter_views.xml",
+        "views/secretariat_delegation_views.xml",
+        "wizard/referral_wizard_views.xml",
+        "wizard/action_wizard_views.xml",
+        "views/correspondence_menus.xml",
+    ],
+    "installable": True,
+    "application": True,
+    "auto_install": False,
+}

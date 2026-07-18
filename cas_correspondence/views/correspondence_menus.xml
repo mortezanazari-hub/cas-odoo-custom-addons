@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_correspondence_root" name="مکاتبات سازمانی" sequence="42" groups="group_cas_correspondence_user"/>
+    <menuitem id="menu_correspondence_letters" name="نامه‌های داخلی" parent="menu_correspondence_root" action="action_correspondence_letters" sequence="10"/>
+    <menuitem id="menu_correspondence_drafts" name="پیش‌نویس‌های من" parent="menu_correspondence_root" action="action_correspondence_drafts" sequence="20"/>
+    <menuitem id="menu_correspondence_secretariat" name="دبیرخانه" parent="menu_correspondence_root" action="action_correspondence_secretariat" sequence="30"/>
+    <menuitem id="menu_correspondence_config" name="پیکربندی" parent="menu_correspondence_root" sequence="90" groups="group_cas_correspondence_manager"/>
+    <menuitem id="menu_secretariat_delegations" name="تفویض‌های دبیرخانه" parent="menu_correspondence_config" action="action_secretariat_delegations" sequence="10"/>
+</odoo>

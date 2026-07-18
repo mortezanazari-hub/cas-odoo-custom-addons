@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_cas_correspondence_user" model="res.groups">
+        <field name="name">کاربر مکاتبات سازمانی</field>
+    </record>
+    <record id="group_cas_correspondence_manager" model="res.groups">
+        <field name="name">مدیر مکاتبات سازمانی</field>
+        <field name="implied_ids" eval="[(4, ref('group_cas_correspondence_user'))]"/>
+    </record>
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('cas_correspondence.group_cas_correspondence_manager'))]"/>
+    </record>
+
+    <record id="rule_correspondence_letter_user" model="ir.rule">
+        <field name="name">نامه: ذی‌نفع، مدیر ساختاری یا دبیرخانه</field>
+        <field name="model_id" ref="model_cas_correspondence_letter"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_user'))]"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), '|', '|', ('authorized_user_ids', 'in', user.id), ('in_manager_scope', '=', True), ('has_secretariat_access', '=', True)]</field>
+    </record>
+    <record id="rule_correspondence_letter_manager" model="ir.rule">
+        <field name="name">نامه: مدیر سامانه در شرکت‌های مجاز</field>
+        <field name="model_id" ref="model_cas_correspondence_letter"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_correspondence_recipient_user" model="ir.rule">
+        <field name="name">مخاطب: نامه قابل مشاهده</field>
+        <field name="model_id" ref="model_cas_correspondence_recipient"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_user'))]"/>
+        <field name="domain_force">[('visible_to_current_user', '=', True)]</field>
+    </record>
+    <record id="rule_correspondence_referral_user" model="ir.rule">
+        <field name="name">ارجاع: نامه قابل مشاهده</field>
+        <field name="model_id" ref="model_cas_correspondence_referral"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_user'))]"/>
+        <field name="domain_force">[('visible_to_current_user', '=', True)]</field>
+    </record>
+    <record id="rule_correspondence_receipt_user" model="ir.rule">
+        <field name="name">رسید مشاهده: نامه قابل مشاهده</field>
+        <field name="model_id" ref="model_cas_correspondence_view_receipt"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_user'))]"/>
+        <field name="domain_force">[('visible_to_current_user', '=', True)]</field>
+    </record>
+    <record id="rule_correspondence_relation_user" model="ir.rule">
+        <field name="name">رابطه: هر دو نامه قابل مشاهده</field>
+        <field name="model_id" ref="model_cas_correspondence_relation"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_user'))]"/>
+        <field name="domain_force">[('visible_to_current_user', '=', True)]</field>
+    </record>
+    <record id="rule_correspondence_audit_user" model="ir.rule">
+        <field name="name">تاریخچه: رکورد منبع قابل مشاهده</field>
+        <field name="model_id" ref="model_cas_correspondence_audit"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_user'))]"/>
+        <field name="domain_force">[('visible_to_current_user', '=', True)]</field>
+    </record>
+    <record id="rule_correspondence_delegation_user" model="ir.rule">
+        <field name="name">تفویض دبیرخانه: ذی‌نفع یا مدیرعامل</field>
+        <field name="model_id" ref="model_cas_correspondence_secretariat_delegation"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_user'))]"/>
+        <field name="domain_force">['&amp;', ('company_id', 'in', company_ids), ('visible_to_current_user', '=', True)]</field>
+    </record>
+
+    <record id="rule_correspondence_child_manager" model="ir.rule">
+        <field name="name">مخاطب: مدیر سامانه</field>
+        <field name="model_id" ref="model_cas_correspondence_recipient"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_correspondence_referral_manager" model="ir.rule">
+        <field name="name">ارجاع: مدیر سامانه</field>
+        <field name="model_id" ref="model_cas_correspondence_referral"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_correspondence_receipt_manager" model="ir.rule">
+        <field name="name">رسید: مدیر سامانه</field>
+        <field name="model_id" ref="model_cas_correspondence_view_receipt"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_correspondence_relation_manager" model="ir.rule">
+        <field name="name">رابطه: مدیر سامانه</field>
+        <field name="model_id" ref="model_cas_correspondence_relation"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_correspondence_audit_manager" model="ir.rule">
+        <field name="name">تاریخچه: مدیر سامانه</field>
+        <field name="model_id" ref="model_cas_correspondence_audit"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_correspondence_delegation_manager" model="ir.rule">
+        <field name="name">تفویض دبیرخانه: مدیر سامانه</field>
+        <field name="model_id" ref="model_cas_correspondence_secretariat_delegation"/>
+        <field name="groups" eval="[(4, ref('group_cas_correspondence_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

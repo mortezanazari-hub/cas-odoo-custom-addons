@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_correspondence_letter_list" model="ir.ui.view">
+        <field name="name">cas.correspondence.letter.list</field>
+        <field name="model">cas.correspondence.letter</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="priority == 'immediate'" decoration-warning="priority == 'urgent'" decoration-muted="state in ('closed', 'cancelled')">
+                <field name="number"/>
+                <field name="subject"/>
+                <field name="sender_user_id"/>
+                <field name="sender_department_id"/>
+                <field name="confidentiality" widget="badge"/>
+                <field name="priority" widget="badge"/>
+                <field name="state" widget="badge"/>
+                <field name="sent_at"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_correspondence_letter_search" model="ir.ui.view">
+        <field name="name">cas.correspondence.letter.search</field>
+        <field name="model">cas.correspondence.letter</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="number"/>
+                <field name="subject"/>
+                <field name="sender_user_id"/>
+                <field name="sender_department_id"/>
+                <filter name="draft" string="پیش‌نویس" domain="[('state', '=', 'draft')]"/>
+                <filter name="needs_reply" string="نیازمند پاسخ" domain="[('recipient_ids.expectation', '=', 'reply'), ('recipient_ids.status', 'not in', ('replied', 'cancelled'))]"/>
+                <filter name="overdue" string="موعد گذشته" domain="[('recipient_ids.deadline', '&lt;', context_today()), ('recipient_ids.status', 'not in', ('completed', 'replied', 'cancelled'))]"/>
+                <filter name="urgent" string="فوری و آنی" domain="[('priority', 'in', ('urgent', 'immediate'))]"/>
+                <filter name="confidential" string="محرمانه" domain="[('confidentiality', '!=', 'normal')]"/>
+                <filter name="closed" string="مختومه" domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter name="group_sender" string="فرستنده" context="{'group_by': 'sender_user_id'}"/>
+                <filter name="group_department" string="واحد" context="{'group_by': 'sender_department_id'}"/>
+                <filter name="group_state" string="وضعیت" context="{'group_by': 'state'}"/>
+                <filter name="group_priority" string="اولویت" context="{'group_by': 'priority'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_correspondence_letter_form" model="ir.ui.view">
+        <field name="name">cas.correspondence.letter.form</field>
+        <field name="model">cas.correspondence.letter</field>
+        <field name="arch" type="xml">
+            <form string="نامه داخلی">
+                <header>
+                    <button name="action_send" type="object" string="ارسال رسمی" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_create_reply" type="object" string="پاسخ رسمی" invisible="state in ('draft', 'cancelled')"/>
+                    <button name="action_open_referral_wizard" type="object" string="ارجاع" invisible="state in ('draft', 'closed', 'cancelled')"/>
+                    <button name="action_close" type="object" string="مختومه‌کردن" invisible="state in ('draft', 'closed', 'cancelled')"/>
+                    <button name="action_create_correction" type="object" string="ایجاد اصلاحیه" invisible="state in ('draft', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,delivered,viewed,in_progress,replied,closed,cancelled"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" text="خیلی محرمانه" bg_color="text-bg-danger" invisible="confidentiality != 'highly_confidential'"/>
+                    <widget name="web_ribbon" text="محرمانه" bg_color="text-bg-warning" invisible="confidentiality != 'confidential'"/>
+                    <div class="oe_title">
+                        <label for="number"/>
+                        <h1><field name="number" readonly="1"/></h1>
+                        <label for="subject"/>
+                        <h2><field name="subject" readonly="state != 'draft'" placeholder="موضوع نامه..."/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" readonly="state != 'draft'" groups="base.group_multi_company"/>
+                            <field name="sender_user_id" readonly="1"/>
+                            <field name="sender_employee_id" readonly="1"/>
+                            <field name="sender_department_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="confidentiality" readonly="state != 'draft'"/>
+                            <field name="priority" readonly="state != 'draft'"/>
+                            <field name="default_deadline" readonly="state != 'draft'"/>
+                            <field name="sent_at" invisible="not sent_at"/>
+                        </group>
+                    </group>
+                    <group invisible="not reply_to_id and not correction_of_id">
+                        <field name="reply_to_id" readonly="state != 'draft'"/>
+                        <field name="correction_of_id" readonly="state != 'draft'"/>
+                        <field name="correction_reason" readonly="state != 'draft'" invisible="not correction_of_id"/>
+                        <field name="replacement_letter_id" readonly="1" invisible="not replacement_letter_id"/>
+                    </group>
+                    <notebook>
+                        <page string="متن نامه">
+                            <field name="body" readonly="state != 'draft'" placeholder="متن رسمی نامه..."/>
+                            <field name="attachment_ids" widget="many2many_binary" readonly="state != 'draft'"/>
+                        </page>
+                        <page string="گیرندگان و رونوشت‌ها">
+                            <field name="recipient_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="role"/>
+                                    <field name="target_kind"/>
+                                    <field name="recipient_user_id" invisible="target_kind != 'user'"/>
+                                    <field name="department_id" invisible="target_kind != 'department'"/>
+                                    <field name="responsible_user_id" readonly="1"/>
+                                    <field name="expectation"/>
+                                    <field name="priority" widget="badge"/>
+                                    <field name="deadline"/>
+                                    <field name="status" widget="badge" readonly="1"/>
+                                    <button name="action_mark_viewed" type="object" string="ثبت مشاهده" invisible="status not in ('delivered', 'viewed')"/>
+                                    <button name="action_start" type="object" string="شروع" invisible="expectation == 'information' or status not in ('delivered', 'viewed')"/>
+                                    <button name="action_open_complete_wizard" type="object" string="ثبت نتیجه" invisible="expectation != 'action' or status not in ('viewed', 'in_progress')"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="role"/>
+                                        <field name="target_kind"/>
+                                        <field name="recipient_user_id" invisible="target_kind != 'user'"/>
+                                        <field name="department_id" invisible="target_kind != 'department'"/>
+                                        <field name="responsible_user_id" readonly="1"/>
+                                        <field name="expectation"/>
+                                        <field name="priority"/>
+                                        <field name="deadline"/>
+                                        <field name="status" readonly="1"/>
+                                        <field name="note"/>
+                                        <field name="action_result" readonly="1"/>
+                                        <field name="reply_letter_id" readonly="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="ارجاع‌ها" invisible="state == 'draft'">
+                            <field name="referral_ids" readonly="1">
+                                <list>
+                                    <field name="referrer_user_id"/>
+                                    <field name="target_kind"/>
+                                    <field name="recipient_user_id"/>
+                                    <field name="department_id"/>
+                                    <field name="responsible_user_id"/>
+                                    <field name="expectation"/>
+                                    <field name="priority" widget="badge"/>
+                                    <field name="deadline"/>
+                                    <field name="status" widget="badge"/>
+                                    <button name="action_mark_viewed" type="object" string="ثبت مشاهده" invisible="status not in ('delivered', 'viewed')"/>
+                                    <button name="action_start" type="object" string="شروع" invisible="expectation == 'information' or status not in ('delivered', 'viewed')"/>
+                                    <button name="action_open_complete_wizard" type="object" string="ثبت نتیجه" invisible="expectation != 'action' or status not in ('viewed', 'in_progress')"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="رسیدهای مشاهده" invisible="state == 'draft'">
+                            <field name="receipt_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="viewer_user_id"/>
+                                    <field name="recipient_id"/>
+                                    <field name="referral_id"/>
+                                    <field name="viewed_at"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="زنجیره و روابط" invisible="state == 'draft'">
+                            <group>
+                                <field name="thread_root_id" readonly="1"/>
+                            </group>
+                            <field name="outgoing_relation_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="relation_type"/>
+                                    <field name="related_letter_id"/>
+                                    <field name="created_by_id"/>
+                                    <field name="create_date"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="امضا و تاریخچه" invisible="state == 'draft'">
+                            <group>
+                                <field name="signed_by_user_id" readonly="1"/>
+                                <field name="signature_name" readonly="1"/>
+                                <field name="signature_job_title" readonly="1"/>
+                                <field name="signed_at" readonly="1"/>
+                            </group>
+                            <field name="audit_ids" readonly="1">
+                                <list create="0" delete="0">
+                                    <field name="event_at"/>
+                                    <field name="event_type"/>
+                                    <field name="actor_user_id"/>
+                                    <field name="reason"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_correspondence_letters" model="ir.actions.act_window">
+        <field name="name">نامه‌های داخلی</field>
+        <field name="res_model">cas.correspondence.letter</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_correspondence_letter_search"/>
+        <field name="context">{'search_default_group_state': 0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">نخستین نامه داخلی را ایجاد کنید.</p>
+        </field>
+    </record>
+    <record id="action_correspondence_drafts" model="ir.actions.act_window">
+        <field name="name">پیش‌نویس‌های من</field>
+        <field name="res_model">cas.correspondence.letter</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'draft'), ('sender_user_id', '=', uid)]</field>
+        <field name="context">{'default_sender_user_id': uid}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">هنوز پیش‌نویسی ندارید.</p>
+        </field>
+    </record>
+    <record id="action_correspondence_secretariat" model="ir.actions.act_window">
+        <field name="name">دبیرخانه</field>
+        <field name="res_model">cas.correspondence.letter</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_state': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">نامه‌ای در نمای دبیرخانه وجود ندارد.</p>
+        </field>
+    </record>
+</odoo>
