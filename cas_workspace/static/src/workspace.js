@@ -143,6 +143,13 @@ export class CasOrganizationalWorkspace extends Component {
         this.state.detail = detail || null;
     }
 
+    onRowKeydown(event, row) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            this.openDetail(this.state.route, row.id);
+        }
+    }
+
     async openDashboardAction(item) {
         await this.navigate("actions");
         await this.openDetail("actions", item.id);

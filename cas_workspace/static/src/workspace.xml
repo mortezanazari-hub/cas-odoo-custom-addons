@@ -152,7 +152,7 @@
                                 <table>
                                     <thead><tr><th t-foreach="state.page.columns" t-as="column" t-key="column.key" t-esc="column.label"/><th aria-label="جزئیات"/></tr></thead>
                                     <tbody>
-                                        <tr t-foreach="state.page.rows" t-as="row" t-key="row.id" tabindex="0" t-on-click="() => this.openDetail(state.route, row.id)" t-on-keydown.enter="() => this.openDetail(state.route, row.id)">
+                                        <tr t-foreach="state.page.rows" t-as="row" t-key="row.id" tabindex="0" t-on-click="() => this.openDetail(state.route, row.id)" t-on-keydown="(event) => this.onRowKeydown(event, row)">
                                             <td t-foreach="row.cells" t-as="cell" t-key="cell.key"><span t-att-class="'cas-workspace__cell ' + (cell.tone !== 'default' ? 'is-' + cell.tone : '')" t-esc="cell.text"/></td>
                                             <td><button type="button" title="نمایش جزئیات"><i class="fa fa-angle-left"/></button></td>
                                         </tr>
