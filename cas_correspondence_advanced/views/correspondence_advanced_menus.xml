@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_correspondence_registers" name="دفتر وارده و صادره" parent="cas_correspondence.menu_correspondence_root" action="action_correspondence_registers" sequence="15"/>
+    <menuitem id="menu_correspondence_signatures" name="دفتر امضاها" parent="cas_correspondence.menu_correspondence_root" action="action_correspondence_signatures" sequence="40"/>
+    <menuitem id="menu_correspondence_templates" name="قالب‌های رسمی" parent="cas_correspondence.menu_correspondence_config" action="action_correspondence_templates" sequence="20" groups="cas_correspondence.group_cas_correspondence_manager"/>
+</odoo>

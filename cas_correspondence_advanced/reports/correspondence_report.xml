@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_correspondence_letter" model="ir.actions.report">
+        <field name="name">نامه رسمی</field>
+        <field name="model">cas.correspondence.letter</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cas_correspondence_advanced.report_correspondence_letter</field>
+        <field name="report_file">cas_correspondence_advanced.report_correspondence_letter</field>
+        <field name="print_report_name">'Letter-%s' % (object.number or object.id)</field>
+        <field name="binding_model_id" ref="cas_correspondence.model_cas_correspondence_letter"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="report_correspondence_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page" style="direction: rtl; text-align: right; font-family: DejaVu Sans;">
+                        <div t-if="o.template_id and o.template_id.header_html" t-field="o.template_id.header_html"/>
+                        <div class="row mb-3">
+                            <div class="col-6"><strong>شماره:</strong> <span t-field="o.number"/></div>
+                            <div class="col-6"><strong>تاریخ:</strong> <span t-field="o.sent_at"/></div>
+                        </div>
+                        <h3 class="mb-3"><span t-field="o.subject"/></h3>
+                        <div t-field="o.body"/>
+                        <div class="mt-5">
+                            <strong t-field="o.signature_name"/><br/>
+                            <span t-field="o.signature_job_title"/>
+                        </div>
+                        <div class="mt-4" t-if="o.template_id and o.template_id.footer_html" t-field="o.template_id.footer_html"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

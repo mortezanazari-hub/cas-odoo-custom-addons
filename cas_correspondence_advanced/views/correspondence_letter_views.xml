@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_correspondence_letter_form_advanced" model="ir.ui.view">
+        <field name="name">cas.correspondence.letter.form.advanced</field><field name="model">cas.correspondence.letter</field><field name="inherit_id" ref="cas_correspondence.view_correspondence_letter_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_send']" position="after"><button name="action_generate_official_pdf" type="object" string="تولید PDF رسمی" invisible="state == 'draft'"/><button name="action_download_official_pdf" type="object" string="دریافت PDF" invisible="not official_pdf_attachment_id"/></xpath>
+            <xpath expr="//field[@name='default_deadline']" position="after"><field name="template_id" readonly="state != 'draft'" domain="[('company_id','=',company_id)]"/><button name="action_apply_template" type="object" string="اعمال قالب" invisible="state != 'draft' or not template_id"/></xpath>
+            <xpath expr="//notebook" position="inside"><page string="نسخه رسمی" invisible="state == 'draft'"><group><field name="official_pdf_attachment_id"/><field name="official_pdf_sha256"/><field name="official_pdf_generated_at"/><field name="document_id"/></group><field name="advanced_signature_ids"><list create="0" delete="0"><field name="signer_user_id"/><field name="method"/><field name="state" widget="badge"/><field name="source_digest"/><field name="provider_reference"/><field name="signed_at"/></list></field></page></xpath>
+        </field>
+    </record>
+</odoo>
