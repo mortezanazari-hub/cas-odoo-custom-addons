@@ -1,0 +1,25 @@
+body:has(.oe_login_form), body:has(.o_database_list) {
+    color: #172033;
+    background: #f4f7f9;
+    font-family: Vazirmatn, IRANSans, Tahoma, Arial, sans-serif;
+
+    .oe_login_form, .o_database_list {
+        padding: 28px;
+        border: 1px solid #dfe4ea;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 22px 65px rgba(9, 31, 55, .14);
+    }
+    .oe_login_form .btn-primary, .o_database_list .btn-primary {
+        border-color: #078f96;
+        background: #078f96;
+    }
+    .oe_login_form .btn-primary:hover, .o_database_list .btn-primary:hover {
+        border-color: #06777d;
+        background: #06777d;
+    }
+    .form-control:focus {
+        border-color: #078f96;
+        box-shadow: 0 0 0 3px rgba(7, 143, 150, .13);
+    }
+}
