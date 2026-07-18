@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_document_root" name="مدیریت اسناد" sequence="35" groups="group_cas_document_user"/>
+    <menuitem id="menu_documents" name="اسناد" parent="menu_document_root" action="action_documents" sequence="10"/>
+    <menuitem id="menu_document_folders" name="پوشه‌ها" parent="menu_document_root" action="action_document_folders" sequence="20"/>
+    <menuitem id="menu_document_ocr_jobs" name="صف OCR" parent="menu_document_root" action="action_document_ocr_jobs" sequence="30"/>
+    <menuitem id="menu_document_config" name="پیکربندی" parent="menu_document_root" sequence="90" groups="group_cas_document_manager"/>
+    <menuitem id="menu_document_backends" name="ذخیره‌سازها" parent="menu_document_config" action="action_document_backends" sequence="10"/>
+    <menuitem id="menu_document_ocr_providers" name="سرویس‌های OCR" parent="menu_document_config" action="action_document_ocr_providers" sequence="20"/>
+</odoo>

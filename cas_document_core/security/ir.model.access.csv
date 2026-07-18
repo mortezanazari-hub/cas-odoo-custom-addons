@@ -1,0 +1,20 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_document_user,cas.document user,model_cas_document,group_cas_document_user,1,1,1,0
+access_document_manager,cas.document manager,model_cas_document,group_cas_document_manager,1,1,1,0
+access_document_folder_user,cas.document.folder user,model_cas_document_folder,group_cas_document_user,1,0,0,0
+access_document_folder_manager,cas.document.folder manager,model_cas_document_folder,group_cas_document_manager,1,1,1,1
+access_document_backend_user,cas.document.storage.backend user,model_cas_document_storage_backend,group_cas_document_user,1,0,0,0
+access_document_backend_manager,cas.document.storage.backend manager,model_cas_document_storage_backend,group_cas_document_manager,1,1,1,1
+access_document_version_user,cas.document.version user,model_cas_document_version,group_cas_document_user,1,0,0,0
+access_document_version_manager,cas.document.version manager,model_cas_document_version,group_cas_document_manager,1,0,0,0
+access_document_tag_user,cas.document.tag user,model_cas_document_tag,group_cas_document_user,1,0,0,0
+access_document_tag_manager,cas.document.tag manager,model_cas_document_tag,group_cas_document_manager,1,1,1,1
+access_document_link_user,cas.document.link user,model_cas_document_link,group_cas_document_user,1,0,1,0
+access_document_link_manager,cas.document.link manager,model_cas_document_link,group_cas_document_manager,1,0,1,1
+access_document_event_user,cas.document.event user,model_cas_document_event,group_cas_document_user,1,0,0,0
+access_document_event_manager,cas.document.event manager,model_cas_document_event,group_cas_document_manager,1,0,0,0
+access_document_ocr_provider_user,cas.document.ocr.provider user,model_cas_document_ocr_provider,group_cas_document_user,1,0,0,0
+access_document_ocr_provider_manager,cas.document.ocr.provider manager,model_cas_document_ocr_provider,group_cas_document_manager,1,1,1,1
+access_document_ocr_job_user,cas.document.ocr.job user,model_cas_document_ocr_job,group_cas_document_user,1,1,1,0
+access_document_ocr_job_manager,cas.document.ocr.job manager,model_cas_document_ocr_job,group_cas_document_manager,1,1,1,0
+access_document_upload_version_wizard,cas.document.upload.version.wizard,model_cas_document_upload_version_wizard,group_cas_document_user,1,1,1,1
