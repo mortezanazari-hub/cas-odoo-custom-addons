@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_workflow_definition_form_binding" model="ir.ui.view">
+        <field name="name">cas.workflow.definition.form.binding</field>
+        <field name="model">cas.workflow.definition</field>
+        <field name="inherit_id" ref="cas_workflow_core.view_cas_workflow_definition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='target_model_id']" position="after">
+                <field name="form_definition_id" placeholder="اختیاری؛ برای گردش‌کار فرم‌محور"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_cas_workflow_version_node_designer" model="ir.ui.view">
+        <field name="name">cas.workflow.version.form.node.designer</field>
+        <field name="model">cas.workflow.version</field>
+        <field name="inherit_id" ref="cas_workflow_core.view_cas_workflow_version_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_publish']" position="before">
+                <button name="action_open_node_designer" type="object" string="طراح نودبیس" class="btn-secondary" groups="cas_workflow_core.group_cas_workflow_designer"/>
+            </xpath>
+            <xpath expr="//field[@name='schema_hash']" position="after">
+                <field name="designer_revision" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

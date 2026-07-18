@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_workflow_designer.NodeDesigner">
+        <div class="o_cas_workflow_designer" dir="rtl">
+            <t t-if="state.loading"><div class="o_cas_wf_loading"><i class="fa fa-spinner fa-spin"/> در حال بارگذاری طراح…</div></t>
+            <t t-else="">
+                <header class="o_cas_wf_toolbar">
+                    <div class="d-flex align-items-center gap-2"><button class="btn btn-light" t-on-click="back"><i class="fa fa-arrow-right"/> بازگشت</button><strong t-esc="state.graph.name"/><span class="badge text-bg-secondary">ویرایش <t t-esc="state.graph.revision"/></span><span t-if="state.graph.form_name" class="badge text-bg-info">فرم: <t t-esc="state.graph.form_name"/></span></div>
+                    <div class="d-flex align-items-center gap-2"><span t-if="state.connectingFrom" class="text-primary">نود مقصد را انتخاب کنید</span><span t-if="!editable" class="badge text-bg-warning">نسخه قفل‌شده؛ فقط نمایش</span><button class="btn btn-primary" t-on-click="save" t-att-disabled="!editable || state.saving"><i class="fa fa-save"/> ذخیره گراف</button></div>
+                </header>
+                <div class="o_cas_wf_workspace">
+                    <aside class="o_cas_wf_palette">
+                        <h5>نودها</h5><p>نوع نود را بکشید یا برای افزودن کلیک کنید.</p>
+                        <t t-foreach="nodeTypes" t-as="type" t-key="type.kind"><button t-att-class="'o_cas_wf_palette_item is-' + type.color" t-on-click="() => this.addNode(type.kind)" t-att-disabled="!editable"><i t-att-class="'fa ' + type.icon"/><span t-esc="type.label"/></button></t>
+                        <hr/><div class="o_cas_wf_help"><i class="fa fa-random"/><p>روی آیکن اتصال یک نود بزنید، سپس نود مقصد را انتخاب کنید.</p></div>
+                    </aside>
+                    <main class="o_cas_wf_canvas_wrap">
+                        <div class="o_cas_wf_canvas" t-ref="canvas">
+                            <svg class="o_cas_wf_edges" width="5000" height="5000">
+                                <defs><marker id="cas-wf-arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7"/></marker></defs>
+                                <t t-foreach="state.graph.edges" t-as="edge" t-key="edge.key">
+                                    <line t-att-x1="edgeLine(edge).x1" t-att-y1="edgeLine(edge).y1" t-att-x2="edgeLine(edge).x2" t-att-y2="edgeLine(edge).y2" t-att-class="'o_cas_wf_edge ' + (state.selectedEdgeKey === edge.key ? 'is-selected' : '')" marker-end="url(#cas-wf-arrow)" t-on-click="() => this.selectEdge(edge.key)"/>
+                                    <text t-att-x="edgeLine(edge).mx" t-att-y="edgeLine(edge).my - 8" class="o_cas_wf_edge_label" t-on-click="() => this.selectEdge(edge.key)" t-esc="edge.name"/>
+                                </t>
+                            </svg>
+                            <t t-foreach="state.graph.nodes" t-as="node" t-key="node.key">
+                                <article t-att-class="'o_cas_wf_node is-' + node.color + (state.selectedNodeKey === node.key ? ' is-selected' : '') + (state.connectingFrom === node.key ? ' is-connecting' : '')" t-att-style="'left:' + node.x + 'px;top:' + node.y + 'px'" t-on-pointerdown="(ev) => this.onNodePointerDown(ev, node)" t-on-pointermove="(ev) => this.onNodePointerMove(ev, node)" t-on-pointerup="onNodePointerUp" t-on-click="() => this.selectNode(node.key)">
+                                    <div class="o_cas_wf_node_head"><span t-esc="node.name"/><button title="ایجاد اتصال" t-on-click.stop="() => this.startConnection(node.key)"><i class="fa fa-share-alt"/></button></div><small t-esc="node.key"/><span class="o_cas_wf_kind" t-esc="nodeTypes.find((type) => type.kind === node.kind)?.label"/>
+                                </article>
+                            </t>
+                        </div>
+                    </main>
+                    <aside class="o_cas_wf_properties">
+                        <t t-if="selectedNode"><h5>ویژگی‌های نود</h5><label>عنوان<input class="form-control" t-att-value="selectedNode.name" t-on-input="(ev) => this.updateNode(ev, 'name')" t-att-disabled="!editable"/></label><label>کلید فنی<input class="form-control" dir="ltr" t-att-value="selectedNode.key" t-on-input="(ev) => this.updateNode(ev, 'key')" t-att-disabled="!editable"/></label><label>نوع<select class="form-select" t-att-value="selectedNode.kind" t-on-change="(ev) => this.updateNode(ev, 'kind')" t-att-disabled="!editable"><t t-foreach="nodeTypes" t-as="type" t-key="type.kind"><option t-att-value="type.kind" t-esc="type.label"/></t></select></label><label>مهلت مرحله (ساعت)<input class="form-control" type="number" min="0" step="0.5" t-att-value="selectedNode.sla_hours" t-on-input="(ev) => this.updateNode(ev, 'sla_hours')" t-att-disabled="!editable"/></label><label>رنگ<select class="form-select" t-att-value="selectedNode.color" t-on-change="(ev) => this.updateNode(ev, 'color')" t-att-disabled="!editable"><option value="blue">آبی</option><option value="green">سبز</option><option value="purple">بنفش</option><option value="orange">نارنجی</option><option value="red">قرمز</option></select></label><div class="form-check"><input class="form-check-input" type="checkbox" t-att-checked="selectedNode.fold" t-on-change="(ev) => this.updateNode(ev, 'fold')" t-att-disabled="!editable"/><label class="form-check-label">جمع‌شده در کانبان</label></div><button class="btn btn-outline-danger w-100 mt-3" t-on-click="() => this.deleteNode(selectedNode.key)" t-att-disabled="!editable"><i class="fa fa-trash"/> حذف نود</button></t>
+                        <t t-elif="selectedEdge"><h5>ویژگی‌های اتصال</h5><label>عنوان<input class="form-control" t-att-value="selectedEdge.name" t-on-input="(ev) => this.updateEdge(ev, 'name')" t-att-disabled="!editable"/></label><label>کلید فنی<input class="form-control" dir="ltr" t-att-value="selectedEdge.key" t-on-input="(ev) => this.updateEdge(ev, 'key')" t-att-disabled="!editable"/></label><label>مسئول بعدی<select class="form-select" t-att-value="selectedEdge.responsible_mode" t-on-change="(ev) => this.updateEdge(ev, 'responsible_mode')" t-att-disabled="!editable"><option value="keep">حفظ مسئول جاری</option><option value="actor">کاربر اجراکننده</option></select></label><div class="form-check"><input class="form-check-input" type="checkbox" t-att-checked="selectedEdge.note_required" t-on-change="(ev) => this.updateEdge(ev, 'note_required')" t-att-disabled="!editable"/><label class="form-check-label">یادداشت اجباری</label></div><div class="o_cas_wf_route"><code t-esc="selectedEdge.from"/><i class="fa fa-long-arrow-left"/><code t-esc="selectedEdge.to"/></div><button class="btn btn-outline-danger w-100 mt-3" t-on-click="() => this.deleteEdge(selectedEdge.key)" t-att-disabled="!editable"><i class="fa fa-trash"/> حذف اتصال</button></t>
+                        <t t-else=""><div class="o_cas_wf_property_hint"><i class="fa fa-hand-pointer-o"/><p>یک نود یا اتصال را برای ویرایش انتخاب کنید.</p></div></t>
+                    </aside>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
