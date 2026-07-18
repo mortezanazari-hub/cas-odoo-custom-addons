@@ -20,7 +20,10 @@
         <field name="name">دریافت‌کننده رخداد دستگاه</field>
     </record>
     <record id="base.group_system" model="res.groups">
-        <field name="implied_ids" eval="[(4, ref('cas_attendance_core.group_cas_attendance_manager'))]"/>
+        <field name="implied_ids" eval="[
+            (4, ref('cas_attendance_core.group_cas_attendance_manager')),
+            (4, ref('cas_attendance_core.group_cas_attendance_device_importer'))
+        ]"/>
     </record>
 
     <record id="rule_cas_attendance_site_company" model="ir.rule"><field name="name">محل‌های شرکت‌های مجاز</field><field name="model_id" ref="model_cas_attendance_site"/><field name="domain_force">[('company_id','in',company_ids)]</field></record>
@@ -38,4 +41,3 @@
     <record id="rule_cas_attendance_interval_own" model="ir.rule"><field name="name">بازه‌های خود کاربر</field><field name="model_id" ref="model_cas_attendance_interval"/><field name="groups" eval="[(4, ref('group_cas_attendance_user'))]"/><field name="domain_force">[('employee_id.user_id','=',user.id)]</field></record>
     <record id="rule_cas_attendance_interval_supervisor" model="ir.rule"><field name="name">بازه‌های قابل رسیدگی سرپرست</field><field name="model_id" ref="model_cas_attendance_interval"/><field name="groups" eval="[(4, ref('group_cas_attendance_supervisor'))]"/><field name="domain_force">[(1,'=',1)]</field></record>
 </odoo>
-

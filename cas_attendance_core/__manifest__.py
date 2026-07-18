@@ -1,7 +1,7 @@
 {
     "name": "CAS Attendance Core",
     "summary": "Auditable guard and device attendance reconciliation",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.2",
     "category": "Human Resources",
     "author": "Chodan Ara Shomal",
     "license": "LGPL-3",

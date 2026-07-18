@@ -7,7 +7,7 @@
 | مشخصه | مقدار |
 |---|---|
 | نام فنی | `cas_attendance_core` |
-| نسخه | `19.0.1.0.1` |
+| نسخه | `19.0.1.0.2` |
 | عنوان | CAS Attendance Core |
 | خلاصه | Auditable guard and device attendance reconciliation |
 | دسته | Human Resources |
@@ -231,7 +231,7 @@ Constraints سمت سرور: `_check_dates()`
 | `group_cas_attendance_supervisor` | سرپرست حضور و غیاب | [(4, ref('group_cas_attendance_user'))] | `security/cas_attendance_security.xml` |
 | `group_cas_attendance_manager` | مدیر حضور و غیاب | [(4, ref('group_cas_attendance_supervisor')), (4, ref('group_cas_attendance_guard'))] | `security/cas_attendance_security.xml` |
 | `group_cas_attendance_device_importer` | دریافت‌کننده رخداد دستگاه | — | `security/cas_attendance_security.xml` |
-| `base.group_system` | — | [(4, ref('cas_attendance_core.group_cas_attendance_manager'))] | `security/cas_attendance_security.xml` |
+| `base.group_system` | — | مدیر حضور و غیاب، دریافت‌کننده رخداد دستگاه | `security/cas_attendance_security.xml` |
 
 ## ماتریس ACL
 

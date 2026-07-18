@@ -7,7 +7,7 @@
 | مشخصه | مقدار |
 |---|---|
 | نام فنی | `cas_kardex_management` |
-| نسخه | `19.0.1.0.1` |
+| نسخه | `19.0.1.0.2` |
 | عنوان | CAS Kardex Management |
 | خلاصه | Minute-accurate attendance kardex, requests, overtime and monthly locks |
 | دسته | Human Resources |
@@ -347,7 +347,7 @@ Constraints سمت سرور: `_check_minutes()`
 | `group_cas_kardex_supervisor` | سرپرست کاردکس | [(4, ref('group_cas_kardex_user')), (4, ref('cas_attendance_core.group_cas_attendance_supervisor'))] | `security/cas_kardex_security.xml` |
 | `group_cas_kardex_manager` | مدیر کاردکس | [(4, ref('group_cas_kardex_supervisor'))] | `security/cas_kardex_security.xml` |
 | `group_cas_kardex_ceo` | مدیرعامل کاردکس | [(4, ref('group_cas_kardex_manager'))] | `security/cas_kardex_security.xml` |
-| `base.group_system` | — | [(4, ref('cas_kardex_management.group_cas_kardex_manager'))] | `security/cas_kardex_security.xml` |
+| `base.group_system` | — | مدیرعامل کاردکس (شامل مدیر، سرپرست و کاربر) | `security/cas_kardex_security.xml` |
 
 ## ماتریس ACL
 
