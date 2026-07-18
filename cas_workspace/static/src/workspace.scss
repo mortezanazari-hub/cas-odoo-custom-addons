@@ -24,6 +24,14 @@ $cas-bg: #f8fafb;
 }
 
 .cas-workspace__sidebar {
+    position: absolute;
+    z-index: 2;
+    /*!rtl:begin:ignore*/
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    /*!rtl:end:ignore*/
     width: 176px;
     flex: 0 0 176px;
     display: flex;
@@ -64,7 +72,17 @@ $cas-bg: #f8fafb;
 .cas-workspace__nav-badge { margin-right: auto; min-width: 22px; padding: 2px 6px; border-radius: 12px; color: $cas-navy; background: #fff; font-size: 11px; text-align: center; }
 .cas-workspace__logout { margin-top: 5px; }
 
-.cas-workspace__main { min-width: 0; flex: 1; display: flex; flex-direction: column; background: #fbfcfd; }
+.cas-workspace__main {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fbfcfd;
+    /*!rtl:begin:ignore*/
+    margin-right: 176px;
+    margin-left: 0;
+    /*!rtl:end:ignore*/
+}
 .cas-workspace__topbar {
     min-height: 78px;
     display: grid;
@@ -172,6 +190,12 @@ $cas-bg: #f8fafb;
 
 @media (max-width: 1100px) {
     .cas-workspace__sidebar { width: 76px; flex-basis: 76px; }
+    .cas-workspace__main {
+        /*!rtl:begin:ignore*/
+        margin-right: 76px;
+        margin-left: 0;
+        /*!rtl:end:ignore*/
+    }
     .cas-workspace__nav-item { justify-content: center; padding: 0; }
     .cas-workspace__nav-item > span:not(.cas-workspace__nav-badge) { display: none; }
     .cas-workspace__nav-badge { position: absolute; top: 3px; right: 3px; margin: 0; }
@@ -183,6 +207,12 @@ $cas-bg: #f8fafb;
 
 @media (max-width: 780px) {
     .cas-workspace__sidebar { width: 64px; flex-basis: 64px; padding-inline: 5px; }
+    .cas-workspace__main {
+        /*!rtl:begin:ignore*/
+        margin-right: 64px;
+        margin-left: 0;
+        /*!rtl:end:ignore*/
+    }
     .cas-workspace__brand img { width: 42px; height: 42px; }
     .cas-workspace__topbar { min-height: 68px; grid-template-columns: 1fr auto; gap: 12px; }
     .cas-workspace__title { display: none; }
