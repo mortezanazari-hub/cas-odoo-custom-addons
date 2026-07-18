@@ -43,3 +43,8 @@ Workspace نقش کسب‌وکاری تازه نمی‌سازد و باید از
 ```
 
 برای جزئیات معماری، routeها، امنیت و QA، [راهنمای کامل](docs/ARCHITECTURE_AND_USAGE.md) را ببینید.
+
+## مستندات
+
+- [معماری و راهنمای استفاده](docs/ARCHITECTURE_AND_USAGE.md)
+- [مرجع فنی استخراج‌شده از کد](docs/TECHNICAL_REFERENCE.md)

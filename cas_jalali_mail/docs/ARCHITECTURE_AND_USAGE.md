@@ -65,3 +65,7 @@ test_tracking_value.py و بررسی chatter.
 - **تاریخ جابه‌جا است:** timezone و مرز روز را بررسی کنید.
 - **OwlError:** اولین خطای template/event در console را مبنا بگیرید.
 - **PDF میلادی/جلالی اشتباه است:** نوع t-field و گزینه cas_gregorian را کنترل کنید.
+
+## مرجع فنی
+
+فهرست دقیق مدل‌ها، فیلدها، متدها، ACL، record rule، منوها، actionها، cronها، assetها و آزمون‌ها در [مرجع فنی استخراج‌شده از کد](TECHNICAL_REFERENCE.md) نگهداری می‌شود.

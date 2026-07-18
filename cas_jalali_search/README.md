@@ -47,3 +47,8 @@
 آزمون دوره، timezone و domain.
 
 [راهنمای معماری و استفاده](docs/ARCHITECTURE_AND_USAGE.md)
+
+## مستندات
+
+- [معماری و راهنمای استفاده](docs/ARCHITECTURE_AND_USAGE.md)
+- [مرجع فنی استخراج‌شده از کد](docs/TECHNICAL_REFERENCE.md)

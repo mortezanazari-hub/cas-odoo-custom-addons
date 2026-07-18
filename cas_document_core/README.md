@@ -50,3 +50,8 @@
 آزمون‌های version، storage، link، lifecycle، OCR و security.
 
 جزئیات معماری و سناریوها: [راهنمای کامل](docs/ARCHITECTURE_AND_USAGE.md).
+
+## مستندات
+
+- [معماری و راهنمای استفاده](docs/ARCHITECTURE_AND_USAGE.md)
+- [مرجع فنی استخراج‌شده از کد](docs/TECHNICAL_REFERENCE.md)

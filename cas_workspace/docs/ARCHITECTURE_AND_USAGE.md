@@ -110,3 +110,7 @@ flowchart RL
 - **scroll قفل است:** زنجیره ارتفاع و overflow از body تا content را کنترل کنید.
 - **ستون سمت چپ می‌رود:** جهت flex، position و breakpoint مالک sidebar را بررسی کنید.
 - **Settings فقط کاربران را نشان می‌دهد:** این محدودیت نسخه فعلی است و باید با settings hub دامنه‌ای جایگزین شود.
+
+## مرجع فنی
+
+فهرست دقیق مدل‌ها، فیلدها، متدها، ACL، record rule، منوها، actionها، cronها، assetها و آزمون‌ها در [مرجع فنی استخراج‌شده از کد](TECHNICAL_REFERENCE.md) نگهداری می‌شود.
