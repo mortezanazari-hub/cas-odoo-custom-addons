@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_cas_action_hub_user" model="res.groups">
+        <field name="name">کاربر کارتابل یکپارچه</field>
+    </record>
+    <record id="group_cas_action_hub_manager" model="res.groups">
+        <field name="name">مدیر کارتابل یکپارچه</field>
+        <field name="implied_ids" eval="[(4, ref('group_cas_action_hub_user'))]"/>
+    </record>
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('cas_action_hub.group_cas_action_hub_user'))]"/>
+    </record>
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('cas_action_hub.group_cas_action_hub_manager'))]"/>
+    </record>
+
+    <record id="rule_cas_action_item_visible" model="ir.rule">
+        <field name="name">کارتابل: فقط اقدام‌های قابل مشاهده کاربر</field>
+        <field name="model_id" ref="model_cas_action_item"/>
+        <field name="groups" eval="[(4, ref('group_cas_action_hub_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids), ('visibility_user_ids', 'in', user.id)]</field>
+    </record>
+</odoo>

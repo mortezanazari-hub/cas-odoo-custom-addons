@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_action_item_list" model="ir.ui.view">
+        <field name="name">cas.action.item.list</field>
+        <field name="model">cas.action.item</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0" decoration-danger="is_overdue or priority == 'immediate'" decoration-warning="priority == 'urgent'" decoration-muted="status in ('completed', 'cancelled')">
+                <field name="priority" widget="badge"/>
+                <field name="title"/>
+                <field name="action_type" widget="badge"/>
+                <field name="assignee_user_id"/>
+                <field name="original_assignee_user_id" optional="hide"/>
+                <field name="delegate_user_id" optional="show"/>
+                <field name="deadline"/>
+                <field name="is_overdue" column_invisible="1"/>
+                <field name="status" widget="badge"/>
+                <field name="source_adapter" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <button name="action_open_source" type="object" string="بازکردن" icon="fa-external-link"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cas_action_item_search" model="ir.ui.view">
+        <field name="name">cas.action.item.search</field>
+        <field name="model">cas.action.item</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="title"/>
+                <field name="assignee_user_id"/>
+                <field name="source_adapter"/>
+                <filter name="my_work" string="کارهای من" domain="[('assignee_user_id', '=', uid), ('status', 'not in', ('completed', 'cancelled'))]"/>
+                <filter name="urgent" string="فوری و آنی" domain="[('priority', 'in', ('urgent', 'immediate')), ('status', 'not in', ('completed', 'cancelled'))]"/>
+                <filter name="overdue" string="موعد گذشته" domain="[('is_overdue', '=', True)]"/>
+                <filter name="decision" string="نیازمند تصمیم" domain="[('action_type', '=', 'decision'), ('status', 'not in', ('completed', 'cancelled'))]"/>
+                <filter name="reply" string="نیازمند پاسخ" domain="[('action_type', '=', 'reply'), ('status', 'not in', ('completed', 'cancelled'))]"/>
+                <filter name="information" string="جهت اطلاع" domain="[('action_type', '=', 'information'), ('status', 'not in', ('completed', 'cancelled'))]"/>
+                <filter name="referred_by_me" string="ارجاع‌شده توسط من" domain="[('referred_by_user_id', '=', uid)]"/>
+                <filter name="delegated" string="تفویض‌شده" domain="[('is_delegated', '=', True)]"/>
+                <filter name="waiting_others" string="منتظر اقدام دیگران" domain="[('assignee_user_id', '!=', uid), '|', ('original_assignee_user_id', '=', uid), ('referred_by_user_id', '=', uid), ('status', 'not in', ('completed', 'cancelled'))]"/>
+                <filter name="completed" string="تکمیل‌شده" domain="[('status', 'in', ('completed', 'cancelled'))]"/>
+                <separator/>
+                <filter name="group_type" string="نوع اقدام" context="{'group_by': 'action_type'}"/>
+                <filter name="group_assignee" string="مسئول" context="{'group_by': 'assignee_user_id'}"/>
+                <filter name="group_source" string="منبع" context="{'group_by': 'source_adapter'}"/>
+                <filter name="group_status" string="وضعیت" context="{'group_by': 'status'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_cas_action_item_form" model="ir.ui.view">
+        <field name="name">cas.action.item.form</field>
+        <field name="model">cas.action.item</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <header>
+                    <button name="action_open_source" type="object" string="بازکردن رکورد منبع" class="btn-primary"/>
+                    <button name="action_refresh_item" type="object" string="به‌روزرسانی" groups="cas_action_hub.group_cas_action_hub_manager"/>
+                    <field name="status" widget="statusbar" statusbar_visible="pending,in_progress,waiting,completed,cancelled"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" text="موعد گذشته" bg_color="text-bg-danger" invisible="not is_overdue"/>
+                    <div class="oe_title"><h1><field name="title"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="action_type"/>
+                            <field name="priority"/>
+                            <field name="deadline"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="assignee_user_id"/>
+                            <field name="original_assignee_user_id"/>
+                            <field name="delegate_user_id" invisible="not delegate_user_id"/>
+                            <field name="referred_by_user_id" invisible="not referred_by_user_id"/>
+                            <field name="actor_user_id" invisible="not actor_user_id"/>
+                        </group>
+                    </group>
+                    <group string="منبع">
+                        <field name="source_adapter"/>
+                        <field name="source_model"/>
+                        <field name="source_record_id"/>
+                        <field name="action_key"/>
+                        <field name="source_status"/>
+                        <field name="last_synced_at"/>
+                    </group>
+                    <group string="شرح" invisible="not summary"><field name="summary" nolabel="1"/></group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cas_action_hub" model="ir.actions.act_window">
+        <field name="name">کارتابل یکپارچه</field>
+        <field name="res_model">cas.action.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cas_action_item_search"/>
+        <field name="domain">[('assignee_user_id', '=', uid), ('status', 'not in', ('completed', 'cancelled'))]</field>
+        <field name="context">{'search_default_my_work': 1}</field>
+    </record>
+    <record id="action_cas_action_hub_all_visible" model="ir.actions.act_window">
+        <field name="name">همه اقدام‌های قابل مشاهده</field>
+        <field name="res_model">cas.action.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_cas_action_item_search"/>
+    </record>
+    <record id="server_action_cas_action_hub_sync" model="ir.actions.server">
+        <field name="name">همگام‌سازی کارتابل</field>
+        <field name="model_id" ref="model_cas_action_item"/>
+        <field name="state">code</field>
+        <field name="code">model.action_sync_all()</field>
+    </record>
+</odoo>

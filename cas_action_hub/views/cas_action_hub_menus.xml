@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cas_action_hub_root" name="کارتابل یکپارچه" sequence="5" groups="group_cas_action_hub_user"/>
+    <menuitem id="menu_cas_action_hub_my_work" name="کارهای من" parent="menu_cas_action_hub_root" action="action_cas_action_hub" sequence="10"/>
+    <menuitem id="menu_cas_action_hub_all_visible" name="همه اقدام‌های قابل مشاهده" parent="menu_cas_action_hub_root" action="action_cas_action_hub_all_visible" sequence="20"/>
+    <menuitem id="menu_cas_action_hub_sync" name="همگام‌سازی اکنون" parent="menu_cas_action_hub_root" action="server_action_cas_action_hub_sync" sequence="90" groups="group_cas_action_hub_manager"/>
+</odoo>
