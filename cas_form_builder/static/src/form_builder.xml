@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_form_builder.VisualDesigner">
+        <div class="o_cas_form_builder" dir="rtl">
+            <t t-if="state.loading"><div class="o_cas_builder_loading"><i class="fa fa-spinner fa-spin"/> در حال بارگذاری طراح…</div></t>
+            <t t-else="">
+                <header class="o_cas_builder_toolbar">
+                    <div><button class="btn btn-light" t-on-click="back"><i class="fa fa-arrow-right"/> بازگشت</button><strong t-esc="state.schema.name"/><span class="badge text-bg-secondary">نسخه <t t-esc="state.schema.revision"/></span></div>
+                    <div><span t-if="!editable" class="badge text-bg-warning">نسخه قفل‌شده؛ فقط پیش‌نمایش</span><button class="btn btn-primary" t-on-click="save" t-att-disabled="!editable || state.saving"><i class="fa fa-save"/> ذخیره طراحی</button></div>
+                </header>
+                <div class="o_cas_builder_workspace">
+                    <aside class="o_cas_builder_palette">
+                        <h5>اجزای فرم</h5><p>جزء را بکشید و داخل بخش رها کنید.</p>
+                        <div class="o_cas_palette_grid"><t t-foreach="palette" t-as="item" t-key="item.type"><div class="o_cas_palette_item" draggable="true" t-on-dragstart="(ev) => this.dragPalette(ev, item.type)" t-on-dblclick="() => this.addField(item.type)"><i t-att-class="'fa ' + item.icon"/><span t-esc="item.label"/></div></t></div>
+                        <button class="btn btn-outline-primary w-100 mt-3" t-on-click="addSection" t-att-disabled="!editable"><i class="fa fa-plus"/> افزودن بخش</button>
+                    </aside>
+                    <main class="o_cas_builder_canvas">
+                        <t t-foreach="state.schema.sections" t-as="section" t-key="section.key">
+                            <section class="o_cas_form_section" t-on-dragover.prevent="" t-on-drop="(ev) => this.dropSection(ev, section.key)">
+                                <div class="o_cas_section_header"><input t-att-value="section.title" t-on-input="(ev) => this.updateSection(ev, section, 'title')" t-att-disabled="!editable"/><label>ستون <select t-att-value="section.columns" t-on-change="(ev) => this.updateSection(ev, section, 'columns')" t-att-disabled="!editable"><option value="1">۱</option><option value="2">۲</option><option value="3">۳</option><option value="4">۴</option></select></label><button class="btn btn-sm btn-link text-danger" t-on-click="() => this.removeSection(section.key)" t-att-disabled="!editable || state.schema.sections.length === 1"><i class="fa fa-trash"/></button></div>
+                                <div class="o_cas_section_grid" t-att-style="'grid-template-columns: repeat(' + section.columns + ', minmax(0, 1fr))'">
+                                    <t t-foreach="state.schema.fields.filter((field) => field.section_key === section.key)" t-as="field" t-key="field.key">
+                                        <article t-att-class="'o_cas_field_card ' + (state.selectedKey === field.key ? 'is-selected' : '')" t-att-style="'grid-column: span ' + Math.min(field.column_span, section.columns)" draggable="true" t-on-dragstart="(ev) => this.dragField(ev, field.key)" t-on-click="() => this.selectField(field.key)">
+                                            <div><strong t-esc="field.label"/><span t-if="field.required" class="text-danger"> *</span><small t-esc="field.key"/></div><span class="badge text-bg-light" t-esc="palette.find((item) => item.type === field.type)?.label || field.type"/>
+                                            <div class="o_cas_field_actions"><button t-on-click.stop="() => this.moveField(field.key, -1)"><i class="fa fa-arrow-up"/></button><button t-on-click.stop="() => this.moveField(field.key, 1)"><i class="fa fa-arrow-down"/></button><button class="text-danger" t-on-click.stop="() => this.removeField(field.key)"><i class="fa fa-trash"/></button></div>
+                                        </article>
+                                    </t>
+                                    <div t-if="!state.schema.fields.some((field) => field.section_key === section.key)" class="o_cas_drop_hint">فیلدها را اینجا رها کنید</div>
+                                </div>
+                            </section>
+                        </t>
+                    </main>
+                    <aside class="o_cas_builder_properties">
+                        <t t-if="selected"><h5>ویژگی‌های فیلد</h5><label>عنوان<input class="form-control" t-att-value="selected.label" t-on-input="(ev) => this.updateSelected(ev, 'label')"/></label><label>کلید فنی<input class="form-control" dir="ltr" t-att-value="selected.key" t-on-input="(ev) => this.updateSelected(ev, 'key')"/></label><label>نوع<select class="form-select" t-att-value="selected.type" t-on-change="(ev) => this.updateSelected(ev, 'type')"><t t-foreach="palette" t-as="item" t-key="item.type"><option t-att-value="item.type" t-esc="item.label"/></t></select></label><label>متن نمونه<input class="form-control" t-att-value="selected.placeholder" t-on-input="(ev) => this.updateSelected(ev, 'placeholder')"/></label><label>عرض<select class="form-select" t-att-value="selected.column_span" t-on-change="(ev) => this.updateSelected(ev, 'column_span')"><option value="1">۱ ستون</option><option value="2">۲ ستون</option><option value="3">۳ ستون</option><option value="4">۴ ستون</option></select></label><div class="form-check"><input class="form-check-input" type="checkbox" t-att-checked="selected.required" t-on-change="(ev) => this.updateSelected(ev, 'required')"/><label class="form-check-label">اجباری</label></div><div class="form-check"><input class="form-check-input" type="checkbox" t-att-checked="selected.readonly" t-on-change="(ev) => this.updateSelected(ev, 'readonly')"/><label class="form-check-label">فقط خواندنی</label></div><t t-if="['single_select','multi_select','radio','dropdown','tag'].includes(selected.type)"><hr/><div class="d-flex justify-content-between"><strong>گزینه‌ها</strong><button class="btn btn-sm btn-outline-primary" t-on-click="addOption">افزودن</button></div><t t-foreach="selected.options" t-as="option" t-key="option_index"><div class="o_cas_option_row"><input class="form-control" t-att-value="option.label" t-on-input="(ev) => this.updateOption(ev, option_index, 'label')"/><input class="form-control" dir="ltr" t-att-value="option.key" t-on-input="(ev) => this.updateOption(ev, option_index, 'key')"/><button class="btn btn-link text-danger" t-on-click="() => this.removeOption(option_index)"><i class="fa fa-times"/></button></div></t></t></t>
+                        <t t-else=""><div class="o_cas_property_hint"><i class="fa fa-hand-pointer-o"/><p>برای ویرایش، یک فیلد را انتخاب کنید.</p></div></t>
+                    </aside>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
