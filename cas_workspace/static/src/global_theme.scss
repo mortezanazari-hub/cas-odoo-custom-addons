@@ -11,7 +11,6 @@ $cas-shell-border: #dfe4ea;
 $cas-shell-danger: #d92d20;
 $cas-shell-warning: #e58a00;
 $cas-sidebar-width: 176px;
-$cas-navbar-height: 78px;
 
 body.cas-global-theme {
     --cas-primary: #{$cas-shell-teal};
@@ -34,14 +33,15 @@ body.cas-global-theme {
 .cas-global-sidebar {
     position: fixed;
     z-index: 1090;
-    inset: 0 0 0 auto;
+    inset-block: 0;
+    inset-inline-start: 0;
     width: $cas-sidebar-width;
     display: flex;
     flex-direction: column;
     padding: 20px 8px 14px;
     color: #e5eef6;
     background: $cas-shell-navy;
-    box-shadow: -5px 0 26px rgba(4, 25, 48, .12);
+    box-shadow: 0 0 26px rgba(4, 25, 48, .12);
 }
 
 .cas-global-sidebar__brand {
@@ -78,71 +78,29 @@ body.cas-global-theme {
     &:hover, &:focus-visible { color: #fff; background: rgba(255,255,255,.09); outline: none; transform: translateX(-2px); }
     &.is-active { color: #fff; background: $cas-shell-teal; box-shadow: 0 8px 22px rgba(0,0,0,.15); }
 }
-.cas-global-sidebar__badge { margin-right: auto; min-width: 21px; padding: 2px 6px; border-radius: 12px; color: $cas-shell-navy; background: #fff; font-size: 10px; text-align: center; }
+.cas-global-sidebar__badge { margin-inline-start: auto; min-width: 21px; padding: 2px 6px; border-radius: 12px; color: $cas-shell-navy; background: #fff; font-size: 10px; text-align: center; }
 .cas-global-sidebar__logout { margin-top: 3px; }
 .cas-global-shell__mobile-toggle { display: none; }
 .cas-global-sidebar__backdrop { display: none; }
-
-.cas-global-apps {
-    position: fixed;
-    z-index: 1100;
-    top: 84px;
-    right: 188px;
-    width: 660px;
-    max-width: calc(100vw - 220px);
-    max-height: calc(100vh - 112px);
-    overflow: hidden;
-    border: 1px solid $cas-shell-border;
-    border-radius: 14px;
-    color: $cas-shell-ink;
-    background: #fff;
-    box-shadow: 0 24px 70px rgba(18, 38, 64, .2);
-    header { min-height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid $cas-shell-border; }
-    header > div { display: flex; flex-direction: column; gap: 3px; }
-    header strong { font-size: 17px; }
-    header small { color: $cas-shell-muted; }
-    header button { width: 36px; height: 36px; border: 0; border-radius: 8px; color: $cas-shell-muted; background: #f3f5f7; }
-}
-.cas-global-apps__grid { max-height: calc(100vh - 186px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding: 18px; overflow: auto; }
-.cas-global-apps__grid > button {
-    min-height: 112px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 12px 8px;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    color: $cas-shell-ink;
-    background: #f8fafb;
-    text-align: center;
-    img, .cas-global-apps__fallback { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; }
-    .cas-global-apps__fallback { display: grid; place-items: center; color: #fff; background: $cas-shell-teal; font-size: 22px; }
-    strong { max-width: 100%; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    &:hover, &:focus-visible { border-color: $cas-shell-teal; color: $cas-shell-teal-dark; background: $cas-shell-teal-soft; outline: none; }
-}
 
 body.cas-global-theme .o_web_client {
     background: $cas-shell-bg;
 
     > .o_navbar {
         min-width: 0;
-        margin-right: $cas-sidebar-width;
+        margin-inline-start: $cas-sidebar-width;
         background: #fff;
     }
 
     > .o_action_manager {
         min-width: 0;
-        margin-right: $cas-sidebar-width;
+        margin-inline-start: $cas-sidebar-width;
         color: $cas-shell-ink;
         background: $cas-shell-bg;
     }
 }
 
 body.cas-global-theme .o_main_navbar {
-    height: $cas-navbar-height;
-    padding: 0 22px;
     border-bottom: 1px solid $cas-shell-border;
     color: $cas-shell-ink;
     background: #fff !important;
@@ -170,26 +128,6 @@ body.cas-global-theme .o_main_navbar {
     .o_menu_systray .dropdown-toggle:hover, .o_menu_systray button:hover, .o_menu_systray > div > a:hover { color: $cas-shell-teal !important; background: $cas-shell-teal-soft !important; }
 }
 
-.cas-global-search {
-    min-width: 260px;
-    max-width: 520px;
-    min-height: 44px;
-    flex: 1 1 420px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 22px;
-    padding: 0 14px;
-    border: 1px solid #d5dbe2;
-    border-radius: 9px;
-    color: $cas-shell-muted;
-    background: #fff;
-    &:focus-within { border-color: $cas-shell-teal; box-shadow: 0 0 0 3px rgba($cas-shell-teal,.12); }
-    > i { font-size: 18px; }
-    input { min-width: 0; flex: 1; border: 0; outline: 0; color: $cas-shell-ink; background: transparent; }
-    kbd { direction: ltr; padding: 2px 6px; border: 1px solid $cas-shell-border; border-radius: 5px; color: #8a93a1; background: #f6f7f9; font: 10px Arial, sans-serif; }
-}
-
 // Shared controls and feedback
 body.cas-global-theme {
     .btn-primary, .o_form_button_save, .o_list_button_add {
@@ -201,13 +139,13 @@ body.cas-global-theme {
     .btn-secondary { border-color: $cas-shell-border !important; color: #364152 !important; background: #fff !important; }
     .btn-secondary:hover { border-color: $cas-shell-teal !important; color: $cas-shell-teal-dark !important; background: $cas-shell-teal-soft !important; }
     .btn-link, a:not(.btn) { color: $cas-shell-teal-dark; }
-    .form-control, .form-select, .o_input, .o_field_widget input, .o_field_widget textarea, .o_field_widget select {
+    .form-control, .form-select, .o_input, .o_field_widget input[type="text"], .o_field_widget input[type="number"], .o_field_widget input[type="email"], .o_field_widget input[type="tel"], .o_field_widget input[type="date"], .o_field_widget textarea, .o_field_widget select {
         border-color: #d8dee5;
         border-radius: 7px;
         color: $cas-shell-ink;
         background-color: #fff;
     }
-    .form-control:focus, .form-select:focus, .o_input:focus, .o_field_widget input:focus, .o_field_widget textarea:focus {
+    .form-control:focus, .form-select:focus, .o_input:focus, .o_field_widget input[type="text"]:focus, .o_field_widget input[type="number"]:focus, .o_field_widget input[type="email"]:focus, .o_field_widget input[type="tel"]:focus, .o_field_widget input[type="date"]:focus, .o_field_widget textarea:focus {
         border-color: $cas-shell-teal !important;
         box-shadow: 0 0 0 3px rgba($cas-shell-teal,.12) !important;
         outline: 0;
@@ -221,8 +159,6 @@ body.cas-global-theme {
 
 // Control panels, breadcrumbs, search and paging
 body.cas-global-theme .o_control_panel {
-    min-height: 76px;
-    padding: 14px 24px;
     border-bottom: 1px solid $cas-shell-border;
     background: #fff;
 
@@ -241,18 +177,14 @@ body.cas-global-theme {
         color: $cas-shell-ink;
         background: $cas-shell-bg;
     }
-    .o_list_renderer { padding: 18px 22px 26px; background: $cas-shell-bg; }
+    .o_list_renderer { background: $cas-shell-bg; }
     .o_list_table {
-        overflow: hidden;
         border: 1px solid $cas-shell-border;
-        border-radius: 9px;
-        border-collapse: separate;
-        border-spacing: 0;
         background: #fff;
         box-shadow: 0 2px 8px rgba(21,42,68,.03);
         thead { background: #f5f7f9; }
-        thead th { height: 48px; border-bottom: 1px solid $cas-shell-border; color: #3e4756; font-size: 12px; font-weight: 800; }
-        tbody td { height: 54px; border-bottom-color: #e8ebef; vertical-align: middle; }
+        thead th { border-bottom: 1px solid $cas-shell-border; color: #3e4756; font-size: 12px; font-weight: 800; }
+        tbody td { border-bottom-color: #e8ebef; vertical-align: middle; }
         tbody tr:hover > td { background: #f3fbfb !important; }
         tbody tr.o_selected_row > td { background: $cas-shell-teal-soft !important; }
         .o_list_record_selector { background: inherit; }
@@ -264,7 +196,7 @@ body.cas-global-theme {
 // Forms, sheets, chatter and status bars
 body.cas-global-theme {
     .o_form_view { color: $cas-shell-ink; background: $cas-shell-bg; }
-    .o_form_view .o_form_sheet_bg { padding: 24px; background: $cas-shell-bg; }
+    .o_form_view .o_form_sheet_bg { background: $cas-shell-bg; }
     .o_form_view .o_form_sheet {
         border: 1px solid $cas-shell-border;
         border-radius: 10px;
@@ -274,7 +206,7 @@ body.cas-global-theme {
     .o_form_view .oe_title h1, .o_form_view .oe_title h2 { color: $cas-shell-ink; font-weight: 800; }
     .o_form_label { color: #4b5565; font-weight: 700; }
     .o_group .o_horizontal_separator { color: $cas-shell-teal-dark; border-bottom-color: #cfe7e8; font-weight: 800; }
-    .o_form_statusbar { min-height: 54px; padding-inline: 20px; border-bottom: 1px solid $cas-shell-border; background: #fff; }
+    .o_form_statusbar { border-bottom: 1px solid $cas-shell-border; background: #fff; }
     .o_statusbar_status .o_arrow_button { color: #657083; background: #f4f6f8; }
     .o_statusbar_status .o_arrow_button.o_arrow_button_current { color: #fff; background: $cas-shell-teal; }
     .o_notebook_headers { border-bottom-color: $cas-shell-border; background: #fff; }
@@ -287,7 +219,7 @@ body.cas-global-theme {
 
 // Kanban, activity, calendar, pivot, graph and dashboards
 body.cas-global-theme {
-    .o_kanban_renderer { padding: 20px; background: $cas-shell-bg; }
+    .o_kanban_renderer { background: $cas-shell-bg; }
     .o_kanban_record, .o_kanban_quick_create {
         border: 1px solid $cas-shell-border !important;
         border-radius: 9px !important;
@@ -298,7 +230,6 @@ body.cas-global-theme {
     .o_kanban_group_header { color: #3f4857; }
     .o_activity_view, .o_pivot_view, .o_graph_view, .o_calendar_view { background: $cas-shell-bg; }
     .o_activity_view table, .o_pivot_view table { border: 1px solid $cas-shell-border; background: #fff; }
-    .o_calendar_renderer { padding: 18px; }
     .fc .fc-toolbar-title { color: $cas-shell-ink; font-weight: 800; }
     .fc .fc-button-primary { border-color: $cas-shell-teal !important; background: $cas-shell-teal !important; }
     .o_dashboard, .o_spreadsheet_dashboard_action { background: $cas-shell-bg; }
@@ -314,8 +245,8 @@ body.cas-global-theme {
     }
     .dropdown-item { color: $cas-shell-ink; }
     .dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active { color: $cas-shell-teal-dark; background: $cas-shell-teal-soft; }
-    .modal-content { overflow: hidden; border: 1px solid $cas-shell-border; border-radius: 12px; box-shadow: 0 28px 80px rgba(10,29,52,.24); }
-    .modal-header { min-height: 62px; border-bottom-color: $cas-shell-border; background: #fbfcfd; }
+    .modal-content { border: 1px solid $cas-shell-border; border-radius: 12px; box-shadow: 0 28px 80px rgba(10,29,52,.24); }
+    .modal-header { border-bottom-color: $cas-shell-border; background: #fbfcfd; }
     .modal-title { color: $cas-shell-ink; font-weight: 800; }
     .modal-footer { border-top-color: $cas-shell-border; background: #fbfcfd; }
     .modal-backdrop { background: #071d35; }
@@ -325,7 +256,7 @@ body.cas-global-theme {
 body.cas-global-theme {
     .o_base_settings { background: $cas-shell-bg; }
     .o_base_settings .o_setting_container { background: $cas-shell-bg; }
-    .o_base_settings .settings_tab { border-left: 1px solid $cas-shell-border; background: $cas-shell-navy; }
+    .o_base_settings .settings_tab { border-inline-end: 1px solid $cas-shell-border; background: $cas-shell-navy; }
     .o_base_settings .settings_tab .tab { color: #dce8f2; }
     .o_base_settings .settings_tab .selected { color: #fff; background: $cas-shell-teal; }
     .o_base_settings .settings { background: $cas-shell-bg; }
@@ -355,36 +286,27 @@ body.cas-global-theme {
     .cas-global-sidebar { width: $cas-sidebar-compact; }
     .cas-global-sidebar__item { justify-content: center; padding: 0; }
     .cas-global-sidebar__item > span:not(.cas-global-sidebar__badge) { display: none; }
-    .cas-global-sidebar__badge { position: absolute; top: 3px; right: 3px; margin: 0; }
+    .cas-global-sidebar__badge { position: absolute; inset-block-start: 3px; inset-inline-start: 3px; margin: 0; }
     .cas-global-sidebar__brand { width: 48px; height: 48px; }
     body.cas-global-theme .o_web_client > .o_navbar,
-    body.cas-global-theme .o_web_client > .o_action_manager { margin-right: $cas-sidebar-compact; }
-    .cas-global-apps { right: 88px; width: 640px; max-width: calc(100vw - 112px); }
-    .cas-global-search { min-width: 220px; margin-inline: 12px; }
+    body.cas-global-theme .o_web_client > .o_action_manager { margin-inline-start: $cas-sidebar-compact; }
 }
 
 @media (max-width: 991.98px) {
     body.cas-global-theme .o_web_client > .o_navbar,
-    body.cas-global-theme .o_web_client > .o_action_manager { margin-right: 0; }
-    body.cas-global-theme .o_main_navbar { height: 64px; padding-right: 62px; padding-left: 10px; }
+    body.cas-global-theme .o_web_client > .o_action_manager { margin-inline-start: 0; }
+    body.cas-global-theme .o_main_navbar { padding-inline-start: 62px; }
     .cas-global-sidebar { width: 236px; transform: translateX(105%); transition: transform .2s ease; }
     .cas-global-sidebar.is-open { transform: translateX(0); }
     .cas-global-sidebar__item { justify-content: flex-start; padding: 0 14px; }
     .cas-global-sidebar__item > span:not(.cas-global-sidebar__badge) { display: inline; }
-    .cas-global-sidebar__badge { position: static; margin-right: auto; }
-    .cas-global-shell__mobile-toggle { position: fixed; z-index: 1092; top: 11px; right: 12px; width: 42px; height: 42px; display: grid; place-items: center; border: 0; border-radius: 9px; color: #fff; background: $cas-shell-teal; font-size: 18px; }
+    .cas-global-sidebar__badge { position: static; margin-inline-start: auto; }
+    .cas-global-shell__mobile-toggle { position: fixed; z-index: 1092; inset-block-start: 8px; inset-inline-start: 12px; width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 9px; color: #fff; background: $cas-shell-teal; font-size: 18px; }
     .cas-global-sidebar__backdrop { position: fixed; z-index: 1089; inset: 0; display: block; background: rgba(4,25,48,.5); }
-    .cas-global-apps { top: 70px; right: 12px; left: 12px; width: auto; }
-    .cas-global-apps__grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
-    body.cas-global-theme .o_control_panel { min-height: 64px; padding: 10px 14px; }
-    body.cas-global-theme .o_list_renderer { padding: 10px; }
-    body.cas-global-theme .o_form_view .o_form_sheet_bg { padding: 12px; }
 }
 
 @media (max-width: 575.98px) {
-    .cas-global-apps__grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
     body.cas-global-theme .o_form_view .o_form_sheet { border-radius: 7px; }
-    body.cas-global-theme .o_list_table { border-radius: 7px; }
 }
 
 @media print {

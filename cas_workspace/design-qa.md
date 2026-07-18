@@ -55,6 +55,7 @@ Blocked for the same reason. The reference regions were inspected directly, but 
 
 - Iteration 1: source opened and implementation installed; browser capture failed before initialization. No visual fixes could be evidence-driven.
 - Iteration 2: global WebClient shell and shared design tokens were installed. The first CSS build exposed an incompatible Sass `min()` expression; it was replaced with width plus max-width, and the rebuilt debug bundle returned no CSS error. Browser capture remained unavailable.
+- Iteration 3: the user reported broken responsiveness and inconsistent menu behavior. Code review identified three structural causes: a custom search component injected into Odoo's responsive Navbar, a second custom apps menu competing with Odoo's own menu system, and physical right/left offsets plus forced component dimensions. The injected search and duplicate apps menu were removed, the Navbar was returned to Odoo ownership, sidebar offsets were converted to logical RTL properties, and forced navbar, control-panel, list-row, form-padding, kanban-padding, calendar-padding, and dialog-overflow rules were removed. Version 19.0.1.2.0 rebuilt with no CSS error and the debug JavaScript bundle no longer contains the removed global-search component. Browser capture remained unavailable.
 
 ## Implementation checklist
 

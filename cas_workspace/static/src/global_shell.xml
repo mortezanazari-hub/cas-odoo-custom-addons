@@ -6,14 +6,8 @@
         </xpath>
     </t>
 
-    <t t-name="cas_workspace.NavBarSearch" t-inherit="web.NavBar" t-inherit-mode="extension">
-        <xpath expr="//div[hasclass('o_menu_systray')]" position="before">
-            <CasGlobalSearch t-if="!this.ui.isSmall"/>
-        </xpath>
-    </t>
-
     <t t-name="cas_workspace.GlobalSidebar">
-        <div class="cas-global-shell" t-ref="root" dir="rtl">
+        <div class="cas-global-shell" dir="rtl">
             <button type="button" class="cas-global-shell__mobile-toggle" title="بازکردن منو" t-on-click="() => this.state.mobileOpen = !this.state.mobileOpen">
                 <i class="fa fa-bars"/>
             </button>
@@ -35,15 +29,6 @@
                 </nav>
 
                 <nav class="cas-global-sidebar__nav cas-global-sidebar__nav--footer">
-                    <button type="button" class="cas-global-sidebar__item cas-global-sidebar__apps-button" title="همه سامانه‌ها" t-on-click="toggleApps">
-                        <i class="fa fa-th-large"/><span>همه سامانه‌ها</span>
-                    </button>
-                    <button type="button" class="cas-global-sidebar__item" title="تنظیمات" t-on-click="() => this.action.doAction('base.action_res_users')">
-                        <i class="fa fa-cog"/><span>تنظیمات</span>
-                    </button>
-                    <button type="button" class="cas-global-sidebar__item" title="راهنما">
-                        <i class="fa fa-question-circle-o"/><span>راهنما</span>
-                    </button>
                     <button type="button" class="cas-global-sidebar__item cas-global-sidebar__logout" title="خروج" t-on-click="logout">
                         <i class="fa fa-sign-out"/><span>خروج</span>
                     </button>
@@ -51,27 +36,6 @@
             </aside>
 
             <div t-if="state.mobileOpen" class="cas-global-sidebar__backdrop" t-on-click="() => this.state.mobileOpen = false"/>
-
-            <section t-if="state.appsOpen" class="cas-global-apps" aria-label="همه سامانه‌ها">
-                <header><div><strong>همه سامانه‌ها</strong><small>یک بخش را برای ادامه انتخاب کنید</small></div><button type="button" title="بستن" t-on-click="() => this.state.appsOpen = false"><i class="fa fa-times"/></button></header>
-                <div class="cas-global-apps__grid">
-                    <button t-foreach="apps" t-as="app" t-key="app.id" type="button" t-on-click="() => this.openApp(app)">
-                        <img t-if="app.webIconData" t-att-src="app.webIconData" alt=""/>
-                        <span t-else="" class="cas-global-apps__fallback"><i class="fa fa-cube"/></span>
-                        <strong t-esc="app.name"/>
-                    </button>
-                </div>
-            </section>
         </div>
     </t>
-
-    <t t-name="cas_workspace.GlobalSearch">
-        <label class="cas-global-search">
-            <i class="fa fa-search"/>
-            <input t-ref="input" type="search" placeholder="جست‌وجو در همین صفحه" t-model="state.query" t-on-keydown="runSearch" aria-label="جست‌وجو در صفحه جاری"/>
-            <kbd>Ctrl K</kbd>
-        </label>
-    </t>
-
-    <t t-name="cas_workspace.ThemeMarker"><span class="d-none" aria-hidden="true"/></t>
 </templates>
