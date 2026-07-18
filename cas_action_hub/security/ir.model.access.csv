@@ -1,3 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_cas_action_item_user,cas.action.item user,model_cas_action_item,group_cas_action_hub_user,1,0,0,0
 access_cas_action_item_manager,cas.action.item manager,model_cas_action_item,group_cas_action_hub_manager,1,0,0,0
+access_cas_action_event_user,cas.action.event user,model_cas_action_event,group_cas_action_hub_user,1,0,0,0
+access_cas_action_event_manager,cas.action.event manager,model_cas_action_event,group_cas_action_hub_manager,1,0,0,0
+access_cas_action_sla_user,cas.action.sla.rule user,model_cas_action_sla_rule,group_cas_action_hub_user,1,0,0,0
+access_cas_action_sla_manager,cas.action.sla.rule manager,model_cas_action_sla_rule,group_cas_action_hub_manager,1,1,1,1

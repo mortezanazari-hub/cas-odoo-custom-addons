@@ -116,6 +116,22 @@ class CasCorrespondenceVisibilityMixin(models.AbstractModel):
             "source_adapter": "cas_correspondence",
         }
 
+    def _sync_action_hub(self):
+        if "cas.action.item" not in self.env:
+            return
+        Hub = self.env["cas.action.item"].sudo()
+        for record in self.exists():
+            descriptor = record._cas_action_descriptor()
+            key = descriptor["action_key"]
+            if record.status in ("completed", "replied", "cancelled"):
+                Hub._complete(record._name, record.id, key, cancelled=record.status == "cancelled")
+                continue
+            if not record.responsible_user_id or record.letter_id.state == "draft":
+                continue
+            descriptor["assignee_user_id"] = descriptor.pop("responsible_user_id")
+            descriptor["original_assignee_user_id"] = descriptor.pop("original_responsible_user_id")
+            Hub._publish(descriptor)
+
 
 class CasCorrespondenceRecipient(models.Model):
     _name = "cas.correspondence.recipient"
@@ -236,6 +252,7 @@ class CasCorrespondenceRecipient(models.Model):
                 raise ValidationError(_("فیلدهای اجرایی مخاطب قابل ویرایش مستقیم نیستند."))
         result = super().write(vals)
         self.mapped("letter_id")._sync_access_index()
+        self._sync_action_hub()
         return result
 
     def unlink(self):
@@ -420,12 +437,15 @@ class CasCorrespondenceReferral(models.Model):
             records |= record
         records._create_activity()
         records.mapped("letter_id")._sync_access_index()
+        records._sync_action_hub()
         return records
 
     def write(self, vals):
         if not self.env.context.get("cas_correspondence_engine"):
             raise ValidationError(_("ارجاع قابل ویرایش مستقیم نیست."))
-        return super().write(vals)
+        result = super().write(vals)
+        self._sync_action_hub()
+        return result
 
     def unlink(self):
         raise ValidationError(_("ارجاع و سابقه آن قابل حذف نیست."))

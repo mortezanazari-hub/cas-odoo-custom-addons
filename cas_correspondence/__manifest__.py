@@ -1,7 +1,7 @@
 {
     "name": "CAS Internal Correspondence",
     "summary": "Secure, auditable internal organizational correspondence",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Productivity",
     "author": "Chodan Ara Shomal",
     "website": "https://erp.chodanara.com",

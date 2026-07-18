@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="cas_action_hub.Systray" owl="1">
+        <button class="o-mail-DiscussSystray-class o-dropdown dropdown-toggle dropdown" t-on-click="openHub" title="کارتابل یکپارچه">
+            <i class="fa fa-inbox" aria-label="کارتابل یکپارچه"/>
+            <span t-if="state.open" t-att-class="state.overdue ? 'badge rounded-pill text-bg-danger' : 'badge rounded-pill text-bg-primary'">
+                <t t-esc="state.open"/>
+            </span>
+        </button>
+    </t>
+</templates>

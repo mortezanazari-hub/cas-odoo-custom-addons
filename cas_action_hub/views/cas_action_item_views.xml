@@ -11,9 +11,11 @@
                 <field name="assignee_user_id"/>
                 <field name="original_assignee_user_id" optional="hide"/>
                 <field name="delegate_user_id" optional="show"/>
+                <field name="manager_user_id" optional="hide"/>
                 <field name="deadline"/>
                 <field name="is_overdue" column_invisible="1"/>
                 <field name="status" widget="badge"/>
+                <field name="escalation_level" optional="show"/>
                 <field name="source_adapter" optional="hide"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <button name="action_open_source" type="object" string="بازکردن" icon="fa-external-link"/>
@@ -38,6 +40,8 @@
                 <filter name="referred_by_me" string="ارجاع‌شده توسط من" domain="[('referred_by_user_id', '=', uid)]"/>
                 <filter name="delegated" string="تفویض‌شده" domain="[('is_delegated', '=', True)]"/>
                 <filter name="waiting_others" string="منتظر اقدام دیگران" domain="[('assignee_user_id', '!=', uid), '|', ('original_assignee_user_id', '=', uid), ('referred_by_user_id', '=', uid), ('status', 'not in', ('completed', 'cancelled'))]"/>
+                <filter name="manager_scope" string="حوزه مدیریتی من" domain="[('manager_user_id', '=', uid), ('status', 'not in', ('completed', 'cancelled'))]"/>
+                <filter name="escalated" string="تصعیدشده" domain="[('escalation_level', '&gt;', 0), ('status', 'not in', ('completed', 'cancelled'))]"/>
                 <filter name="completed" string="تکمیل‌شده" domain="[('status', 'in', ('completed', 'cancelled'))]"/>
                 <separator/>
                 <filter name="group_type" string="نوع اقدام" context="{'group_by': 'action_type'}"/>
@@ -73,6 +77,7 @@
                             <field name="original_assignee_user_id"/>
                             <field name="delegate_user_id" invisible="not delegate_user_id"/>
                             <field name="referred_by_user_id" invisible="not referred_by_user_id"/>
+                            <field name="manager_user_id" invisible="not manager_user_id"/>
                             <field name="actor_user_id" invisible="not actor_user_id"/>
                         </group>
                     </group>
@@ -84,7 +89,35 @@
                         <field name="source_status"/>
                         <field name="last_synced_at"/>
                     </group>
+                    <group string="SLA و تفویض">
+                        <group>
+                            <field name="reminder_count"/>
+                            <field name="last_reminder_at"/>
+                            <field name="escalation_level"/>
+                            <field name="escalated_to_user_id"/>
+                        </group>
+                        <group>
+                            <field name="delegation_reference"/>
+                            <field name="delegation_valid_from"/>
+                            <field name="delegation_valid_to"/>
+                        </group>
+                    </group>
                     <group string="شرح" invisible="not summary"><field name="summary" nolabel="1"/></group>
+                    <notebook>
+                        <page string="تاریخچه رسمی">
+                            <field name="event_ids" readonly="1">
+                                <list create="0" edit="0" delete="0">
+                                    <field name="event_at"/>
+                                    <field name="event_type" widget="badge"/>
+                                    <field name="actor_user_id"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="یادآوری‌های Odoo">
+                            <field name="activity_ids"/>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

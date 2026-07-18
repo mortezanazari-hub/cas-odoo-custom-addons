@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_cas_action_sla_rule_list" model="ir.ui.view">
+        <field name="name">cas.action.sla.rule.list</field>
+        <field name="model">cas.action.sla.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="source_adapter"/>
+                <field name="action_type"/>
+                <field name="reminder_interval_hours"/>
+                <field name="escalation_after_hours"/>
+                <field name="max_escalation_level"/>
+                <field name="escalation_user_id"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_cas_action_sla_rule_form" model="ir.ui.view">
+        <field name="name">cas.action.sla.rule.form</field>
+        <field name="model">cas.action.sla.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="active"/>
+                            <field name="sequence"/>
+                            <field name="company_id"/>
+                            <field name="source_adapter" placeholder="برای همه منابع خالی بماند"/>
+                            <field name="action_type"/>
+                        </group>
+                        <group>
+                            <field name="reminder_interval_hours"/>
+                            <field name="escalation_after_hours"/>
+                            <field name="max_escalation_level"/>
+                            <field name="escalation_user_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_cas_action_sla_rules" model="ir.actions.act_window">
+        <field name="name">قوانین SLA و تصعید</field>
+        <field name="res_model">cas.action.sla.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
