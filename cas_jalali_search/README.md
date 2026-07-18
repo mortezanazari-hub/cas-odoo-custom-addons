@@ -1,30 +1,49 @@
 # CAS Jalali - Search Bridge
 
-Adds **فیلتر تاریخ شمسی…** to the standard Odoo Filters menu.
+> نسخه: 19.0.2.1.0 · Odoo 19 Community
 
-## Release 19.0.1.0.0
+فیلتر تاریخ شمسی در منوی جستجوی Odoo با دوره سریع و بازه سفارشی.
 
-Supported periods:
+## اجزا
 
-- امروز
-- دیروز
-- این هفته (شنبه تا جمعه)
-- هفته گذشته
-- این ماه شمسی
-- ماه گذشته
-- این فصل شمسی
-- فصل گذشته
-- امسال
-- سال گذشته
-- بازه دلخواه شمسی
+- dialog انتخاب فیلد و بازه
+- patch منوی Filters
+- CSS RTL
+- تبدیل بازه به domain استاندارد
 
-The dialog automatically lists searchable Date and Datetime fields exposed by
-the current Odoo search model.
+## نقش‌ها
 
-For Date fields it creates inclusive ISO date bounds. For Datetime fields it
-creates a timezone-aware lower bound and an exclusive start-of-next-day upper
-bound. PostgreSQL and Odoo still receive standard Gregorian/UTC values.
+نقش مستقل ندارد؛ روی search view دارای تاریخ فعال است.
 
-This release does not change ORM `group_by` semantics. True Jalali month/year
-aggregation requires a separate reporting/grouping layer and is planned for a
-later release.
+## روش کار
+
+1. فیلتر تاریخ شمسی را باز کنید.
+2. فیلد Date/Datetime را انتخاب کنید.
+3. دوره سریع یا بازه سفارشی را برگزینید.
+4. برای Datetime کران بالا ابتدای روز بعد است.
+5. Odoo domain میلادی/UTC را اجرا می‌کند.
+
+## نقطه ورود
+
+در منوی Filters نمای جستجو ظاهر می‌شود.
+
+## نصب و ارتقا
+
+وابستگی‌ها: cas_jalali، web.
+
+```bash
+./odoo-bin -d <database> -i cas_jalali_search --stop-after-init
+./odoo-bin -d <database> -u cas_jalali_search --stop-after-init
+```
+
+## قواعد و محدودیت‌ها
+
+- timezone در Datetime لحاظ می‌شود.
+- مرز ماه/فصل جلالی درست تبدیل می‌شود.
+- semantics group_by ORM تغییر نمی‌کند.
+
+## آزمون‌ها
+
+آزمون دوره، timezone و domain.
+
+[راهنمای معماری و استفاده](docs/ARCHITECTURE_AND_USAGE.md)

@@ -1,40 +1,51 @@
-# CAS Jalali Calendar — Odoo 19
+# CAS Jalali Calendar
 
-Core of the organization-wide Jalali suite.
+> نسخه: 19.0.2.1.0 · Odoo 19 Community
 
-## Covered by the 2.0 RC suite
+لایه ورودی و نمایش جلالی فیلدهای Date/Datetime و DateTimeInput؛ ذخیره استاندارد Odoo را تغییر نمی‌دهد.
 
-- Standard Date, Datetime and Date Range fields.
-- Form, list, editable list and standard kanban formatter paths.
-- Persian/Arabic-Indic/Latin typed digits.
-- Native graphical Jalali picker.
-- RTL-safe responsive layout.
-- Timezone-aware Datetime display.
-- Backend Python helpers for reports and templates.
+## اجزا
 
-## Internal rule
+- helperهای Python برای parse/format
+- هسته تبدیل JavaScript
+- picker گرافیکی
+- field/formatter/parser registry
+- patch مؤلفه DateTimeInput
+- CSS سازگار با RTL
 
-Odoo/PostgreSQL values remain standard Gregorian dates and UTC datetimes.
-Jalali is the human-facing presentation and input layer.
+## نقش‌ها
 
-## Deliberately separate workstreams
+نقش مستقل ندارد؛ برای کاربران backend فعال است.
 
-- True Jalali Calendar View navigation and month boundaries.
-- True Jalali ORM month/quarter/year group aggregation.
-- Transparent import/export conversion.
+## روش کار
 
+1. ماژول را نصب و assetها را بازسازی کنید.
+2. کاربر با رقم فارسی، عربی یا لاتین یا picker تاریخ را وارد می‌کند.
+3. مقدار به تاریخ استاندارد Odoo تبدیل می‌شود.
+4. Datetime با timezone کاربر نمایش و UTC ذخیره می‌شود.
+5. در کد Python از helperهای tools استفاده کنید.
 
-## RC4: Core DateTimeInput bridge
+## نقطه ورود
 
-The shared Odoo `DateTimeInput` now uses Jalali formatting, parsing and the
-graphical Jalali popover.
+منوی مستقل ندارد و داخل فیلدهای تاریخ ظاهر می‌شود.
 
-Covered technical paths include:
+## نصب و ارتقا
 
-- Custom Filter
-- Domain Selector
-- Tree Editor date conditions
-- Date and Datetime range operands
+وابستگی‌ها: web، cas_core.
 
-The patched component still returns Luxon DateTime values. Odoo therefore
-continues serializing domains as standard Gregorian/UTC ISO values internally.
+```bash
+./odoo-bin -d <database> -i cas_jalali --stop-after-init
+./odoo-bin -d <database> -u cas_jalali --stop-after-init
+```
+
+## قواعد و محدودیت‌ها
+
+- PostgreSQL میلادی و Datetime به UTC می‌ماند.
+- تبدیل فقط لایه انسانی است.
+- group_by جلالی و import/export شفاف در این نسخه نیست.
+
+## آزمون‌ها
+
+test_jalali.py و آزمون asset.
+
+[راهنمای معماری و استفاده](docs/ARCHITECTURE_AND_USAGE.md)

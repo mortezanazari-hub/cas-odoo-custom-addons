@@ -1,36 +1,50 @@
-# CAS Dynamic Form Runtime
+# CAS Dynamic Form
 
-End-user runtime for the versioned CAS form engine on Odoo 19 Community.
+> نسخه: `19.0.1.0.6` · Odoo 19 Community
 
-## Version 1.0 scope
+اجرای دیداری و RTL فرم‌های منتشرشده با OWL، ذخیره پیش‌نویس و ورودی جلالی.
 
-- Persian, RTL and responsive OWL client action;
-- catalog of published forms;
-- start a new submission and resume personal drafts;
-- display recent submitted forms in read-only mode;
-- render versioned pages, sections, groups, text and field nodes;
-- short/long text, integer, decimal, percentage, monetary, Boolean, single and
-  multiple options, radio, dropdown, tag, time and controlled record-reference
-  inputs;
-- Jalali Date and Datetime input with Gregorian/UTC persistence;
-- client-side completion hints and basic validation;
-- definitive server-side validation through `cas_form_core`;
-- manual draft save, final submit, tracking number and immutable snapshot;
-- secure bounded reference lookup under the caller's ACL and record rules.
+## اجزای ماژول
 
-## Explicitly deferred
+- افزونه مدل‌های تعریف، نسخه، فیلد و submission
+- `dynamic_form_app.js/xml`: برنامه اجرا
+- `dynamic_reference_field.js/xml`: انتخاب رکورد مرجع
+- `dynamic_form.scss`: ظاهر واکنش‌گرا
+- Client action با تگ `action_cas_dynamic_form_runtime`
 
-- conditional rules and dynamic visibility;
-- multi-step wizard navigation and per-step validation;
-- attachment/image/signature widgets;
-- autosave and offline recovery;
-- workflow and approvals;
-- department-specific availability, which belongs to the work-report/business
-  layer;
-- drag-and-drop builder and workflow designer.
+## نقش‌ها
 
-## Security
+کاربر مجاز ثبت فرم؛ انتشار و طراحی تابع Form Core.
 
-The browser never writes `cas.form.answer` directly. All mutations pass through
-the version-pinned submission service in `cas_form_core`. Related-record search
-uses a backend whitelist and the current user's real Odoo access rights.
+## روش کار
+
+1. کاربر یک نسخه منتشرشده را باز می‌کند.
+2. Runtime schema را بارگذاری و کنترل مناسب هر نوع فیلد را نمایش می‌دهد.
+3. پاسخ‌ها پیش‌نویس ذخیره و بازیابی می‌شوند.
+4. ارسال نهایی اعتبارسنجی سمت کاربر و سرور را اجرا می‌کند.
+5. تاریخ برای کاربر جلالی و در Odoo به‌صورت استاندارد میلادی/UTC ذخیره می‌شود.
+
+## منوها
+
+از فرم منتشرشده یا Workspace باز می‌شود؛ منوی مدیریتی مستقل لازم ندارد.
+
+## نصب و ارتقا
+
+وابستگی‌ها: `cas_form_core`، `cas_jalali`، `web`.
+
+```bash
+./odoo-bin -d <database> -i cas_dynamic_form --stop-after-init
+./odoo-bin -d <database> -u cas_dynamic_form --stop-after-init
+```
+
+## قواعد کلیدی
+
+- Runtime فقط نسخه منتشرشده و مجاز را اجرا می‌کند.
+- اعتبارسنجی سرور مرجع نهایی است.
+- نمایش جلالی مقدار ذخیره‌شده را تغییر نمی‌دهد.
+
+## آزمون‌ها
+
+آزمون‌های runtime در `tests/`.
+
+جزئیات معماری و سناریوها: [راهنمای کامل](docs/ARCHITECTURE_AND_USAGE.md).

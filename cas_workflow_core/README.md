@@ -1,35 +1,51 @@
 # CAS Workflow Core
 
-Versioned, secure and auditable workflow foundation for Odoo 19 Community.
+> نسخه: `19.0.1.0.3` · Odoo 19 Community
 
-Current module version: `19.0.1.0.2` (Foundation RC3).
+موتور نسخه‌دار گردش کار شامل حالت، گذار، نمونه اجرایی، مسئول، SLA و تاریخچه.
 
-## Version 1.0 scope
+## اجزای ماژول
 
-- stable workflow definition and immutable published revisions;
-- initial, normal, final and cancelled states;
-- guarded transitions with group-based permission;
-- safe structured condition placeholder without Python or JavaScript code;
-- generic binding through an allowed `ir.model` and numeric resource id;
-- version-pinned runtime instances;
-- current responsible user and state deadline;
-- explicit active responsibility for technical/test execution paths;
-- append-only transition history with actor, time and note;
-- company isolation, manager visibility and personal runtime visibility;
-- backend tests and deployment verification.
+- `cas.workflow.definition` و `cas.workflow.version`: تعریف و بازبینی
+- `cas.workflow.state`: وضعیت
+- `cas.workflow.transition`: گذار و قاعده
+- `cas.workflow.instance`: اجرای متصل به منبع
+- `cas.workflow.history`: تاریخچه append-only
+- `cas.workflow.versioned.mixin`: قواعد نسخه
 
-## Deferred to extensions
+## نقش‌ها
 
-- parallel, unanimous and quorum approvals (`cas_approval_core`);
-- delegation, absence and substitutes;
-- conditional expression builder and automatic transitions;
-- notification/action engine and scheduled escalation;
-- graphical workflow designer;
-- work-report-specific supervisor resolution.
+کاربر، طراح، منتشرکننده و مدیر گردش کار.
 
-Published workflow schemas never execute arbitrary Python, JavaScript, SQL or
-unrestricted domains.
+## روش کار
 
-Runtime validation rejects missing, nonexistent or inactive responsible users.
-Interactive callers may omit the responsible user only when the current Odoo
-user is a real active user; technical execution must always pass it explicitly.
+1. تعریف و نسخه پیش‌نویس ساخته می‌شود.
+2. حالت آغاز/میانی/پایان و گذارها تعریف می‌شوند.
+3. نسخه پس از اعتبارسنجی منتشر می‌شود.
+4. نمونه روی رکورد منبع شروع و به همان نسخه pin می‌شود.
+5. مسئول جاری گذار مجاز را اجرا می‌کند؛ SLA و تاریخچه به‌روزرسانی می‌شوند.
+
+## منوها
+
+نمونه‌ها، تعاریف، نسخه‌ها و پیکربندی گردش کار.
+
+## نصب و ارتقا
+
+وابستگی‌ها: `cas_form_core`، `mail`.
+
+```bash
+./odoo-bin -d <database> -i cas_workflow_core --stop-after-init
+./odoo-bin -d <database> -u cas_workflow_core --stop-after-init
+```
+
+## قواعد کلیدی
+
+- نمونه فعال به نسخه ثابت متصل است.
+- فقط گذار مجاز برای کاربر و وضعیت جاری اجرا می‌شود.
+- تاریخچه حذف یا بازنویسی نمی‌شود.
+
+## آزمون‌ها
+
+آزمون‌های نسخه، اجرا، دسترسی و تاریخچه.
+
+جزئیات معماری و سناریوها: [راهنمای کامل](docs/ARCHITECTURE_AND_USAGE.md).

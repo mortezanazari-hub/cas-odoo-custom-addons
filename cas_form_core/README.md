@@ -1,40 +1,51 @@
 # CAS Form Core
 
-Technical foundation for the Chodan Ara organizational form platform on Odoo
-19 Community.
+> نسخه: `19.0.1.1.0` · Odoo 19 Community
 
-## Current scope
+هسته نسخه‌دار فرم‌ها، ساختار منطقی، پاسخ تایپ‌شده و چرخه پیش‌نویس تا ارسال.
 
-- stable form identities;
-- company-scoped definitions;
-- immutable published revisions;
-- persistent field UUIDs across revisions;
-- typed field metadata;
-- versioned option values;
-- a versioned layout tree;
-- schema fingerprints;
-- controlled publish/archive operations;
-- access groups and company record rules;
-- backend tests for publication and revision cloning.
-- version-pinned form submissions with unique tracking numbers;
-- typed answer columns for text, numbers, money, Boolean, date/time, options
-  and controlled Odoo record references;
-- server-side required, range, precision, length and regex validation;
-- immutable final snapshots and locked submitted records;
-- controlled cancellation and manager-only reopening with a mandatory reason;
-- ordinary users access answers only through the submission service, never by
-  direct answer-model ACL.
+## اجزای ماژول
 
-The dynamic end-user renderer, attachments, conditional rules, workflow,
-approvals, Excel export and business-specific work reports are intentionally
-developed in subsequent reviewable slices.
+- `cas.form.definition`: هویت پایدار فرم
+- `cas.form.version`: بازبینی قابل انتشار
+- `cas.form.field` و `cas.form.field.option`: فیلد و گزینه
+- `cas.form.node`: ساختار منطقی
+- `cas.form.submission` و `cas.form.answer`: ثبت و پاسخ تایپ‌شده
+- `cas.form.versioned.mixin`: قواعد نسخه‌بندی
 
-## Security principles
+## نقش‌ها
 
-- published structures cannot be edited or deleted;
-- technical identities are stable after publication;
-- ordinary form users receive read-only definition access;
-- only the publisher group may publish or archive a revision;
-- all records are restricted to the user's allowed companies;
-- JSON metadata is declarative and must never contain executable Python or
-  JavaScript.
+کاربر فرم، طراح، منتشرکننده و مدیر فرم.
+
+## روش کار
+
+1. طراح تعریف فرم را می‌سازد و نسخه اولیه خودکار ایجاد می‌شود.
+2. فیلدها و گره‌ها روی نسخه پیش‌نویس تنظیم می‌شوند.
+3. منتشرکننده نسخه را اعتبارسنجی و منتشر می‌کند.
+4. کاربر submission می‌سازد، پیش‌نویس ذخیره و نهایی ارسال می‌کند.
+5. تغییر ساختار با بازبینی جدید انجام می‌شود و سوابق به نسخه قبلی متصل می‌مانند.
+
+## منوها
+
+ارسال‌ها، تعاریف فرم، نسخه‌ها و پیکربندی.
+
+## نصب و ارتقا
+
+وابستگی‌ها: `cas_core`، `mail`، `web`.
+
+```bash
+./odoo-bin -d <database> -i cas_form_core --stop-after-init
+./odoo-bin -d <database> -u cas_form_core --stop-after-init
+```
+
+## قواعد کلیدی
+
+- نسخه منتشرشده تغییرناپذیر است.
+- نوع پاسخ باید با نوع فیلد سازگار باشد.
+- هر submission به نسخه مشخص pin می‌شود.
+
+## آزمون‌ها
+
+آزمون‌های versioning و submission در `tests/`.
+
+جزئیات معماری و سناریوها: [راهنمای کامل](docs/ARCHITECTURE_AND_USAGE.md).

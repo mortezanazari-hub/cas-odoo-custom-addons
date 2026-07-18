@@ -1,30 +1,53 @@
-# CAS Internal Correspondence
+# CAS Correspondence
 
-Foundation module for secure internal organizational correspondence on Odoo 19 Community.
+> نسخه: `19.0.1.1.0` · Odoo 19 Community
 
-## RC1 scope
+مکاتبات رسمی داخلی، گیرنده، ارجاع، مشاهده، پاسخ/اصلاح، محرمانگی و ممیزی؛ جدا از چت.
 
-- Company-wide letter numbering assigned only on formal send.
-- Internal recipients and copies addressed to users or departments.
-- Information, action and formal-reply expectations per recipient.
-- System signature snapshot, confidentiality, priority and deadlines.
-- Immutable sent letters, view receipts, referrals, relations and audit events.
-- Formal replies as independently numbered letters with a preserved thread.
-- Corrective replacement letters instead of hidden edits.
-- Date-bounded, revocable secretariat delegation controlled by the configured CEO.
-- Structural manager, participant, secretariat and multi-company access controls.
-- Odoo activities for pending recipient and referral actions.
-- Source-side descriptor contract for a future `cas_action_hub` connector.
+## اجزای ماژول
 
-External mail, incoming/outgoing physical mail, OCR, digital signature, PDF rendering,
-Nextcloud and Action Hub projection are intentionally outside RC1.
+- `cas.correspondence.letter`: نامه
+- `cas.correspondence.recipient`: گیرنده
+- `cas.correspondence.referral`: ارجاع
+- `cas.correspondence.view.receipt`: رسید مشاهده
+- `cas.correspondence.relation`: پاسخ/اصلاح
+- `cas.correspondence.audit`: ممیزی
+- `cas.correspondence.secretariat.delegation`: نمایندگی
+- wizardهای ارجاع، تکمیل و لغو
 
-## Operational setup
+## نقش‌ها
 
-1. Assign the correspondence user group to internal users.
-2. Configure one correspondence CEO on every participating company.
-3. Complete employee/user/department mappings and department managers.
-4. Review the automatically created company sequence after the first formal send.
-5. Grant secretariat access only through dated delegation records.
+کاربر مکاتبات و مدیر دبیرخانه.
 
-No operational users, departments, letters or sample records are seeded by this module.
+## روش کار
+
+1. نامه با محرمانگی و گیرندگان آماده می‌شود.
+2. ارسال، دسترسی گیرندگان و سابقه رسمی را تثبیت می‌کند.
+3. گیرنده مشاهده را ثبت یا نامه را ارجاع می‌دهد.
+4. مسئول ارجاع کار را شروع و تکمیل می‌کند.
+5. پاسخ/اصلاح با رابطه به اصل ساخته و سپس نامه بسته می‌شود.
+
+## منوها
+
+نامه‌ها، پیش‌نویس‌های من، دبیرخانه و نمایندگی‌ها.
+
+## نصب و ارتقا
+
+وابستگی‌ها: `cas_core`، `mail`، `hr`.
+
+```bash
+./odoo-bin -d <database> -i cas_correspondence --stop-after-init
+./odoo-bin -d <database> -u cas_correspondence --stop-after-init
+```
+
+## قواعد کلیدی
+
+- record rule و محرمانگی مرجع دسترسی‌اند.
+- ارسال، مشاهده، ارجاع و اصلاح ممیزی می‌شوند.
+- چت جای نامه رسمی نیست.
+
+## آزمون‌ها
+
+آزمون‌های security، lifecycle، referral، delegation و audit.
+
+جزئیات معماری و سناریوها: [راهنمای کامل](docs/ARCHITECTURE_AND_USAGE.md).

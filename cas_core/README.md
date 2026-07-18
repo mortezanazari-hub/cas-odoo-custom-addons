@@ -1,9 +1,44 @@
 # CAS Core
 
-Technical foundation for Chodan Ara Shomal custom Odoo modules.
+> نسخه: `19.0.1.0.0` · Odoo 19 Community
 
-- Never modify Odoo Community core directly.
-- Put business models in focused modules that depend on `cas_core`.
-- Use Odoo inheritance and extension mechanisms.
-- Add access-control files before adding persistent business models.
-- Never commit secrets, database dumps, filestore data, or private keys.
+هسته فنی و نقطه اتکای مشترک افزونه‌های CAS؛ عمداً فرایند کسب‌وکاری یا منوی مستقل ندارد.
+
+## اجزای ماژول
+
+- `__manifest__.py`: مرز وابستگی و هویت فنی
+- `__init__.py`: نقطه بارگذاری بسته
+
+## نقش‌ها
+
+فاقد نقش مستقل؛ مجوزهای استاندارد Odoo.
+
+## روش کار
+
+1. پیش از افزونه‌های وابسته نصب می‌شود.
+2. هیچ داده عملیاتی در آن ثبت نمی‌شود.
+3. فقط قابلیت‌های واقعاً مشترک و بدون مالک دامنه در این لایه قرار می‌گیرند.
+
+## منوها
+
+منوی مستقل ندارد.
+
+## نصب و ارتقا
+
+وابستگی‌ها: `base`.
+
+```bash
+./odoo-bin -d <database> -i cas_core --stop-after-init
+./odoo-bin -d <database> -u cas_core --stop-after-init
+```
+
+## قواعد کلیدی
+
+- نباید به ماژول دامنه‌ای وابسته شود.
+- نباید محل انباشت کدهای نامرتبط شود.
+
+## آزمون‌ها
+
+سلامت با نصب ماژول‌های وابسته سنجیده می‌شود.
+
+جزئیات معماری و سناریوها: [راهنمای کامل](docs/ARCHITECTURE_AND_USAGE.md).

@@ -1,19 +1,51 @@
 # CAS Daily Work Reports
 
-Typed daily work reports for Odoo 19 Community.
+> نسخه: `19.0.1.0.0` · Odoo 19 Community
 
-## Foundation scope
+گزارش روزانه کار کارکنان با ایستگاه، نمایندگی، مهلت، تأیید رسمی و Excel.
 
-- Daily reports linked to real `hr.employee`, department and company records.
-- Configurable work stations independent from the employee's organizational unit.
-- Shift start/end, normal hours, overtime and a hard 12-hour submission deadline.
-- Self-entry, managerial entry and explicit department/company representation permissions.
-- Server-enforced visibility for the employee, submitter, station supervisor and every
-  direct/indirect manager in the organizational chain.
-- Formal supervisor approval through `cas_workflow_core` and `cas_approval_core`.
-- Automatic, audited approval when the employee's direct manager creates the report.
-- Filtered XLSX export that respects record rules.
-- Permanent tracking number, chatter and immutable workflow/approval history.
+## اجزای ماژول
 
-Missing-report detection, a full shift-management module and PDF output are intentionally
-outside this foundation release.
+- `cas.work.station`: ایستگاه کاری مستقل از واحد سازمانی
+- `cas.work.report`: گزارش روزانه و ساعات
+- `cas.work.report.delegation`: مجوز نمایندگی تاریخ‌دار
+- `cas.work.report.export.wizard`: Excel
+- افزونه `hr.employee`
+- workflow/approval پیش‌فرض در post-init
+
+## نقش‌ها
+
+کاربر، سرپرست و مدیر گزارش کار.
+
+## روش کار
+
+1. کارمند یا نماینده مجاز گزارش روز/شیفت را در ایستگاه ثبت می‌کند.
+2. ساعت شروع/پایان، کار عادی، اضافه‌کاری و شرح فعالیت تکمیل می‌شود.
+3. گزارش حداکثر تا مهلت ۱۲ ساعته ارسال می‌شود.
+4. تأیید رسمی سرپرست از Approval/Workflow انجام می‌شود؛ ثبت توسط مدیر مستقیم می‌تواند خودکار تأیید شود.
+5. کاربر مجاز خروجی Excel حوزه قابل مشاهده را می‌گیرد.
+
+## منوها
+
+گزارش‌های من، گزارش‌های حوزه من، خروجی Excel، ایستگاه‌ها و نمایندگی‌ها.
+
+## نصب و ارتقا
+
+وابستگی‌ها: `hr`، `mail`، `cas_workflow_core`، `cas_approval_core`.
+
+```bash
+./odoo-bin -d <database> -i cas_work_report --stop-after-init
+./odoo-bin -d <database> -u cas_work_report --stop-after-init
+```
+
+## قواعد کلیدی
+
+- نمایندگی باید صریح، تاریخ‌دار و متناسب با حوزه باشد.
+- دیدن گزارش تابع زنجیره سازمانی و record rule است.
+- شماره، chatter و تاریخچه تأیید حفظ می‌شوند.
+
+## آزمون‌ها
+
+آزمون‌های deadline، visibility، delegation، approval و export.
+
+جزئیات معماری و سناریوها: [راهنمای کامل](docs/ARCHITECTURE_AND_USAGE.md).
