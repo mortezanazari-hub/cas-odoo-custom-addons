@@ -5,6 +5,20 @@
 ## اسناد فعلی
 
 - [یادداشت معماری اتصال Workspace v7](Workspace_UI_Integration_Notes.md) — وضعیت `Needs Review`
+- [قراردادهای تعامل و Integration نسخه ۸](V8-Interaction-And-Integration-Contracts.md) — وضعیت `Needs Review`
+
+## دامنه سند نسخه ۸
+
+- Overlay Manager و Stack لایه‌ها
+- Focus Trap و Focus Restore
+- Scroll Lock و Outside Click
+- Directory Search Server-side
+- Organization Scope Resolver
+- Calendar Event Command
+- Personal Category Contract
+- Discuss Adapter Contract
+- Layout صفحه گفتگو
+- Accessibility، Performance و Observability
 
 ## فایل‌های آینده
 
@@ -15,4 +29,4 @@
 - `Assignment_Model.md`
 - `Security_Model.md`
 
-این اسناد باید پس از تجمیع تصمیمات صفحات به‌روزرسانی شوند و نباید بر اساس یک صفحه به‌تنهایی نهایی شوند.
+این اسناد باید پس از تجمیع تصمیمات صفحات به‌روزرسانی شوند و به‌تنهایی مجوز پیاده‌سازی نیستند.
