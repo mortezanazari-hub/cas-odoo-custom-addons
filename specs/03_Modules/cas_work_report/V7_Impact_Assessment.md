@@ -1,47 +1,94 @@
-# ارزیابی اثر نسخه ۷ بر `cas_work_report`
+# ارزیابی اثر معماری پویا بر `cas_work_report`
 
 | مشخصه | مقدار |
 |---|---|
 | وضعیت | `Needs Review` |
-| نوع سند | ارزیابی اثر؛ نه Specification اجرایی |
+| نسخه مبنا | Workspace v7 |
+| نسخه هدف | Workspace v8 Iteration 12 |
+| تصمیم مرجع | `../../04_Decisions/DEC-017-Work-Report-Domain-Uses-Form-Engine.md` |
+| معماری مرجع | `../../05_Architecture/Work_Report_Form_Engine_Architecture.md` |
 
-## آثار نسخه ۷
+## جمع‌بندی
+`cas_work_report` حذف نمی‌شود. این ماژول از فرم ثابت روزانه به دامنه تخصصی مدیریت گزارش کار تبدیل می‌شود و برای Schema، Version، Validation و Submission از Form Engine استفاده می‌کند.
 
-- ثبت سریع فعالیت از میزکار
-- ساخت تدریجی گزارش روزانه
-- Widget واحد برای ثبت و مرور فعالیت‌های امروز
-- نمایش مجموع زمان
-- تبدیل اختیاری Personal Task به ردیف Activity
-- حفظ Snapshot عنوان و توضیح اولیه
-- ثبت فعالیت ناموجود بدون توقف گزارش
-- هشدار غیرمسدودکننده اختلاف حضور و زمان ثبت‌شده
-- Search Provider و Recent History Provider
-- Notification برای گزارش ناقص یا نیازمند اصلاح
+## مسئولیت‌های قطعی ماژول
+- Daily/Shift Report Identity
+- Employee، Assignment، Date و Shift Context
+- Profile Resolution
+- Deadline و Missing/Overdue State
+- Draft، Submitted، Returned، Approved و Locked
+- Attendance Reconciliation
+- Reviewer/Approval Reference
+- Duplicate Prevention
+- Snapshot Reference
+- Reporting Projection
+- Team Review و Management Aggregation
 
-## مرزبندی
+## مسئولیت‌هایی که منتقل می‌شوند
+### به Form Engine
+- Section و Field Definition
+- Validation و Conditional Logic
+- Form Version
+- Submission و Answer Storage
+- Runtime Schema
 
-`cas_workspace` فقط UI و Orchestration را ارائه می‌کند. Header/Line گزارش، وضعیت، Validation، Snapshot و عملیات نهایی‌سازی متعلق به `cas_work_report` باقی می‌مانند.
+### به Workflow/Approval
+- Decision، Return، Escalation و Delegation
 
-## نیازهای احتمالی داده
+### به Workspace
+- Dynamic Page Shell
+- Navigation و Renderer
+- Profile Explanation
 
-- Daily Report Header
-- Activity Line
-- Standard Activity Reference
-- Original Title/Description Snapshot
-- Duration و Result
-- Draft/Final/Reopened State
-- Standardization Request Reference
+## مدل‌های موردنیاز
+- `cas.work.report`
+- `cas.work.report.profile`
+- `cas.work.report.projection`
+- Deadline/Attendance/Evidence Policy در صورت نیاز
 
-## وابستگی‌ها
+## Profile Resolution
+Profile براساس Company، Assignment، Position، Job، Department، Role، Shift Type، Effective Date و Priority انتخاب می‌شود. انتخاب Client معتبر نیست و Backend باید Resolve را تکرار کند.
 
-- Activity Catalog
-- Attendance Summary
-- Personal Task Adapter
-- Approval/Workflow برای بررسی در صورت تصویب
+## چندوظیفه‌ای
+- Profile اصلی
+- چند گزارش مستقل
+- فرم ترکیبی با Sectionهای پویا
 
-## سؤال‌های باز
+Policy پیشنهادی: فرم ترکیبی فقط در صورت یکسان‌بودن Reviewer و محرمانگی.
 
-- مالک Activity Catalog کدام ماژول است؟
-- بازگشایی گزارش نهایی چگونه کنترل می‌شود؟
-- تبدیل Task به Activity کپی است یا Reference؟
-- حد اختلاف زمان و Policy مسدودکننده کجا تنظیم می‌شود؟
+## APIهای پیشنهادی
+- `get_or_create_daily_report(employee_id, report_date)`
+- `resolve_work_report_profile(employee_id, report_date, shift_id)`
+- `get_work_report_render_contract(report_id)`
+- `submit_work_report(report_id, submission_revision)`
+- `return_work_report(report_id, reason)`
+- `approve_work_report(report_id, decision)`
+- `reopen_work_report(report_id, reason)`
+- `get_team_work_reports(filters)`
+
+نام نهایی APIها هنوز تصویب نشده است.
+
+## امنیت
+- بدون `sudo()` برای مسیرهای کاربرمحور
+- کنترل مجدد employee، assignment، profile و form version
+- Record Rule مستقل Report و Submission
+- Reviewer Scope مؤثر و تاریخ‌دار
+- Multi-company
+- Audit برای Submit، Return، Approve، Reopen و Lock
+
+## Migration
+فرم ثابت موجود باید به Form Definition نسخه‌دار و Profile پیش‌فرض تبدیل شود. رکوردهای قبلی باید شناسه، تاریخچه و Snapshot خود را حفظ کنند.
+
+## تست‌ها
+- Resolver و Conflict
+- Assignment هم‌زمان
+- فرم‌های تخصصی نگهبانی، IT و عملیات
+- Snapshot تاریخی
+- Attendance mismatch
+- Reviewer delegation
+- Security tampering
+- Migration فرم ثابت
+- Analytics Projection
+
+## وضعیت
+این سند Impact Assessment است و هنوز `Implementation Ready` نیست. مدل نهایی Profile، قرارداد Submission/Snapshot، Reporting Projection، Migration و Security Specification باید تصویب شوند.
