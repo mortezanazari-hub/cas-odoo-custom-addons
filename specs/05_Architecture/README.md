@@ -2,6 +2,10 @@
 
 اسناد معماری کلان و بین‌ماژولی در این بخش نگهداری می‌شوند.
 
+## اسناد فعلی
+
+- [یادداشت معماری اتصال Workspace v7](Workspace_UI_Integration_Notes.md) — وضعیت `Needs Review`
+
 ## فایل‌های آینده
 
 - `System_Context.md`
