@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#102a43" />
+  <title>CAS Workspace v6 | مرکز فرمان سازمانی</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="ناوبری اصلی">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">C</div>
+        <div>
+          <strong>فضای کار سازمانی</strong>
+          <span>CAS Workspace</span>
+        </div>
+      </div>
+      <div id="sidebarContent" class="sidebar-content"></div>
+      <div class="sidebar-footer">
+        <button class="support-card" data-action="open-help">
+          <span class="support-icon">؟</span>
+          <span><strong>راهنمای سامانه</strong><small>قرارداد اتصال، نقش‌ها و صفحات</small></span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-leading">
+          <button id="mobileMenuButton" class="icon-button mobile-only" aria-label="نمایش منو">☰</button>
+          <div class="breadcrumb" id="breadcrumb"></div>
+        </div>
+        <div class="topbar-actions">
+          <label class="role-switcher" title="تغییر کاربر فقط برای نمایش آزمایشی؛ در نسخه Production حذف می‌شود">
+            <span>کاربر آزمایشی</span>
+            <select id="roleSelect" aria-label="انتخاب کاربر آزمایشی"></select>
+          </label>
+          <button class="icon-button" data-action="global-search" aria-label="جست‌وجوی سراسری">⌕</button>
+          <button class="icon-button has-badge" data-action="notifications" aria-label="اعلان‌ها">◔<em>۴</em></button>
+          <button class="profile-chip" data-action="profile">
+            <span class="avatar avatar-sm">مر</span>
+            <span><strong id="profileName">مهدی رضایی</strong><small id="profileRole">کاربر عادی</small></span>
+            <span class="chevron">⌄</span>
+          </button>
+        </div>
+      </header>
+
+      <main id="mainContent" class="main-content" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <div id="drawerRoot" class="drawer-root" aria-live="polite"></div>
+  <div id="modalRoot" class="modal-root" aria-live="polite"></div>
+  <div id="toastRoot" class="toast-root" aria-live="assertive"></div>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
