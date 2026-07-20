@@ -5,27 +5,35 @@
 ## خط نسخه‌بندی فعال
 
 ```text
-CAS UI Prototype v4 → CAS UI Workspace v7
+CAS UI Prototype v4 → CAS UI Workspace v7 → CAS UI Workspace v8
 ```
 
 نسخه‌های ۵ و ۶ Release رسمی مستقل نیستند.
 
-## اسناد Workspace v7
-
-### کاربر عادی
+## اسناد کاربر عادی
 
 - [میزکار کاربر عادی](Employee/Workspace.md)
-- [کارهای شخصی](Employee/Personal_Tasks.md)
-- [تقویم](Employee/Calendar.md)
-- [گفت‌وگوها](Employee/Conversations.md)
+- [کارهای شخصی — به‌روزشده برای v8](Employee/Personal_Tasks.md)
+- [تقویم — به‌روزشده برای v8](Employee/Calendar.md)
+- [گفت‌وگوها — به‌روزشده برای v8](Employee/Conversations.md)
 - [جست‌وجوی سراسری سازمان](Employee/Global_Search.md)
 - [مرکز اعلان‌ها](Employee/Notifications_Center.md)
 - [تاریخچه اخیر](Employee/Recent_History.md)
 
-### مشترک همه نقش‌ها
+## مشترک همه نقش‌ها
 
 - [پوسته مشترک Workspace](Shared/Workspace_Shell.md)
 
+## دامنه ویژه نسخه ۸
+
+- مدیریت دسته‌های شخصی و سیستمی در «کارهای من»
+- Selector مقیاس‌پذیر شرکت‌کنندگان تقویم
+- تفکیک دعوت‌نامه و تخصیص وظیفه
+- تجربه کامل‌تر گفت‌وگو بر پایه Mail/Discuss
+- Overlay Stack، Focus و Scroll Contract
+
+مرجع جامع: `../06_ChangeSets/CS-WORKSPACE-V8.md`
+
 ## وضعیت
 
-تصمیم‌های محصولی صفحات فوق ثبت شده‌اند، اما اثر آن‌ها بر نقش‌های سرپرست، مدیر، مدیرعامل، نگهبان، دبیرخانه، طراحان و مدیر سامانه هنوز باید در اسناد صفحه‌ای مستقل بررسی شود. این اسناد به‌تنهایی مجوز پیاده‌سازی نیستند.
+تصمیم‌های محصولی نسخه ۸ ثبت شده‌اند، اما این اسناد به‌تنهایی مجوز پیاده‌سازی Production نیستند. Specification و قراردادهای امنیتی ماژول‌های متأثر باید تصویب شوند.
