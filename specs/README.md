@@ -102,6 +102,7 @@ CAS UI Prototype v4 → CAS UI Workspace v7
 
 ## ارزیابی اثر ماژول‌ها
 
+- [مرجع جامع ماژول‌های متأثر، ماژول‌های جدید، سرویس‌های داخلی و Adapterها](03_Modules/V7_Module_Impact_And_New_Modules.md)
 - [`cas_workspace`](03_Modules/cas_workspace/V7_Impact_Assessment.md)
 - [`cas_action_hub`](03_Modules/cas_action_hub/V7_Impact_Assessment.md)
 - [`cas_work_report`](03_Modules/cas_work_report/V7_Impact_Assessment.md)
@@ -115,4 +116,4 @@ CAS UI Prototype v4 → CAS UI Workspace v7
 
 ## وضعیت فعلی
 
-صفحات جدید، تغییرات Shell، Routeها، Capabilityها و آثار اصلی ماژول‌ها ثبت شده‌اند. این مجموعه هنوز `Implementation Ready` نیست، زیرا باید اثر نسخه ۷ بر صفحه‌های نقش‌های سرپرست، مدیر، مدیرعامل، نگهبان، دبیرخانه، طراح فرم، طراح گردش‌کار، مدیر اسناد و مدیر سامانه نیز صفحه‌به‌صفحه بررسی و سپس Specification نهایی هر ماژول تدوین شود.
+صفحات جدید، تغییرات Shell، Routeها، Capabilityها، آثار ماژول‌های موجود، ماژول‌های جدید پیشنهادی، سرویس‌های داخلی Workspace و Adapterهای Odoo ثبت شده‌اند. این مجموعه هنوز `Implementation Ready` نیست، زیرا باید اثر نسخه ۷ بر صفحه‌های نقش‌های سرپرست، مدیر، مدیرعامل، نگهبان، دبیرخانه، طراح فرم، طراح گردش‌کار، مدیر اسناد و مدیر سامانه نیز صفحه‌به‌صفحه بررسی و سپس Specification نهایی هر ماژول تدوین شود.
