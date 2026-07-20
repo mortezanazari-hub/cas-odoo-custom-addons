@@ -4,8 +4,8 @@
 
 ## وضعیت‌ها
 
-- `Collected`: تصمیم ثبت شده ولی هنوز تجمیع ماژولی نشده است.
-- `Needs Review`: نیازمند بررسی صفحات، نقش‌ها یا مرز مالکیت است.
+- `Collected`: ثبت شده ولی هنوز تجمیع ماژولی نشده است.
+- `Needs Review`: نیازمند بررسی مرز مالکیت، امنیت یا صفحات دیگر است.
 - `Conflict`: تعارض حل‌نشده دارد.
 - `Consolidated`: در Specification ماژول تجمیع شده است.
 - `Implementation Ready`: آماده تبدیل به دستور اجرایی است.
@@ -13,200 +13,221 @@
 ## خط نسخه‌بندی فعال
 
 ```text
-CAS UI Prototype v4 → CAS UI Workspace v7
+CAS UI Prototype v4 → CAS UI Workspace v7 → CAS UI Workspace v8
 ```
 
 نسخه‌های ۵ و ۶ Release رسمی مستقل نیستند.
 
-## تغییرات صفحه میزکار
+# بخش اول — تصمیمات پایه Workspace v7
 
-| شناسه تصمیم | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
+## میزکار
+
+| تصمیم | ماژول/دامنه | اثر | وضعیت |
+|---|---|---|---|
+| `PAGE-EMP-DESK-DEC-001..015` | `cas_workspace`, `cas_work_report`, `cas_action_hub`, Attendance, Activity Catalog | میزکار عملیاتی، ثبت تدریجی فعالیت، شخصی‌سازی | Needs Review |
+| `PAGE-EMP-DESK-DEC-016..018` | `cas_workspace`, Search Registry | Hero، کارت‌های وضعیت و Command Launcher | Needs Review |
+| `PAGE-EMP-DESK-DEC-019..021` | `cas_action_hub`, Calendar, Mail/Bus | Task شخصی، تقویم و گفتگو | Needs Review |
+| `PAGE-EMP-DESK-DEC-022..030` | `cas_workspace`, User Preference, Providerها | Widget Layout، DnD، Theme، Drawer و Route Action | Needs Review |
+
+## کارهای شخصی v7
+
+| تصمیم | ماژول/دامنه | اثر | وضعیت |
+|---|---|---|---|
+| `PAGE-EMP-TASK-DEC-001` | `cas_workspace`, `cas_action_hub` | جداسازی Task شخصی از Action رسمی | Needs Review |
+| `PAGE-EMP-TASK-DEC-002` | Access Resolver | Capability `personal.tasks` | Collected |
+| `PAGE-EMP-TASK-DEC-003..007` | Personal Task Store، `cas_workspace`, `cas_work_report` | ثبت، تکمیل، زمان‌بندی، Widget و تبدیل اختیاری | Needs Review |
+
+## تقویم v7
+
+| تصمیم | ماژول/دامنه | اثر | وضعیت |
+|---|---|---|---|
+| `PAGE-EMP-CAL-DEC-001..003` | `cas_workspace`, Calendar Aggregator | Route و سه نمای تقویم | Needs Review |
+| `PAGE-EMP-CAL-DEC-004..005` | Jalali Suite، Odoo ORM | نمایش شمسی و ذخیره استاندارد | Needs Review |
+| `PAGE-EMP-CAL-DEC-006..007` | Calendar Integration، Shift، Action، Correspondence، Workflow | CRUD و Feed چندمنبعی | Needs Review |
+
+## گفتگوها v7
+
+| تصمیم | ماژول/دامنه | اثر | وضعیت |
+|---|---|---|---|
+| `PAGE-EMP-CONV-DEC-001..005` | `cas_workspace` | Route، Topbar، Widget، Drawer و صفحه | Collected |
+| `PAGE-EMP-CONV-DEC-006..007` | Odoo Mail/Discuss/Bus | Unread، Realtime و مالکیت Message | Needs Review |
+| `PAGE-EMP-CONV-DEC-008` | Search | جداسازی Search پیام از Global Search | Collected |
+
+## سایر صفحات v7
+
+| صفحه | ماژول/دامنه | اثر | وضعیت |
+|---|---|---|---|
+| Global Search | `cas_workspace`, Provider Registry, Access Resolver, `cas_jalali_search` | Search چندمنبعی و امن | Needs Review |
+| Notification Center | Notification Service، `cas_action_hub`, Providerها، Mail/Bus/Cron | اعلان، Read State و Delivery | Needs Review |
+| Recent History | `cas_workspace`, History Service, Access Resolver | تاریخچه مرور و Privacy | Needs Review |
+| Workspace Shell | `cas_workspace`, User Preference | Navigation، Theme، Widget، Router و Overlay | Needs Review |
+
+# بخش دوم — تغییرات Workspace v8
+
+## کارهای من: دسته‌ها
+
+| تصمیم | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
 |---|---|---|---|---|
-| `PAGE-EMP-DESK-DEC-001..015` | `cas_workspace`, `cas_work_report`, `cas_action_hub`, Attendance, Activity Catalog | Product/Data/UI | تصمیمات پایه میزکار عملیاتی، ثبت تدریجی فعالیت و شخصی‌سازی | Needs Review |
-| `PAGE-EMP-DESK-DEC-016` | `cas_workspace` | UI/Composition | Hero سه‌ردیفه | Collected |
-| `PAGE-EMP-DESK-DEC-017` | `cas_workspace` | UI/Layout | چهار Status Card هم‌اندازه | Collected |
-| `PAGE-EMP-DESK-DEC-018` | `cas_workspace`, Search Registry | UI/Navigation | Command Launcher تمام‌عرض | Needs Review |
-| `PAGE-EMP-DESK-DEC-019` | `cas_workspace`, `cas_action_hub` | Domain/UI | جداسازی Task شخصی از Action رسمی | Needs Review |
-| `PAGE-EMP-DESK-DEC-020` | `cas_workspace`, Calendar Providers | Widget/Integration | تقویم روز، هفته و ماه در میزکار | Needs Review |
-| `PAGE-EMP-DESK-DEC-021` | `cas_workspace`, Mail/Bus | Widget/Communication | گفتگوهای اخیر | Needs Review |
-| `PAGE-EMP-DESK-DEC-022` | `cas_workspace`, `cas_work_report` | UI/Consolidation | ادغام ثبت و مرور فعالیت | Collected |
-| `PAGE-EMP-DESK-DEC-023` | `cas_workspace` | Widget/Layout | ارتفاع ثابت Widgetها | Collected |
-| `PAGE-EMP-DESK-DEC-024` | `cas_workspace` | Widget/Empty State | ظرفیت بصری ثابت و Placeholder | Collected |
-| `PAGE-EMP-DESK-DEC-025` | `cas_workspace`, User Preference | Preference/DnD | Drag & Drop و ذخیره ترتیب | Needs Review |
-| `PAGE-EMP-DESK-DEC-026` | `cas_workspace`, User Preference | Preference | ذخیره تنظیمات | Needs Review |
-| `PAGE-EMP-DESK-DEC-027` | `cas_workspace` | Theme/Accessibility | Theme و خوانایی سراسری | Needs Review |
-| `PAGE-EMP-DESK-DEC-028` | `cas_workspace` | Accessibility | حداقل متن ۱۲ پیکسل | Collected |
-| `PAGE-EMP-DESK-DEC-029` | `cas_workspace` | Drawer/UI | انتقال اطلاعات جانبی به Drawer | Collected |
-| `PAGE-EMP-DESK-DEC-030` | `cas_workspace`, همه Providerها | Route/Action | اتصال همه CTAها به Route رسمی | Needs Review |
+| `PAGE-EMP-TASK-DEC-008` / `DEC-012` | `cas_personal_task` پیشنهادی، `cas_workspace` | Domain/Data/UI | تفکیک دسته سیستمی و شخصی | Needs Review |
+| `PAGE-EMP-TASK-DEC-009` | Personal Task Store | Transaction/Data | حذف دسته و انتقال Taskها به دسته پیش‌فرض | Needs Review |
+| `PAGE-EMP-TASK-DEC-010` | Security | ACL/Method Rule | ممنوعیت حذف دسته سیستمی و کنترل مالکیت | Needs Review |
 
-## صفحه کارهای شخصی
+### اثر ماژولی
 
-| شناسه | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
+- `cas_workspace`: UI مدیریت Category و Sync فیلترها
+- `cas_personal_task` پیشنهادی: مالک Category، Task و Reminder
+- `cas_action_hub`: بدون مالکیت Category؛ فقط حفظ مرزبندی
+- `cas_work_report`: Adapter تبدیل Task به Activity
+
+## تقویم: Selector شرکت‌کنندگان
+
+| تصمیم | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
 |---|---|---|---|---|
-| `PAGE-EMP-TASK-DEC-001` | `cas_workspace`, `cas_action_hub` | Domain Boundary | جداسازی Task شخصی از Action سازمانی | Needs Review |
-| `PAGE-EMP-TASK-DEC-002` | Access Resolver | Security/Capability | Capability جدید `personal.tasks` | Collected |
-| `PAGE-EMP-TASK-DEC-003..005` | Personal Task Store, `cas_workspace` | Data/UI | ثبت سریع، تکمیل، انتقال و زمان‌بندی | Needs Review |
-| `PAGE-EMP-TASK-DEC-006` | `cas_work_report` | Adapter | تبدیل اختیاری Task به فعالیت | Needs Review |
-| `PAGE-EMP-TASK-DEC-007` | `cas_workspace` | Widget/Page | منبع مشترک Widget و صفحه کامل | Collected |
+| `PAGE-EMP-CAL-DEC-008` / `DEC-013` | HR Directory، `cas_workspace` | Search/Performance | جست‌وجوی Server-side و بدون بارگذاری کل کارکنان | Needs Review |
+| `PAGE-EMP-CAL-DEC-009` | Calendar/Event، `cas_action_hub` | Domain Boundary | دعوت و Task دو Operation مستقل | Needs Review |
+| `PAGE-EMP-CAL-DEC-010` | Organization Scope Resolver | Security | Task فقط برای زیرمجموعه مجاز | Needs Review |
+| `PAGE-EMP-CAL-DEC-011` | Calendar Selector | UI/Data | روش ارسال مستقل برای هر فرد | Collected |
+| `PAGE-EMP-CAL-DEC-012` / `DEC-015` | `cas_workspace` | Overlay/Accessibility | Selector روی Modal، Focus Restore و Scroll Lock | Needs Review |
 
-## صفحه تقویم
+### اثر ماژولی
 
-| شناسه | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
+- `cas_workspace`: Modal، Selector، Chip، State و Overlay Manager
+- HR/Employee Directory: Search Server-side، Pagination و Scope اطلاعات
+- Organization Hierarchy Resolver: رابطه مدیریتی، Delegation و Company Scope
+- Odoo Calendar/Event: Event، Attendee، Invitation و RSVP
+- `cas_action_hub`: Task/Action برای زیرمجموعه مجاز
+- Mail/Notification: Delivery و Failure Feedback
+- Jalali Suite: ورودی و نمایش تاریخ
+
+## گفتگوها: تجربه پیام‌رسانی
+
+| تصمیم | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
 |---|---|---|---|---|
-| `PAGE-EMP-CAL-DEC-001..003` | `cas_workspace`, Calendar Aggregator | Route/Widget | Route سطح اول و سه نمای روز/هفته/ماه | Needs Review |
-| `PAGE-EMP-CAL-DEC-004` | Jalali Suite | Date/UI | نمای ماهانه شمسی کامل | Needs Review |
-| `PAGE-EMP-CAL-DEC-005` | Jalali Suite, Odoo ORM | Data Contract | ذخیره استاندارد و نمایش جلالی | Collected |
-| `PAGE-EMP-CAL-DEC-006` | Calendar Integration | CRUD | ساخت رویداد واقعی | Needs Review |
-| `PAGE-EMP-CAL-DEC-007` | Shift, Action, Correspondence, Workflow | Provider Aggregation | تجمیع رویدادهای چندمنبعی | Needs Review |
+| `PAGE-EMP-CONV-DEC-009` / `DEC-014` | Odoo Mail/Discuss/Bus | Integration | استفاده از قابلیت استاندارد و عدم ساخت Message موازی | Needs Review |
+| `PAGE-EMP-CONV-DEC-010` | `cas_workspace` | Layout | Composer ثابت و حذف Scroll صفحه | Collected |
+| `PAGE-EMP-CONV-DEC-011` | `cas_workspace` | Interaction | Context Menu اختصاصی پیام و گفتگو | Collected |
+| `PAGE-EMP-CONV-DEC-012` | Mail/Discuss Adapter | Feature/API | Reply، Forward، Pin و Reaction | Needs Review |
+| `PAGE-EMP-CONV-DEC-013` / `DEC-015` | Overlay Manager | UX/Accessibility | Outside Click، Escape، Focus و Viewport Position | Needs Review |
 
-## صفحه گفت‌وگوها
+### اثر ماژولی
 
-| شناسه | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
-|---|---|---|---|---|
-| `PAGE-EMP-CONV-DEC-001` | `cas_workspace` | Navigation | Route سطح اول `messages` | Collected |
-| `PAGE-EMP-CONV-DEC-002` | Mail/Discuss, `cas_correspondence` | Domain Boundary | جداسازی گفتگو از مکاتبه رسمی | Needs Review |
-| `PAGE-EMP-CONV-DEC-003..005` | `cas_workspace` | Widget/Drawer/Topbar | سه نقطه دسترسی و Drawer جزئیات | Collected |
-| `PAGE-EMP-CONV-DEC-006` | Mail/Bus | Realtime/State | همگام‌سازی Unread | Needs Review |
-| `PAGE-EMP-CONV-DEC-007` | Mail/Discuss/Bus Adapter | Integration | Workspace مالک Message نیست | Needs Review |
-| `PAGE-EMP-CONV-DEC-008` | Search | Search Boundary | جست‌وجوی پیام مستقل از Global Search | Collected |
+- `cas_workspace`: Layout، Floating Action، Context Menu، Picker و Adapter
+- Odoo Mail/Discuss/Bus: Conversation، Message، Member، Unread، Reaction و Realtime
+- `cas_document_core`: Permission فایل در صورت Link به Document
+- `cas_correspondence`: مرزبندی با نامه رسمی
+- Notification Core: پیام جدید، Mute و Deep Link
 
-## صفحه جست‌وجوی سراسری
-
-| شناسه | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
-|---|---|---|---|---|
-| `PAGE-EMP-SEARCH-DEC-001..002` | `cas_workspace` | Route/Command | Route مستقل و Command Launcher | Collected |
-| `PAGE-EMP-SEARCH-DEC-003` | همه ماژول‌های منبع | Provider Registry | جست‌وجوی فرم، اقدام، شخص، سند، نامه و فرایند | Needs Review |
-| `PAGE-EMP-SEARCH-DEC-004..005` | Access Resolver, Providerها | Security | Whitelist و جلوگیری از نشت نتیجه | Needs Review |
-| `PAGE-EMP-SEARCH-DEC-006` | `cas_workspace` | UX | تجربه واحد برای Route و Data Search | Collected |
-| `PAGE-EMP-SEARCH-DEC-007` | `cas_jalali_search` | Date Parsing | تبدیل Query شمسی | Needs Review |
-
-## مرکز اعلان‌ها
-
-| شناسه | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
-|---|---|---|---|---|
-| `PAGE-EMP-NOTIF-DEC-001` | Notification Service, `cas_action_hub` | Domain Boundary | اعلان با Action یکی نیست | Needs Review |
-| `PAGE-EMP-NOTIF-DEC-002..004` | `cas_workspace`, Notification Service | Data/UI | نوع، منبع، مقصد، Read State و Count | Needs Review |
-| `PAGE-EMP-NOTIF-DEC-005` | همه ماژول‌های منبع | Provider Registry | Adapter اعلان | Needs Review |
-| `PAGE-EMP-NOTIF-DEC-006` | Mail/Bus/Cron | Delivery | Realtime با fallback | Needs Review |
-
-## تاریخچه اخیر
-
-| شناسه | ماژول/دامنه | نوع اثر | خلاصه | وضعیت |
-|---|---|---|---|---|
-| `PAGE-EMP-HISTORY-DEC-001` | `cas_workspace`, Audit | Domain Boundary | History مرور با Audit Log متفاوت است | Collected |
-| `PAGE-EMP-HISTORY-DEC-002` | Access Resolver | Security | بازبینی مجوز هنگام نمایش | Needs Review |
-| `PAGE-EMP-HISTORY-DEC-003..004` | History Service | Data/Preference | Resource Reference و حذف فقط از History | Needs Review |
-| `PAGE-EMP-HISTORY-DEC-005` | Security Policy | Privacy | استثنای Routeهای حساس | Needs Review |
-| `PAGE-EMP-HISTORY-DEC-006` | User Preference | Persistence | ذخیره سمت سرور در Production | Needs Review |
-
-## پوسته مشترک Workspace
+## زیرساخت Overlay مشترک v8
 
 | حوزه | ماژول/دامنه | اثر | وضعیت |
 |---|---|---|---|
-| Routeهای جدید | `cas_workspace`, Access Resolver | ثبت ۶ Route و ۶ Capability جدید | Needs Review |
-| Sidebar | `cas_workspace` | Collapse/Expand، Tooltip و State | Collected |
-| Topbar | `cas_workspace` | Search، Conversation، Notification، Appearance و Profile | Collected |
-| Theme | `cas_workspace`, Preference | Accent، Dark Mode، Font Scale و Density | Needs Review |
-| Widget Registry | `cas_workspace` | ID پایدار، DnD، Error Boundary و State | Needs Review |
-| Drawer/Modal | `cas_workspace` | Focus، Escape، State Preservation | Needs Review |
-| Router | `cas_workspace` | Deep Link، Browser History و Route State | Needs Review |
+| Overlay Stack | `cas_workspace` | Parent/Child Layer و حذف z-index موردی | Needs Review |
+| Focus | `cas_workspace` | Trap، Restore و Keyboard | Needs Review |
+| Scroll | `cas_workspace` | Body Lock و جلوگیری از Scroll تودرتو | Collected |
+| Context Menu/Picker | `cas_workspace` | Outside Click، Escape و Viewport Boundary | Collected |
+| Accessibility | Design System / Workspace | `aria-modal`، Label و Focus Ring | Needs Review |
 
-## نمای ماژول‌محور جامع
+# بخش سوم — نمای ماژول‌محور جامع پس از v8
 
-### `cas_workspace` — اثر بسیار زیاد
+## `cas_workspace` — اثر بسیار زیاد
 
-- Shell و Router
-- Navigation و Capability Mapping
-- Routeهای `personal-tasks`, `calendar`, `messages`, `global-search-page`, `notifications-center`, `recent-history`
-- Dashboard/Hero/Widget Registry
-- Drawer و Modal Infrastructure
-- Theme و Preference
-- Provider Registryهای Search، Calendar، Notification و History
-- Topbar Quick Access
-
-وضعیت: `Needs Review`؛ Specification نهایی هنوز تولید نشده است.
-
-### `cas_action_hub` — اثر زیاد
-
-- تغییر عنوان UI از «کارهای من» به «نیازمند اقدام»
-- جداسازی Action رسمی از Task شخصی
-- Provider اقدام‌های میزکار، Search، Calendar Deadline و Notification
+- Shell، Router و Navigation
+- Widget Registry و Preference
+- صفحات Personal Tasks، Calendar و Conversations
+- Overlay Manager
+- Directory Search Adapter
+- Organization Scope Adapter
+- Calendar Attendee Selector
+- Discuss Adapter
+- Context Menu و Emoji Picker
+- Layout ثابت گفتگو و Composer
 
 وضعیت: `Needs Review`.
 
-### `cas_work_report` — اثر زیاد
+## `cas_personal_task` پیشنهادی — اثر ساختاری
 
-- ثبت سریع و تدریجی
-- Widget ترکیبی فعالیت
-- تبدیل اختیاری Task به Activity
-- مجموع زمان و اختلاف حضور
-- Search/History Provider
+- Personal Task
+- Personal Category
+- System Category Seed
+- Reminder و Ownership
+- Archive/Retention
 
-وضعیت: `Needs Review`.
+وضعیت: `Needs Review`؛ ایجاد ماژول هنوز قطعی نشده است.
 
-### `cas_attendance_core` و `cas_attendance_operations` — اثر متوسط
+## `cas_action_hub` — اثر زیاد
 
-- Hero Presence Provider
-- مغایرت و Notification
-- Search/History محدود
-- Deep Link به ثبت نگهبانی؛ صفحه تخصصی نسخه ۴ حفظ می‌شود
-
-وضعیت: `Needs Review` تا بررسی نقش نگهبان.
-
-### `cas_shift_management` — اثر متوسط
-
-- شیفت امروز
-- Calendar Provider
-- Notification جابه‌جایی/انتشار
-- Search و History
+- حفظ جداسازی Action رسمی از Task شخصی
+- ایجاد Task از Event برای Target مجاز
+- Deadline، Notification و Deep Link
 
 وضعیت: `Needs Review`.
 
-### `cas_correspondence` و `cas_correspondence_advanced` — اثر متوسط
+## HR/Employee Directory — اثر زیاد
 
-- مرزبندی با Conversation
-- Search Provider
-- Calendar Deadline
-- Notification و Recent History
-
-وضعیت: `Needs Review`.
-
-### `cas_document_core` — اثر متوسط
-
-- Global Search
-- Recent History
-- فایل گفتگو و Permission Download
-- Notification نسخه/OCR در صورت نیاز
+- Search Server-side
+- Cursor/Pagination
+- Company Scope
+- حداقل Metadata مجاز
 
 وضعیت: `Needs Review`.
 
-### Form/Workflow/Approval/Kardex — اثر متوسط یا کم
+## Organization Hierarchy Resolver — اثر زیاد
 
-هرکدام باید Providerهای Search، Notification، Calendar Deadline و History متناسب با مجوز ارائه دهند. مالکیت داده و عملیات در ماژول اصلی باقی می‌ماند.
+- رابطه مستقیم/غیرمستقیم
+- تاریخ مؤثر Assignment
+- Delegation
+- Multi-company
+- Task Assignment Scope
 
-### Jalali Suite — اثر متوسط
+وضعیت: `Needs Review`؛ محل نهایی Service مشخص نشده است.
 
-- Calendar Month View
-- Parse بازه شمسی در Search
-- نمایش زمان History و Notification
-- عدم تغییر مقدار استاندارد ذخیره‌شده
+## Odoo Calendar/Event — اثر زیاد
+
+- Event و Attendee
+- Invitation و RSVP
+- Timezone و Jalali Adapter
+- Event-to-Task Link
 
 وضعیت: `Needs Review`.
 
-### Odoo Mail/Discuss/Bus — اثر زیاد
+## Odoo Mail/Discuss/Bus — اثر زیاد
 
 - Conversation Source
-- Unread Count
-- Realtime Delivery
+- Reply/Forward/Reaction/Pin
+- Unread و Realtime
 - Member/File Permission
+- Mute/Archive Preference
 
-وضعیت: `Needs Review`؛ Adapter نهایی تصویب نشده است.
+وضعیت: `Needs Review`؛ تطبیق دقیق با Odoo 19 لازم است.
+
+## سایر ماژول‌ها
+
+- `cas_document_core`: فایل و Permission
+- Notification Core: دعوت، پیام و Failure Feedback
+- Jalali Suite: تاریخ تقویم
+- `cas_work_report`: تبدیل اختیاری Task
+- `cas_correspondence`: مرزبندی با Conversation
+
+وضعیت: `Needs Review`.
+
+# بخش چهارم — اسناد مرجع
+
+- `02_UI_UX/Employee/Personal_Tasks.md`
+- `02_UI_UX/Employee/Calendar.md`
+- `02_UI_UX/Employee/Conversations.md`
+- `04_Decisions/DEC-012-Personal-Task-Category-Governance.md`
+- `04_Decisions/DEC-013-Calendar-Attendee-Selection-And-Assignment-Authorization.md`
+- `04_Decisions/DEC-014-Discuss-Reuse-And-Message-Interaction.md`
+- `04_Decisions/DEC-015-Overlay-Layering-And-Focus-Management.md`
+- `03_Modules/V8_Impact_Assessment.md`
+- `05_Architecture/V8-Interaction-And-Integration-Contracts.md`
+- `06_ChangeSets/CS-WORKSPACE-V8.md`
 
 ## قواعد به‌روزرسانی
 
 1. هر صفحه جدید سند مستقل دارد.
 2. هر تصمیم با شناسه در این ماتریس ثبت می‌شود.
 3. Decisionهای بین‌صفحه‌ای در `04_Decisions` ثبت می‌شوند.
-4. Change Set جامع در `06_ChangeSets/CS-WORKSPACE-V7.md` مرجع Audit است.
-5. پس از بررسی نقش‌ها و صفحات وابسته، آثار در `03_Modules` Consolidate می‌شوند.
+4. Change Set جامع هر نسخه مرجع Audit همان نسخه است.
+5. آثار در `03_Modules` Consolidate می‌شوند.
 6. فقط Specification ماژولی با وضعیت `Implementation Ready` مجوز اجرا دارد.
