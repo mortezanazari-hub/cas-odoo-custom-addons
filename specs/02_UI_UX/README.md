@@ -19,6 +19,7 @@ CAS UI Prototype v4 → CAS UI Workspace v7 → CAS UI Workspace v8
 - [جست‌وجوی سراسری سازمان](Employee/Global_Search.md)
 - [مرکز اعلان‌ها](Employee/Notifications_Center.md)
 - [تاریخچه اخیر](Employee/Recent_History.md)
+- [صفحه پویا گزارش روزانه](Employee/Dynamic_Work_Report.md)
 
 ## مشترک همه نقش‌ها
 
@@ -26,14 +27,19 @@ CAS UI Prototype v4 → CAS UI Workspace v7 → CAS UI Workspace v8
 
 ## دامنه ویژه نسخه ۸
 
-- مدیریت دسته‌های شخصی و سیستمی در «کارهای من»
-- Selector مقیاس‌پذیر شرکت‌کنندگان تقویم
-- تفکیک دعوت‌نامه و تخصیص وظیفه
-- تجربه کامل‌تر گفت‌وگو بر پایه Mail/Discuss
-- Overlay Stack، Focus و Scroll Contract
+- مدیریت دسته‌های شخصی و سیستمی
+- Selector مقیاس‌پذیر شرکت‌کنندگان
+- تجربه گفتگو بر پایه Mail/Discuss
+- Command Palette مشترک Search/History
+- Scroll و Overlay Contract
+- گزارش کار پویا براساس Profile، Assignment و Form Version
+- Context خودکار، Snapshot و Renderer تخصصی
 
-مرجع جامع: `../06_ChangeSets/CS-WORKSPACE-V8.md`
+مراجع جامع:
+
+- `../06_ChangeSets/CS-WORKSPACE-V8.md`
+- `../06_ChangeSets/CS-WORK-REPORT-DYNAMIC-FORM.md`
 
 ## وضعیت
 
-تصمیم‌های محصولی نسخه ۸ ثبت شده‌اند، اما این اسناد به‌تنهایی مجوز پیاده‌سازی Production نیستند. Specification و قراردادهای امنیتی ماژول‌های متأثر باید تصویب شوند.
+تصمیم‌های محصولی ثبت شده‌اند، اما این اسناد به‌تنهایی مجوز پیاده‌سازی Production نیستند. Specification و قراردادهای امنیتی ماژول‌های متأثر باید تصویب شوند.
