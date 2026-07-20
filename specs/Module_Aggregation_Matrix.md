@@ -29,51 +29,106 @@
 | `PAGE-EMP-DESK-DEC-013` | میزکار کاربر | `cas_workspace` | Preference | میانبرهای شخصی | Collected |
 | `PAGE-EMP-DESK-DEC-014` | میزکار کاربر | `cas_workspace` | Preference / UI | شخصی‌سازی چیدمان | Collected |
 | `PAGE-EMP-DESK-DEC-015` | میزکار کاربر | `cas_workspace` | Responsive UX | اولویت ثبت سریع در موبایل | Collected |
+| `PAGE-EMP-DESK-DEC-016` | میزکار کاربر | `cas_workspace` | UI / Composition | Hero سه‌ردیفه و منظم | Collected |
+| `PAGE-EMP-DESK-DEC-017` | میزکار کاربر | `cas_workspace`, Mail/Bus | Navigation / Communication | گفتگو قابلیت سطح اول | Needs Review |
+| `PAGE-EMP-DESK-DEC-018` | میزکار کاربر | `cas_workspace` | Iconography | آیکن دو حباب گفتگو | Collected |
+| `PAGE-EMP-DESK-DEC-019` | میزکار کاربر | `cas_workspace`, Mail/Bus | UI / Drawer | جزئیات گفتگو در Drawer | Needs Review |
+| `PAGE-EMP-DESK-DEC-020` | میزکار کاربر | `cas_workspace`, Calendar | UI / Integration | تقویم روز، هفته و ماه در میزکار | Needs Review |
+| `PAGE-EMP-DESK-DEC-021` | میزکار کاربر | Calendar, Jalali | UI / Date | نمای ماهانه شمسی کامل | Needs Review |
+| `PAGE-EMP-DESK-DEC-022` | میزکار کاربر | `cas_workspace` | Widget / Layout | ارتفاع ثابت Widgetها | Collected |
+| `PAGE-EMP-DESK-DEC-023` | میزکار کاربر | `cas_workspace` | Widget / Empty State | ظرفیت ثابت و ردیف خالی غیرفعال | Collected |
+| `PAGE-EMP-DESK-DEC-024` | میزکار کاربر | `cas_workspace`, User Preference | Preference / DnD | Drag & Drop Widgetها | Needs Review |
+| `PAGE-EMP-DESK-DEC-025` | میزکار کاربر | `cas_workspace` | Accessibility / Typography | سه حالت خوانایی | Collected |
+| `PAGE-EMP-DESK-DEC-026` | میزکار کاربر | `cas_workspace` | Theme / Design System | Accent سراسری و Light/Dark Mode | Needs Review |
+| `PAGE-EMP-DESK-DEC-027` | میزکار کاربر | `cas_workspace` | Shell / Navigation | Sidebar جمع‌شونده و پایدار | Collected |
+| `PAGE-EMP-DESK-DEC-028` | میزکار کاربر | `cas_workspace`, `cas_work_report` | UI / Consolidation | ادغام ثبت و مرور فعالیت | Collected |
+| `PAGE-EMP-DESK-DEC-029` | میزکار کاربر | `cas_workspace` | UI / Consolidation | ادغام میانبرها در نوار عملیات | Collected |
+| `PAGE-EMP-DESK-DEC-030` | میزکار کاربر | `cas_workspace` | Accessibility | حداقل متن کاربردی ۱۲ پیکسل | Collected |
+
+## Decision Recordهای مشترک
+
+| شناسه | دامنه | خلاصه | وضعیت |
+|---|---|---|---|
+| `DEC-004` | Workspace / Preference | سیستم Widget با ارتفاع ثابت، Scroll داخلی و Drag | Agreed |
+| `DEC-005` | Communication | گفتگو قابلیت سطح اول Workspace است | Agreed |
+| `DEC-006` | Design System | خوانایی، Accent و Dark Mode سراسری | Agreed |
+| `DEC-007` | Shell / Navigation | Sidebar جمع‌شونده و پایدار | Agreed |
+| `DEC-008` | Calendar | تقویم تعاملی داخل میزکار | Agreed |
 
 ## نمای ماژول‌محور فعلی
 
 ### `cas_workspace`
 
-- تبدیل صفحه اصلی به میزکار عملیاتی
-- برنامه امروز و کارهای نیازمند اقدام
-- ثبت سریع فعالیت به‌عنوان مصرف‌کننده سرویس گزارش کار
-- فعالیت‌های امروز و مجموع زمان
-- خلاصه حضور و مغایرت قابل اقدام
-- میانبرهای شخصی و شخصی‌سازی Layout
-- تجربه فارسی، RTL و Mobile-first
+- میزکار عملیاتی و Hero روزانه
+- Action Strip و جست‌وجوی سراسری
+- Widget Registry و Layout
+- ارتفاع ثابت، Scroll داخلی و Empty Row
+- Drag & Drop و User Preference
+- Theme، Accent، Density و Typography
+- Sidebar جمع‌شونده
+- Quick Conversations و Drawer
+- Calendar Widget و Adapterهای نمایشی
+- تجربه فارسی، RTL و Responsive
 
-وضعیت: `Needs Review` تا بررسی سایر میزکارها و نقش‌ها.
+وضعیت: `Needs Review` تا بررسی Workspace نقش‌های دیگر، Settings و قرارداد Preference.
 
 ### `cas_work_report`
 
-- پشتیبانی محصولی از چند فعالیت در یک گزارش روزانه
+- گزارش چندفعالیتی
 - ثبت تدریجی و ثبت سریع
-- فعالیت پیشنهادی و وضعیت استانداردسازی
-- حفظ Snapshot تاریخی
-- محاسبه مجموع زمان و هشدار اختلاف با حضور
+- ادغام ثبت و مرور فعالیت در میزکار
+- Snapshot تاریخی
+- مجموع زمان و اختلاف حضور
 
-وضعیت: `Needs Review` تا بررسی صفحه کامل گزارش کار، سرپرست و فرایند تأیید.
+وضعیت: `Needs Review` تا بررسی صفحه کامل گزارش کار و فرایند تأیید.
 
 ### `cas_action_hub`
 
-- تأمین برنامه امروز و کارهای اقدام‌پذیر
-- برچسب‌های کاربرپسند موعد به‌جای SLA در UI
-- احتمال ایجاد اقدام بررسی پیشنهاد فعالیت
+- برنامه امروز و اقدام‌های قابل انجام
+- برچسب‌های کاربرپسند موعد
+- منبع Widget «نیازمند اقدام»
 
-وضعیت: `Needs Review` تا بررسی صفحه کارتابل.
+وضعیت: `Needs Review` تا بررسی صفحه کارتابل و SLA Adapter.
+
+### Mail/Bus و `cas_correspondence`
+
+- منبع گفتگوها، Badge خوانده‌نشده و کانال‌ها
+- ارتباط گفتگو با رکورد منبع
+- Drawer اعضا و فایل‌ها
+
+وضعیت: `Needs Review` تا بررسی صفحه کامل گفتگو و Permission Model.
+
+### Calendar و Jalali
+
+- منبع واحد رویدادهای روز، هفته و ماه
+- ناوبری ماهانه شمسی
+- Timezone و Date Conversion
+
+وضعیت: `Needs Review` تا تعیین Adapter و Source Aggregation.
+
+### User Preference
+
+- اندازه متن
+- Density
+- Accent و Theme
+- وضعیت Sidebar
+- ترتیب Widgetها
+
+وضعیت: `Needs Review`؛ مدل سمت سرور و Scope ذخیره‌سازی نهایی نشده است.
 
 ### فرهنگ فعالیت
 
 - فعالیت استاندارد، دسته، Alias و دامنه انتشار
-- پیشنهاد فعالیت جدید و فرایند استانداردسازی
-- حفظ عنوان اولیه و نگاشت به فعالیت استاندارد
+- پیشنهاد فعالیت و استانداردسازی
+- حفظ عنوان اولیه و نگاشت
 
-وضعیت: `Needs Review`؛ مرز ماژول هنوز نهایی نیست.
+وضعیت: `Needs Review`؛ مرز ماژول نهایی نیست.
 
 ### `cas_attendance_core` و `cas_shift_management`
 
-- ارائه خلاصه حضور و شیفت امروز
-- اعلام مغایرت و مسیر اقدام
+- خلاصه حضور و شیفت
+- مغایرت و مسیر اقدام
+- رویدادهای برنامه مرتبط با تقویم
 
 وضعیت: `Needs Review` تا بررسی صفحات حضور، شیفت و نگهبانی.
 
@@ -82,7 +137,8 @@
 پس از هر جلسه بررسی صفحه:
 
 1. تصمیمات صفحه با شناسه یکتا ثبت شوند.
-2. ردیف‌های مربوط به ماژول‌های متأثر به این فایل اضافه شوند.
+2. ردیف‌های ماژول‌های متأثر به این فایل اضافه شوند.
 3. تعارض‌ها و وابستگی‌ها مشخص شوند.
-4. پس از پایان بررسی صفحات، ردیف‌ها ماژول‌به‌ماژول Consolidate شوند.
-5. تنها Specification تجمیع‌شده و تأییدشده مبنای پیاده‌سازی قرار گیرد.
+4. تصمیم مشترک در `04_Decisions` ثبت شود.
+5. پس از پایان بررسی صفحات، ردیف‌ها ماژول‌به‌ماژول Consolidate شوند.
+6. تنها Specification تجمیع‌شده و تأییدشده مبنای پیاده‌سازی قرار گیرد.
