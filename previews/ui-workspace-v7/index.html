@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#123047">
+  <title>CAS Workspace v7</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="app" class="app-shell">
+  <aside id="sidebar" class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">C</div>
+      <div class="brand-copy"><strong>فضای کار سازمانی</strong><span>CAS Workspace</span></div>
+      <button class="sidebar-toggle" data-action="toggle-sidebar" title="جمع‌کردن منو">⇥</button>
+    </div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-footer">
+      <button class="support-card" data-route="settings"><span>⚙</span><span class="nav-text"><strong>تنظیمات محیط</strong><small>ظاهر، خوانایی و چیدمان</small></span></button>
+    </div>
+  </aside>
+  <section class="workspace">
+    <header class="topbar">
+      <div class="topbar-leading">
+        <button class="icon-button mobile-only" data-action="mobile-menu">☰</button>
+        <div id="breadcrumb" class="breadcrumb"></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="quick-chat" data-action="quick-chat" title="گفت‌وگوهای اخیر">💬<em>۴</em></button>
+        <button class="icon-button" data-action="search" title="جست‌وجوی سازمان">⌕</button>
+        <button class="icon-button" data-route="notifications" title="اعلان‌ها">◔</button>
+        <button class="profile-chip" data-route="settings"><span class="avatar">مر</span><span><strong>مهدی رضایی</strong><small>کاربر عادی</small></span></button>
+      </div>
+    </header>
+    <main id="main" class="main"></main>
+  </section>
+</div>
+<div id="drawerRoot"></div>
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
