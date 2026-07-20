@@ -7,24 +7,20 @@
 - [یادداشت معماری اتصال Workspace v7](Workspace_UI_Integration_Notes.md) — وضعیت `Needs Review`
 - [قراردادهای تعامل و Integration نسخه ۸](V8-Interaction-And-Integration-Contracts.md) — وضعیت `Needs Review`
 - [قراردادهای Search، Recent History و Scroll نسخه ۸](V8-Search-History-And-Scroll-Contracts.md) — وضعیت `Needs Review`
+- [معماری جامع گزارش کار مبتنی بر Form Engine](Work_Report_Form_Engine_Architecture.md) — وضعیت `Needs Review`
 
 ## دامنه معماری نسخه ۸
 
-- Overlay Manager و Stack لایه‌ها
-- Focus Trap و Focus Restore
-- Scroll Lock و Outside Click
-- Directory Search Server-side
-- Organization Scope Resolver
-- Calendar Event Command
-- Personal Category Contract
-- Discuss Adapter Contract
+- Overlay، Focus، Scroll و Outside Click
+- Directory Search و Organization Scope
+- Calendar Event و Task Assignment
+- Discuss Adapter و Message Layout
 - Command Palette مشترک Search/History
-- Recent Resource Reference و Retention
-- حذف Routeهای مستقل Search و History
-- Scroll بومی Routeهای عادی Workspace
-- Scroll داخلی فهرست و پیام‌های گفتگو
-- Initial Scroll و حفظ Anchor پیام‌ها
-- Accessibility، Performance و Observability
+- Dynamic Work Report Profile Resolver
+- Form Version، Submission و Snapshot
+- Context Providerهای HR، Shift و Attendance
+- Reporting Projection برای داده‌های پویا
+- Accessibility، Performance، Security و Observability
 
 ## فایل‌های آینده
 
