@@ -3,46 +3,28 @@
 | مشخصه | مقدار |
 |---|---|
 | شناسه | `PAGE-EMP-CONV-001` |
-| خط مبنا | نسخه ۴ |
-| نسخه قبلی | نسخه ۷ |
-| نسخه هدف | نسخه ۸ |
+| نسخه هدف | `CAS UI Workspace v8` |
 | وضعیت محصول | `Agreed` |
 | وضعیت معماری | `Needs Review` |
-| وضعیت پیاده‌سازی | Prototype تأییدشده؛ اتصال Production به Mail/Discuss الزامی است |
-| نقش‌ها | همه کاربران دارای `discuss.use` |
+| وضعیت Prototype | Iteration 11 تأییدشده |
+| نقش‌ها | کاربران دارای `discuss.use` |
 
 ## هدف
 
-ارائه پیام‌رسانی سازمانی سریع و یکپارچه در Workspace، با استفاده از قابلیت‌های واقعی Odoo Mail/Discuss/Bus و بدون ساخت مدل موازی پیام در `cas_workspace`.
+ارائه پیام‌رسانی سازمانی سریع در Workspace با استفاده از Odoo Mail/Discuss/Bus و بدون ساخت مدل موازی Conversation یا Message در `cas_workspace`.
 
-## مرزبندی با مکاتبات
+## مرزبندی
 
-- گفت‌وگو برای ارتباط سریع، کانال، پیام، واکنش و فایل در متن گفتگو است.
+- گفتگو برای پیام سریع، کانال، واکنش، فایل و هماهنگی روزمره است.
 - `cas_correspondence` مالک نامه رسمی، شماره، ثبت، ارجاع و سوابق مکاتبات است.
-- آیکن و زبان بصری این دو حوزه نباید مشابه باشد.
-
-## تغییرات نسخه ۸ نسبت به نسخه ۷
-
-- جایگزینی آیکن نامه با نماد حباب گفت‌وگو
-- اصلاح شکل و اندازه آواتارها
-- حذف Header معرفی و توضیح بدیهی صفحه
-- حذف جست‌وجوی تکراری کنار دکمه گفت‌وگوی جدید
-- انتقال دکمه گفت‌وگوی جدید به Floating Action روی فهرست
-- فشرده‌سازی ردیف‌های فهرست گفتگو
-- محدودکردن Preview به یک خط
-- حذف Scroll کل صفحه و ثابت‌ماندن Composer
-- اضافه‌شدن Context Menu اختصاصی پیام و گفتگو
-- Reply، Forward، Delete مجاز، Pin پیام و Pin گفتگو
-- Mute و Archive گفتگو
-- Emoji Reaction و Emoji Picker در Composer
-- بسته‌شدن Menu/Picker با کلیک بیرون و Escape
+- Search داخل پیام‌ها مستقل از Search سراسری سازمان است.
 
 ## ساختار صفحه
 
-1. فهرست گفتگوها
-2. Search و فیلترهای همان فهرست
-3. Floating Action «گفت‌وگوی جدید»
-4. Header فشرده گفتگوی فعال
+1. فهرست فشرده گفتگوها
+2. Search و فیلتر همان فهرست
+3. Floating Action گفت‌وگوی جدید
+4. Header گفت‌وگوی فعال
 5. بدنه پیام‌ها
 6. Composer ثابت
 7. Drawer اطلاعات، اعضا و فایل‌ها
@@ -50,167 +32,102 @@
 
 ## فهرست گفتگوها
 
-هر ردیف شامل:
-
-- آواتار یا نشان کانال
-- عنوان گفتگو
-- Preview یک‌خطی آخرین پیام
-- زمان آخرین فعالیت
-- شمارنده خوانده‌نشده
-- وضعیت Pin/Mute در صورت نیاز
+هر ردیف شامل آواتار، عنوان، Preview یک‌خطی، زمان، Unread و وضعیت Pin/Mute است.
 
 قواعد:
 
-- ارتفاع ردیف‌ها فشرده و ثابت باشد.
-- متن بلند Ellipsis شود.
-- فقط فهرست گفتگو Scroll بخورد.
-- گفتگوی فعال به‌وضوح مشخص باشد.
-- راست‌کلیک/منوی بیشتر عملیات مجاز همان گفتگو را نشان دهد.
+- ارتفاع ردیف‌ها فشرده و ثابت است.
+- ردیف‌ها برای پرکردن ارتفاع پنل کشیده نمی‌شوند.
+- متن بلند Ellipsis می‌شود.
+- فقط خود فهرست Scroll مستقل دارد.
+- گفت‌وگوی فعال واضح است.
 
-## Header گفتگوی فعال
+## قرارداد Scroll صفحه
 
-فقط اطلاعات عملیاتی نگه داشته می‌شود:
+- خود Route گفت‌وگو Scroll کلی ندارد.
+- Header صفحه، Header گفت‌وگوی فعال و Composer خارج از ناحیه Scroll باقی می‌مانند.
+- فقط دو ناحیه Scroll مجازند:
+  1. فهرست گفتگوها
+  2. بدنه پیام‌های گفت‌وگوی فعال
+- هر دو ناحیه باید Wheel، Scrollbar، Keyboard، Touch و Auto-scroll دکمه وسط موس را پشتیبانی کنند.
+- برای Flex/Grid Containers استفاده از `min-height:0` الزامی است.
+- قفل `overflow:hidden` نباید به `.main-content` یا سایر Routeها به‌صورت سراسری اعمال شود.
+- سایر صفحات Workspace باید Scroll بومی مرورگر و Auto-scroll را حفظ کنند.
 
-- نام گفتگو یا کانال
-- وضعیت یا تعداد اعضا در صورت مفیدبودن
-- دسترسی به Search داخل پیام‌ها
-- فایل‌ها و اطلاعات گفتگو
-- عملیات بیشتر
+## موقعیت اولیه و رفتار انتهای چت
 
-اطلاعات جانبی سنگین در Drawer قرار می‌گیرد. Breadcrumbها یا برچسب رکورد مرتبط فقط زمانی نمایش داده می‌شوند که برای Context عملیاتی لازم باشند.
+- هنگام ورود به صفحه، گفت‌وگوی فعال از آخرین پیام باز می‌شود.
+- هنگام تغییر گفت‌وگوی فعال، پس از Render پیام‌ها Scroll به انتهای همان گفتگو منتقل می‌شود.
+- پس از ارسال پیام جدید، پنل پیام‌ها در انتهای چت باقی می‌ماند.
+- اگر کاربر برای مطالعه تاریخچه به بالا Scroll کرده باشد، دریافت پیام جدید نباید او را بدون قاعده به پایین بپراند؛ در Production باید Near-bottom Threshold و نشان «پیام جدید» تعریف شود.
+- بارگذاری پیام‌های قدیمی‌تر باید با حفظ Anchor بصری انجام شود تا موقعیت کاربر نپرد.
 
-## Scroll و Composer
+## Composer
 
-- Body صفحه گفتگو نباید Scroll مستقل مرورگر ایجاد کند.
-- فهرست گفتگو و بدنه پیام‌ها ناحیه Scroll کنترل‌شده دارند.
-- Composer همیشه در پایین View گفتگو قابل مشاهده است.
-- بازشدن Reply Preview یا Attachment نباید Composer را از Viewport خارج کند.
-- در موبایل، ارتفاع صفحه با Visual Viewport و Keyboard هماهنگ می‌شود.
+- Composer همیشه در پایین پنل قابل مشاهده است.
+- Reply Preview، Attachment و Emoji Picker نباید آن را از Viewport خارج کنند.
+- در موبایل ارتفاع با Visual Viewport و Keyboard هماهنگ می‌شود.
 
-## Context Menu پیام
+## تعامل پیام
 
-حداقل عملیات:
+عملیات پایه:
 
-- پاسخ
-- فوروارد
-- کپی متن
-- واکنش Emoji
-- پین/برداشتن پین
-- مشاهده اطلاعات پیام
-- حذف، فقط برای پیام خود کاربر و در محدوده سیاست
+- Reply
+- Forward
+- Copy
+- Reaction
+- Pin/Unpin
+- Message Info
+- Delete Own Message در صورت مجازبودن
 
-قواعد:
+Context Menu و Picker با Outside Click، Escape، تغییر Route یا تغییر گفت‌وگو بسته می‌شوند و داخل Viewport Position می‌شوند.
 
-- منوی مرورگر در محدوده پیام با منوی اختصاصی جایگزین می‌شود.
-- کلیک بیرون، Escape، تغییر گفتگو یا بازشدن Menu دیگر آن را می‌بندد.
-- Menu داخل Viewport Position می‌شود.
-- عملیات غیرمجاز نمایش داده نمی‌شود.
+## تعامل گفتگو
 
-## Context Menu گفتگو
-
-حداقل عملیات:
-
-- پین/برداشتن پین
-- بی‌صدا/فعال‌کردن اعلان
-- آرشیو
-- علامت‌گذاری خوانده/خوانده‌نشده
-- مشاهده اعضا و اطلاعات
-- ترک کانال در صورت مجازبودن
-
-حذف Conversation عملیات عمومی نیست و فقط مطابق سیاست واقعی Discuss مجاز است.
-
-## Reply
-
-- انتخاب Reply، Preview پیام مرجع را بالای Composer نشان می‌دهد.
-- کاربر می‌تواند Reply را لغو کند.
-- پیام نهایی مرجع Reply را حفظ می‌کند.
-- کلیک روی Preview پیام مرجع، در صورت مجازبودن، به پیام اصلی Scroll می‌کند.
-
-## Forward
-
-- مقصد از Conversation/Partnerهای قابل دسترس انتخاب می‌شود.
-- Forward نباید مجوز متن، فایل یا رکورد مرتبط را دور بزند.
-- منبع پیام در Forward قابل ردیابی است.
-
-## Pin
-
-- Pin پیام باید Scope و Permission روشن داشته باشد.
-- Pin گفتگو می‌تواند Preference کاربر یا Channel State باشد؛ تصمیم نهایی در Integration Spec مشخص می‌شود.
-- پیام‌های Pinشده از Header/Drawer قابل دسترسی‌اند.
-
-## Emoji Reaction و Picker
-
-- Reaction Picker از Context Menu یا دکمه پیام باز می‌شود.
-- Composer Picker Emoji را در محل Cursor درج می‌کند.
-- Picker با کلیک بیرون و Escape بسته می‌شود.
-- Keyboard Navigation، Focus و `aria-label` الزامی است.
-- Reaction به مدل استاندارد Mail/Discuss یا Extension سازگار متصل می‌شود.
-
-## تصمیمات قطعی
-
-- `PAGE-EMP-CONV-DEC-001`: گفت‌وگو قابلیت سطح اول Workspace است.
-- `PAGE-EMP-CONV-DEC-002`: گفت‌وگو از مکاتبه رسمی جداست.
-- `PAGE-EMP-CONV-DEC-003`: دسترسی از Sidebar، Topbar و Widget فراهم است.
-- `PAGE-EMP-CONV-DEC-004`: فهرست، پیام‌ها و Composer ساختار اصلی‌اند.
-- `PAGE-EMP-CONV-DEC-005`: اطلاعات جانبی در Drawer است.
-- `PAGE-EMP-CONV-DEC-006`: Unread در همه نقاط همگام است.
-- `PAGE-EMP-CONV-DEC-007`: Workspace مالک Message نیست.
-- `PAGE-EMP-CONV-DEC-008`: Search پیام از Global Search جداست.
-- `PAGE-EMP-CONV-DEC-009`: از قابلیت‌های استاندارد Mail/Discuss/Bus استفاده می‌شود.
-- `PAGE-EMP-CONV-DEC-010`: Composer همیشه در دسترس باقی می‌ماند.
-- `PAGE-EMP-CONV-DEC-011`: Context Menu اختصاصی جایگزین منوی مرورگر می‌شود.
-- `PAGE-EMP-CONV-DEC-012`: Reply، Forward، Pin و Reaction جزو رفتار پایه هستند.
-- `PAGE-EMP-CONV-DEC-013`: Menu و Picker با Outside Click و Escape بسته می‌شوند.
+- Pin/Unpin
+- Mute/Unmute
+- Archive/Unarchive
+- Mark Read/Unread
+- Members/Info
+- Leave Channel در صورت مجازبودن
 
 ## امنیت
 
 - مشاهده Conversation تابع Membership و Record Rule است.
-- ارسال پیام Author واقعی Session را استفاده می‌کند.
-- Delete تابع مالکیت، زمان و سیاست سازمان است.
-- Forward دسترسی مقصد و Attachment را دوباره بررسی می‌کند.
-- Pin/Mute/Archive Scope روشن کاربر یا کانال دارند.
-- Download فایل علاوه بر پیام، مجوز Attachment/Document را بررسی می‌کند.
+- ارسال پیام با Author واقعی Session انجام می‌شود.
+- Delete تابع مالکیت و سیاست سازمان است.
+- Forward مجوز مقصد، متن و Attachment را دوباره بررسی می‌کند.
+- فایل‌ها تابع Permission پیام و Attachment/Document هستند.
 - Frontend جایگزین ACL و Method Check نیست.
+
+## تصمیمات قطعی
+
+- `PAGE-EMP-CONV-DEC-001..009`: مرزبندی، Route، Discuss Reuse و Unread Sync.
+- `PAGE-EMP-CONV-DEC-010`: Composer همیشه در دسترس است.
+- `PAGE-EMP-CONV-DEC-011`: Context Menu اختصاصی برای پیام و گفتگو وجود دارد.
+- `PAGE-EMP-CONV-DEC-012`: Reply، Forward، Pin و Reaction رفتار پایه‌اند.
+- `PAGE-EMP-CONV-DEC-013`: Menu و Picker قرارداد Overlay مشترک را رعایت می‌کنند.
+- `PAGE-EMP-CONV-DEC-014`: Route گفت‌وگو Scroll کلی ندارد و فقط List و Message Body اسکرول می‌شوند.
+- `PAGE-EMP-CONV-DEC-015`: بازشدن گفتگو و ارسال پیام، موقعیت انتهای چت را مدیریت می‌کند.
+- `PAGE-EMP-CONV-DEC-016`: قفل Scroll صفحه گفتگو نباید Scroll بومی سایر Routeها را غیرفعال کند.
 
 ## اثر ماژولی
 
 | ماژول/دامنه | اثر |
 |---|---|
-| `cas_workspace` | Route، Layout، Floating Action، Context Menu، Overlay و Adapter |
-| Odoo Mail/Discuss/Bus | مالک Conversation، Message، Member، Reaction و Realtime |
-| `cas_document_core` | Permission فایل‌های مرتبط در صورت استفاده |
-| `cas_correspondence` | مرزبندی با نامه رسمی و Context Link |
+| `cas_workspace` | Layout، Scroll Contract، Initial Position، Context Menu، Overlay و Adapter |
+| Odoo Mail/Discuss/Bus | مالک Conversation، Message، Member، Reaction، Pagination و Realtime |
+| `cas_document_core` | Permission فایل‌های مرتبط |
+| `cas_correspondence` | مرزبندی با نامه رسمی |
 | Notification Core | اعلان پیام جدید و Mute Policy |
 
 ## معیارهای پذیرش
 
-- Composer در تمام زمان‌ها قابل مشاهده باشد.
-- کل صفحه Scroll نخورد.
-- فهرست گفتگو تراکم مناسب داشته باشد.
-- Context Menu با کلیک بیرون و Escape بسته شود.
-- Emoji Picker در پیام و Composer کار کند.
-- Reply، Forward، Pin و Reaction به رکورد واقعی متصل شوند.
-- حذف فقط برای پیام مجاز نمایش داده شود.
-- Unread میان Sidebar، Topbar و فهرست همگام بماند.
-- نبود Bus به حالت کنترل‌شده منجر شود.
-
-## تست‌های ضروری
-
-- کلیک بیرون Context Menu و Picker
-- Escape و Focus Restore
-- Composer در ارتفاع‌های مختلف
-- Keyboard باز در موبایل
-- ردیف‌های طولانی و عنوان‌های طولانی
-- گفتگوهای Pin/Mute/Archive
-- Attachment غیرمجاز
-- Forward به مقصد غیرمجاز
-- Realtime قطع و وصل
-- RTL، Zoom و Responsive
-
-## اسناد مرتبط
-
-- `04_Decisions/DEC-014-Discuss-Reuse-And-Message-Interaction.md`
-- `04_Decisions/DEC-015-Overlay-Layering-And-Focus-Management.md`
-- `05_Architecture/V8-Interaction-And-Integration-Contracts.md`
-- `03_Modules/V8_Impact_Assessment.md`
-- `06_ChangeSets/CS-WORKSPACE-V8.md`
+- کل Route گفت‌وگو Scroll نخورد.
+- فهرست و پیام‌ها Scroll و Auto-scroll مستقل داشته باشند.
+- سایر Routeها Auto-scroll بومی مرورگر را حفظ کنند.
+- ورود و تغییر گفتگو آخرین پیام را نمایش دهد.
+- ارسال پیام جدید انتهای چت را حفظ کند.
+- Header و Composer ثابت بمانند.
+- Context Menu و Emoji Picker با Keyboard و Outside Click کار کنند.
+- نبود Bus به حالت `unavailable` کنترل‌شده منجر شود.
