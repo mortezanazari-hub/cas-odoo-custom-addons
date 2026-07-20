@@ -2,7 +2,7 @@
 
 این پوشه مرجع رسمی تصمیمات محصول، طراحی رابط کاربری، تحلیل اثر تغییرات و مشخصات نهایی ماژول‌های پروژه **CAS Organizational Workspace** است.
 
-> این اسناد در مرحله فعلی دستور پیاده‌سازی نیستند. تا زمانی که تصمیمات صفحات مرتبط تجمیع و مشخصات اجرایی نهایی هر ماژول تصویب نشده‌اند، Agent یا توسعه‌دهنده نباید صرفاً بر اساس یک سند صفحه، کد یا Schema را تغییر دهد.
+> این اسناد در مرحله فعلی دستور پیاده‌سازی نیستند. تا زمانی که تصمیمات صفحات مرتبط تجمیع و Specification اجرایی هر ماژول تصویب نشده‌اند، توسعه‌دهنده نباید صرفاً بر اساس یک سند صفحه، کد یا Schema را تغییر دهد.
 
 ## ساختار
 
@@ -27,93 +27,74 @@ specs/
 3. ثبت تصمیم مشترک در `04_Decisions`
 4. ثبت اثر در `Module_Aggregation_Matrix.md`
 5. ثبت Change Set
-6. بررسی سایر نقش‌ها و صفحات وابسته
-7. تجمیع براساس ماژول در `03_Modules`
-8. تدوین Architecture، API، Security، Migration و Test Strategy
+6. تدوین قرارداد معماری
+7. تجمیع بر اساس ماژول در `03_Modules`
+8. تدوین API، Security، Migration و Test Strategy
 9. تغییر وضعیت به `Implementation Ready`
 10. پیاده‌سازی و تطبیق با کد
-
-## وضعیت اسناد
-
-- `Draft`
-- `Agreed`
-- `Needs Review`
-- `Superseded`
-- `Implementation Ready`
-- `Implemented`
 
 ## قواعد سخت
 
 - تصمیم محصولی، معماری و دستور اجرا از هم جدا هستند.
 - سند صفحه به‌تنهایی مجوز تغییر کد نیست.
-- هر تصمیم شناسه یکتا و قابلیت ردیابی دارد.
-- تغییرات مشترک چند صفحه براساس ماژول تجمیع می‌شوند.
 - هیچ تغییری در Odoo Core مجاز نیست.
 - Workspace مالک داده کسب‌وکاری ماژول‌های منبع نیست.
 - UI جایگزین ACL، Record Rule و Method Check نیست.
+- هر تصمیم باید شناسه و قابلیت ردیابی داشته باشد.
 
 ## خط نسخه‌بندی فعال
 
 ```text
-CAS UI Prototype v4 → CAS UI Workspace v7
+CAS UI Prototype v4 → CAS UI Workspace v7 → CAS UI Workspace v8
 ```
 
-نسخه‌های ۵ و ۶ Release رسمی مستقل نیستند و Iterationهای داخلی طراحی بوده‌اند.
+نسخه‌های ۵ و ۶ Release رسمی مستقل نیستند. تاریخچه کامل در [Version History](00_Project/Version_History.md) ثبت شده است.
 
-## Audit نسخه ۷
+## Workspace v7
 
-مقایسه مستقیم Prototype نسخه ۴ و نسخه ۷ نشان داد:
+نسخه ۷ Routeهای عمومی، Capabilityها، Widget System، Calendar، Conversations، Search، Notification، History، Theme و Sidebar را ایجاد یا توسعه داد.
 
-- ۶ Route عمومی جدید
-- ۶ Capability عمومی جدید
-- افزایش Functionهای رابط از ۹۷ به ۱۲۲
-- افزایش Actionهای UI از ۴۴ به ۸۰
-- توسعه Navigation تمام نقش‌ها
-- بیش از ۱۵۰۰ خط تغییر خالص در بسته Prototype
+- [Change Set جامع v7](06_ChangeSets/CS-WORKSPACE-V7.md)
+- [مرجع ماژول‌های v7](03_Modules/V7_Module_Impact_And_New_Modules.md)
 
-مرجع کامل: [Change Set جامع Workspace v7](06_ChangeSets/CS-WORKSPACE-V7.md)
+## Workspace v8
 
-## اسناد صفحه‌ای v7
+نسخه ۸ سه صفحه و یک زیرساخت مشترک را تکمیل کرد:
 
-### کاربر عادی
+### صفحات به‌روزشده
 
-- [میزکار](02_UI_UX/Employee/Workspace.md)
-- [کارهای شخصی](02_UI_UX/Employee/Personal_Tasks.md)
+- [کارهای من](02_UI_UX/Employee/Personal_Tasks.md)
 - [تقویم](02_UI_UX/Employee/Calendar.md)
 - [گفت‌وگوها](02_UI_UX/Employee/Conversations.md)
-- [جست‌وجوی سراسری](02_UI_UX/Employee/Global_Search.md)
-- [مرکز اعلان‌ها](02_UI_UX/Employee/Notifications_Center.md)
-- [تاریخچه اخیر](02_UI_UX/Employee/Recent_History.md)
 
-### مشترک همه نقش‌ها
+### تصمیم‌های نسخه ۸
 
-- [پوسته Workspace](02_UI_UX/Shared/Workspace_Shell.md)
+- [حاکمیت دسته‌های کار شخصی](04_Decisions/DEC-012-Personal-Task-Category-Governance.md)
+- [انتخاب شرکت‌کنندگان و مجوز Task](04_Decisions/DEC-013-Calendar-Attendee-Selection-And-Assignment-Authorization.md)
+- [استفاده از Discuss و تعامل پیام](04_Decisions/DEC-014-Discuss-Reuse-And-Message-Interaction.md)
+- [Overlay و مدیریت Focus](04_Decisions/DEC-015-Overlay-Layering-And-Focus-Management.md)
 
-## Decision Recordهای v7
+### معماری و اثر ماژولی
 
-- [سیستم Widget](04_Decisions/DEC-004-Workspace-Widget-System.md)
-- [گفتگو قابلیت سطح اول](04_Decisions/DEC-005-Conversations-Are-First-Class.md)
-- [Theme و خوانایی](04_Decisions/DEC-006-Workspace-Theme-And-Readability.md)
-- [Sidebar جمع‌شونده](04_Decisions/DEC-007-Collapsible-Sidebar.md)
-- [تقویم تعاملی](04_Decisions/DEC-008-Embedded-Calendar.md)
-- [Route و Capabilityهای جدید](04_Decisions/DEC-009-Workspace-Route-And-Capability-Expansion.md)
-- [Provider Registryها](04_Decisions/DEC-010-Global-Provider-Registries.md)
-- [تفکیک Task، Action، Notification و History](04_Decisions/DEC-011-Separate-Task-Action-Notification-History.md)
+- [قراردادهای تعامل و Integration v8](05_Architecture/V8-Interaction-And-Integration-Contracts.md)
+- [ارزیابی اثر ماژولی v8](03_Modules/V8_Impact_Assessment.md)
+- [Change Set جامع v8](06_ChangeSets/CS-WORKSPACE-V8.md)
+- [ماتریس تجمیع ماژول‌ها](Module_Aggregation_Matrix.md)
 
-## ارزیابی اثر ماژول‌ها
+## خلاصه دامنه نسخه ۸
 
-- [مرجع جامع ماژول‌های متأثر، ماژول‌های جدید، سرویس‌های داخلی و Adapterها](03_Modules/V7_Module_Impact_And_New_Modules.md)
-- [`cas_workspace`](03_Modules/cas_workspace/V7_Impact_Assessment.md)
-- [`cas_action_hub`](03_Modules/cas_action_hub/V7_Impact_Assessment.md)
-- [`cas_work_report`](03_Modules/cas_work_report/V7_Impact_Assessment.md)
-- [اثر بین‌ماژولی سایر ماژول‌ها](03_Modules/Cross_Module_V7_Impact_Assessment.md)
-- [ماتریس تجمیع کامل](Module_Aggregation_Matrix.md)
-
-## Change Setها
-
-- [میزکار کاربر عادی](06_ChangeSets/CS-EMPLOYEE-WORKSPACE.md)
-- [Change Set جامع نسخه ۴ تا ۷](06_ChangeSets/CS-WORKSPACE-V7.md)
+- CRUD دسته‌های شخصی و قفل دسته‌های سیستمی
+- حذف امن دسته بدون حذف Task
+- Selector مستقل و Server-side شرکت‌کنندگان
+- فیلتر واحد و محدوده سازمانی
+- تفکیک دعوت‌نامه از تخصیص وظیفه
+- Task فقط برای زیرمجموعه مجاز
+- Reply، Forward، Pin، Reaction، Mute و Archive در گفتگو
+- Composer ثابت و حذف Scroll صفحه
+- Context Menu و Emoji Picker اختصاصی
+- استفاده از Odoo Mail/Discuss/Bus به‌جای مدل پیام موازی
+- Overlay Manager، Focus Restore و Scroll Lock
 
 ## وضعیت فعلی
 
-صفحات جدید، تغییرات Shell، Routeها، Capabilityها، آثار ماژول‌های موجود، ماژول‌های جدید پیشنهادی، سرویس‌های داخلی Workspace و Adapterهای Odoo ثبت شده‌اند. این مجموعه هنوز `Implementation Ready` نیست، زیرا باید اثر نسخه ۷ بر صفحه‌های نقش‌های سرپرست، مدیر، مدیرعامل، نگهبان، دبیرخانه، طراح فرم، طراح گردش‌کار، مدیر اسناد و مدیر سامانه نیز صفحه‌به‌صفحه بررسی و سپس Specification نهایی هر ماژول تدوین شود.
+مستندات کامل محصول، تصمیم، معماری، Change Set و اثر ماژولی نسخه ۸ ثبت شده‌اند. این مجموعه هنوز `Implementation Ready` نیست؛ مالکیت `cas_personal_task`، Organization Scope Resolver، API Directory Search، قرارداد Event/Task و تطبیق دقیق قابلیت‌های Discuss با Odoo 19 باید در Specificationهای اجرایی تصویب شوند.
