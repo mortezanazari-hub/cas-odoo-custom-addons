@@ -5,214 +5,132 @@
 | شناسه | `CS-WORKSPACE-V8` |
 | خط مبنا | `CAS UI Workspace v7` |
 | نسخه هدف | `CAS UI Workspace v8` |
-| دامنه | Personal Tasks، Calendar Event Modal، Conversations، Overlay Infrastructure |
+| Prototype نهایی این مرحله | `ui-workspace-v8-iteration11.zip` |
 | وضعیت | `Collected` |
-| مجوز پیاده‌سازی Production | ندارد تا Specificationها تصویب شوند |
+| مجوز Production | ندارد تا Specificationها تصویب شوند |
 
-## هدف نسخه ۸
+## دامنه نسخه ۸
 
-نسخه ۸ یک Iteration صرفاً ظاهری نیست. این نسخه سه مسئله عملیاتی نسخه ۷ را تکمیل می‌کند:
+نسخه ۸ این حوزه‌ها را تکمیل کرده است:
 
 1. حاکمیت دسته‌های کار شخصی
-2. انتخاب مقیاس‌پذیر شرکت‌کنندگان و تفکیک دعوت از تخصیص وظیفه
-3. تبدیل صفحه گفتگو به تجربه عملیاتی مبتنی بر Mail/Discuss، همراه با قرارداد مشترک Overlay و Focus
+2. Selector مقیاس‌پذیر شرکت‌کنندگان تقویم
+3. تفکیک دعوت از تخصیص وظیفه
+4. تجربه عملیاتی گفتگو بر پایه Mail/Discuss
+5. Overlay Stack و Focus Management
+6. حذف صفحات مستقل Search و Recent History
+7. Command Palette مشترک Search/History
+8. اصلاح تراکم ردیف گفتگو و جهت تقویم RTL
+9. چیپ تک‌انتخابی منبع در «نیازمند اقدام»
+10. قرارداد Scroll بومی Workspace و Scroll داخلی گفتگو
+11. بازشدن گفتگو از آخرین پیام
 
-## دامنه Prototype
+## تاریخچه Iterationها
 
-خروجی تأییدشده:
+- Iteration 1–4: دسته‌ها، شرکت‌کنندگان، Discuss Interaction و اصلاح Layering
+- Iteration 5: فشرده‌سازی ردیف گفتگو و اصلاح فلش ماه قبل/بعد در RTL
+- Iteration 6: تبدیل فیلتر منبع Action Hub به چیپ تک‌انتخابی
+- Iteration 7: حذف صفحات مستقل Search/History و ایجاد Command Palette
+- Iteration 8: بازگرداندن Scroll بومی و Auto-scroll دکمه وسط موس در Routeهای عادی
+- Iteration 9: محدودکردن Scroll صفحه گفتگو به List و Message Body
+- Iteration 10: افزایش داده نمونه برای آزمون Scroll طولانی
+- Iteration 11: شروع گفتگو از آخرین پیام و حفظ انتهای چت پس از Send
 
-```text
-ui-workspace-v8-iteration4.zip
-```
+## کارهای شخصی
 
-Iterationهای داخلی نسخه ۸:
+- دسته‌های سیستمی قفل هستند.
+- دسته‌های شخصی CRUD و ترتیب دارند.
+- حذف دسته Taskها را حذف نمی‌کند و انتقال اتمیک انجام می‌شود.
+- مالکیت پیشنهادی در `cas_personal_task` هنوز نیازمند Specification است.
 
-- Iteration 1: مدیریت دسته‌ها، شرکت‌کنندگان اولیه، قابلیت‌های پیام
-- Iteration 2: اصلاح Scroll، Context Menu، Emoji و محدودیت Task
-- Iteration 3: Selector مستقل و مقیاس‌پذیر شرکت‌کنندگان
-- Iteration 4: اصلاح Layering و Focus Selector روی Modal
+## تقویم
 
-## تغییرات صفحه «کارهای من»
+- فهرست کامل کارکنان داخل Modal ممنوع است.
+- Selector مستقل با Search Server-side، Scope، Department و Pagination استفاده می‌شود.
+- دعوت و Task دو Operation مستقل هستند.
+- Task فقط برای Target مجاز طبق Hierarchy/Delegation ساخته می‌شود.
+- Selector به‌عنوان Child Overlay بالاتر از Modal باز می‌شود.
+- جهت کنترل ماه در RTL براساس مفهوم «ماه قبل/بعد» است، نه جهت خام آیکن.
 
-- دسته‌های سیستمی قفل و غیرقابل حذف هستند.
-- دسته‌های شخصی قابل افزودن، تغییر نام، حذف، مرتب‌سازی و فیلتر هستند.
-- حذف دسته شخصی Taskهای آن را حذف نمی‌کند.
-- Taskهای متاثر به دسته پیش‌فرض منتقل می‌شوند.
-- کنترل مالکیت و دسته سیستمی در Backend الزامی است.
+## گفتگوها
 
-### تصمیم‌های مرتبط
+- ردیف‌ها فشرده و Preview یک‌خطی هستند.
+- Header و Composer ثابت‌اند.
+- Route گفت‌وگو Scroll کلی ندارد.
+- فقط List و Message Body اسکرول مستقل دارند.
+- هر دو ناحیه Wheel، Scrollbar، Keyboard، Touch و Auto-scroll دکمه وسط موس را پشتیبانی می‌کنند.
+- ورود و تغییر گفتگو از آخرین پیام آغاز می‌شود.
+- ارسال پیام جدید انتهای چت را حفظ می‌کند.
+- Reply، Forward، Reaction، Pin، Mute و Archive از Discuss Adapter استفاده می‌کنند.
 
-- `PAGE-EMP-TASK-DEC-008..010`
-- `DEC-012`
+## Search و Recent History
 
-## تغییرات تقویم و Modal رویداد
+- Routeهای `global-search-page` و `recent-history` حذف شده‌اند.
+- هر دو Navigation Item حذف شده‌اند.
+- Search از Topbar، Hero و `Ctrl+K` در Command Palette باز می‌شود.
+- Query خالی Recent Items، Searchهای اخیر و Pinها را نشان می‌دهد.
+- Query غیرخالی نتایج گروه‌بندی‌شده و فیلتر نوع نتیجه را نشان می‌دهد.
+- `history.read` به‌عنوان Capability مستقل حذف می‌شود؛ Resource Permission مرجع است.
+- ماژول مستقل `cas_recent_history` فعلاً ساخته نمی‌شود.
 
-- فهرست کامل کارکنان از Modal حذف شد.
-- انتخاب شرکت‌کنندگان در Selector مستقل انجام می‌شود.
-- جست‌وجو پس از حداقل دو حرف و به‌صورت Server-side اجرا می‌شود.
-- نتایج محدود، صفحه‌بندی‌شده یا Virtualized هستند.
-- فیلتر واحد، محدوده سازمانی و زیرمجموعه‌های من وجود دارد.
-- انتخاب‌شده‌ها به‌صورت Chip جمع‌بندی می‌شوند.
-- نوع ارسال برای هر فرد مستقل تعیین می‌شود.
-- زیرمجموعه مجاز می‌تواند دعوت، Task یا هر دو دریافت کند.
-- فرد خارج از Scope فقط دعوت دریافت می‌کند.
-- کنترل نوع ارسال برای فرد انتخاب‌نشده نمایش داده نمی‌شود.
-- کنترل عمومی متناقض روش ارسال حذف شد.
-- Header/Footer Modal ثابت و Scroll کنترل‌شده است.
-- Selector به‌عنوان Child Overlay روی Modal باز می‌شود.
-- Modal زیرین Inert و State آن محفوظ است.
-- Focus پس از بستن Selector به Trigger بازمی‌گردد.
+## Action Hub
 
-### تصمیم‌های مرتبط
+- فیلتر زمانی تک‌انتخابی باقی می‌ماند.
+- فیلتر منبع از Dropdown به چیپ تک‌انتخابی تبدیل شده است.
+- انتخاب منبع جدید، منبع قبلی را غیرفعال می‌کند.
+- Sort همچنان Dropdown مستقل است.
 
-- `PAGE-EMP-CAL-DEC-008..012`
-- `DEC-013`
-- `DEC-015`
+## قرارداد Scroll سراسری
 
-## تغییرات گفتگوها
+- Routeهای عادی Workspace باید Scroll Container بومی مرورگر داشته باشند.
+- اعمال `overflow:hidden` سراسری روی `html`، `body` یا `.main-content` ممنوع است.
+- Scroll Lock فقط هنگام Overlay لازم و با Scope روشن مجاز است.
+- Routeهای خاص مانند گفتگو می‌توانند Scroll داخلی داشته باشند، اما نباید Scroll سایر صفحات را مختل کنند.
 
-- آیکن نامه با نماد گفت‌وگو جایگزین شد.
-- Header معرفی و توضیح غیرضروری حذف شد.
-- جست‌وجوی تکراری حذف شد.
-- دکمه «گفت‌وگوی جدید» Floating Action شد.
-- آواتارها اصلاح و یکپارچه شدند.
-- ردیف‌های گفتگو فشرده و Preview یک‌خطی شدند.
-- Scroll کل صفحه حذف شد.
-- Composer همیشه در دسترس باقی می‌ماند.
-- Context Menu اختصاصی برای پیام و گفتگو اضافه شد.
-- Reply، Forward، Copy، Pin، Reaction و Delete مجاز افزوده شد.
-- Pin، Mute، Archive و Read State برای گفتگو تعریف شد.
-- Emoji Picker در Composer و Reaction فعال شد.
-- Context Menu و Picker با Outside Click و Escape بسته می‌شوند.
-- مالکیت داده در Mail/Discuss/Bus باقی می‌ماند.
+## ماژول‌ها و زیرساخت‌های متأثر
 
-### تصمیم‌های مرتبط
+| دامنه | اثر |
+|---|---|
+| `cas_workspace` | Router، Navigation، Command Palette، History UI، Overlay، Scroll Contract، Conversation Layout |
+| `cas_action_hub` | فیلتر منبع تک‌انتخابی و State |
+| Mail/Discuss/Bus | Message، Conversation، Pagination، Realtime و تعاملات |
+| Search Provider Registry | Query امن چندمنبعی |
+| Preference/History Service | Recent Resource Reference و Search History |
+| HR Directory/Hierarchy | Attendee Search و Assignment Scope |
+| Calendar/Event | Event، Invitation، RSVP و Task Link |
+| Jalali Suite | ورودی تاریخ و جهت/معنای ناوبری ماه |
 
-- `PAGE-EMP-CONV-DEC-009..013`
-- `DEC-014`
-- `DEC-015`
+## امنیت
 
-## تغییرات مشترک Overlay
-
-- Overlay Manager مشترک برای Modal، Drawer، Popover، Context Menu و Picker لازم است.
-- Child Overlay باید نسبت به Parent لایه بالاتر بگیرد.
-- فقط بالاترین Overlay قابل تعامل است.
-- Escape فقط لایه فعال را می‌بندد.
-- Focus Trap و Focus Restore الزامی است.
-- Scroll Lock و جلوگیری از Scroll تودرتو جزو قرارداد مشترک است.
-
-## ماژول‌های موجود متأثر
-
-| ماژول/دامنه | شدت | اثر نسخه ۸ |
-|---|---:|---|
-| `cas_workspace` | بسیار زیاد | صفحات، Modal، Selector، Overlay Manager، Context Menu، Layout و State |
-| Odoo Mail/Discuss/Bus | زیاد | Reply، Forward، Reaction، Pin، Unread، Channel و Realtime |
-| HR/Employee Directory | زیاد | جست‌وجوی Server-side کارکنان و Scope اطلاعات |
-| Organization Hierarchy | زیاد | تعیین رابطه مدیریتی و مجوز Task |
-| `cas_action_hub` | متوسط | ایجاد Task/Action برای زیرمجموعه مجاز |
-| `cas_personal_task` پیشنهادی | متوسط | Category Governance و مالکیت Task شخصی |
-| Calendar/Event Integration | زیاد | Event، Attendee، Invitation و پاسخ دعوت |
-| `cas_document_core` | کم تا متوسط | Permission فایل‌های گفتگو |
-| Notification Core | متوسط | دعوت، پیام جدید، Mute و Failure Feedback |
-| Jalali Suite | کم | تاریخ Modal و نمایش رویداد |
-
-## ماژول یا زیرساخت جدید موردنیاز
-
-### قطعی در سطح زیرساخت Workspace
-
-- Overlay Manager
-- Directory Search Adapter
-- Organization Scope Resolver
-- Calendar Attendee Selector Component
-- Discuss Adapter توسعه‌یافته
-
-### پیشنهادی به‌عنوان ماژول مستقل
-
-- `cas_personal_task` برای Task و Category شخصی
-
-ایجاد ماژول مستقل فقط پس از تصویب Specification، Migration و Dependency Graph انجام می‌شود.
-
-## قراردادهای Backend
-
-### Category
-
-- مالکیت User Scope
-- ممنوعیت حذف دسته سیستمی
-- انتقال اتمیک Taskها هنگام حذف دسته
-
-### Directory Search
-
-- Query Server-side
-- حد نتیجه و Pagination
-- رعایت Company و Record Rule
-- عدم افشای اطلاعات خارج از Scope
-
-### Task Assignment
-
-- Operation مستقل از Invitation
-- بررسی Hierarchy، Capability، ACL و Delegation
-- جلوگیری از تغییر Target ID برای دورزدن مجوز
-
-### Discuss
-
-- استفاده از مدل‌های استاندارد Mail/Discuss
-- کنترل مالکیت حذف
-- کنترل Attachment و Forward
-- Realtime از Bus با Fallback کنترل‌شده
+- بدون `sudo()` برای Query کاربرمحور
+- ACL، Record Rule، Company Scope و Method Check در Backend
+- عدم افشای عنوان و Count در Search/History
+- جلوگیری از ID Tampering در Task Assignment
+- Permission مستقل Attachment و Forward
+- Workspace مالک داده کسب‌وکاری Providerها نیست
 
 ## تست‌های Regression
 
-### کارهای من
+- نبود دو Route حذف‌شده در Router/Sidebar
+- بازشدن Command Palette از تمام Triggerها و `Ctrl+K`
+- Query خالی و غیرخالی Search
+- عدم نشت رکورد غیرمجاز در Search/History
+- Auto-scroll دکمه وسط موس در صفحات عادی
+- نبود Scroll کلی در گفتگو
+- Scroll مستقل List و Message Body
+- شروع گفتگو از آخرین پیام
+- حفظ انتهای چت پس از Send
+- حفظ Anchor هنگام Load پیام قدیمی در Production
+- Modal + Child Drawer + Escape + Focus Restore
+- RTL ماه قبل/بعد
+- چیپ منبع تک‌انتخابی Action Hub
 
-- CRUD دسته شخصی
-- تلاش برای حذف دسته سیستمی از RPC
-- حذف دسته دارای Task
-- Refresh و همگام‌سازی Widget
+## شرط `Implementation Ready`
 
-### تقویم
-
-- سازمان با داده حجیم
-- جست‌وجو و Pagination
-- Task برای زیرمجموعه مستقیم/غیرمستقیم
-- دعوت برای فرد خارج از Scope
-- تغییر Target در Request
-- Modal + Selector + Escape + Focus
-- Responsive و Scroll Lock
-
-### گفتگو
-
-- Outside Click Context Menu
-- Emoji Picker در دو محل
-- Composer ثابت
-- ردیف‌های طولانی
-- Reply و Forward
-- Pin/Mute/Archive
-- Delete مجاز و غیرمجاز
-- قطع Bus و Reconnect
-
-## Migration و سازگاری
-
-- Routeهای نسخه ۷ حفظ می‌شوند.
-- داده Prototype Migration محسوب نمی‌شود.
-- در صورت ایجاد مدل Category، دسته‌های سیستمی با XML ID پایدار Seed می‌شوند.
-- Preferenceهای Pin/Mute/Category باید Scope و Migration روشن داشته باشند.
-- Extensionهای Discuss نباید مدل اصلی Odoo را Fork یا Core Edit کنند.
-
-## موارد خارج از دامنه این Change Set
-
-- تماس صوتی و تصویری
-- رمزگذاری سرتاسری
-- اشتراک عمومی Task شخصی
-- Bulk Task Assignment خارج از سیاست مدیریتی
-- Import کامل Contact Directory در Client
-- جایگزینی کامل UI اصلی Discuss خارج از Workspace
-
-## شرط تغییر به `Implementation Ready`
-
-1. تصویب مالکیت `cas_personal_task`
-2. مشخص‌شدن مدل Organization Scope Resolver
-3. تعیین API جست‌وجوی Directory
-4. تعیین مدل Event/Invitation/Task Creation
-5. تطبیق دقیق قابلیت‌های Reply/Forward/Reaction/Pin با Odoo 19 Mail/Discuss
-6. تصویب Overlay Manager و Accessibility Contract
-7. تدوین Security، Migration و Test Strategy برای ماژول‌های متأثر
+1. تصویب مالکیت Personal Task
+2. تعیین Search Provider API و Safe Serializer
+3. تعیین History Storage و Retention
+4. تطبیق Discuss Adapter با Odoo 19 Community
+5. تصویب Scroll/Overlay Accessibility Contract
+6. تعیین Event/Invitation/Task Transaction Policy
+7. تدوین Security، Migration، Performance و Test Strategy هر ماژول
