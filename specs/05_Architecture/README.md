@@ -6,8 +6,9 @@
 
 - [یادداشت معماری اتصال Workspace v7](Workspace_UI_Integration_Notes.md) — وضعیت `Needs Review`
 - [قراردادهای تعامل و Integration نسخه ۸](V8-Interaction-And-Integration-Contracts.md) — وضعیت `Needs Review`
+- [قراردادهای Search، Recent History و Scroll نسخه ۸](V8-Search-History-And-Scroll-Contracts.md) — وضعیت `Needs Review`
 
-## دامنه سند نسخه ۸
+## دامنه معماری نسخه ۸
 
 - Overlay Manager و Stack لایه‌ها
 - Focus Trap و Focus Restore
@@ -17,7 +18,12 @@
 - Calendar Event Command
 - Personal Category Contract
 - Discuss Adapter Contract
-- Layout صفحه گفتگو
+- Command Palette مشترک Search/History
+- Recent Resource Reference و Retention
+- حذف Routeهای مستقل Search و History
+- Scroll بومی Routeهای عادی Workspace
+- Scroll داخلی فهرست و پیام‌های گفتگو
+- Initial Scroll و حفظ Anchor پیام‌ها
 - Accessibility، Performance و Observability
 
 ## فایل‌های آینده
