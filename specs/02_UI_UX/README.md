@@ -6,4 +6,12 @@
 
 ## اسناد فعلی
 
-- [میزکار کاربر عادی](Employee/Workspace.md)
+- [میزکار کاربر عادی — نسخه ۲ سند / Workspace v7](Employee/Workspace.md)
+
+## خط نسخه‌بندی میزکار
+
+```text
+CAS UI Prototype v4 → CAS UI Workspace v7
+```
+
+نسخه‌های ۵ و ۶ Release رسمی مستقل محسوب نمی‌شوند و صرفاً Iterationهای داخلی طراحی بوده‌اند.
