@@ -22,34 +22,35 @@ specs/
 
 ## چرخه تصمیم تا اجرا
 
-1. بررسی یک صفحه و نقش‌های مرتبط
-2. ثبت سند تصمیم صفحه در `02_UI_UX`
-3. ثبت تصمیم‌های مشترک در `04_Decisions`
-4. ثبت اثر احتمالی در `Module_Aggregation_Matrix.md`
-5. تکرار برای سایر صفحات
-6. تجمیع تصمیم‌ها بر اساس ماژول
-7. تولید Specification نهایی در `03_Modules`
-8. تأیید Specification اجرایی
-9. پیاده‌سازی، Migration و تست
+1. بررسی صفحه و نقش‌های مرتبط
+2. ثبت سند صفحه در `02_UI_UX`
+3. ثبت تصمیم مشترک در `04_Decisions`
+4. ثبت اثر در `Module_Aggregation_Matrix.md`
+5. ثبت Change Set
+6. بررسی سایر نقش‌ها و صفحات وابسته
+7. تجمیع براساس ماژول در `03_Modules`
+8. تدوین Architecture، API، Security، Migration و Test Strategy
+9. تغییر وضعیت به `Implementation Ready`
+10. پیاده‌سازی و تطبیق با کد
 
 ## وضعیت اسناد
 
-- `Draft`: در حال بررسی
-- `Agreed`: تصمیم محصولی مورد توافق
-- `Needs Review`: نیازمند بررسی صفحات یا نقش‌های دیگر
-- `Superseded`: با تصمیم جدید جایگزین شده
-- `Implementation Ready`: پس از تجمیع، آماده تبدیل به دستور اجرایی
-- `Implemented`: پیاده‌سازی‌شده و تطبیق‌داده‌شده با کد
+- `Draft`
+- `Agreed`
+- `Needs Review`
+- `Superseded`
+- `Implementation Ready`
+- `Implemented`
 
 ## قواعد سخت
 
-- تصمیم محصولی، پیشنهاد معماری و دستور پیاده‌سازی از یکدیگر جدا هستند.
+- تصمیم محصولی، معماری و دستور اجرا از هم جدا هستند.
 - سند صفحه به‌تنهایی مجوز تغییر کد نیست.
-- هر تصمیم شناسه یکتا و قابلیت ردیابی به صفحه منبع دارد.
-- تغییرات مشترک چند صفحه در پایان بر اساس ماژول تجمیع می‌شوند.
-- تعارض‌ها پیش از طراحی Schema و API نهایی حل یا ثبت می‌شوند.
-- هیچ تغییری در هسته Odoo مجاز نیست.
-- اسناد فارسی، راست‌چین‌خوان و مناسب پردازش انسان و Agent هستند.
+- هر تصمیم شناسه یکتا و قابلیت ردیابی دارد.
+- تغییرات مشترک چند صفحه براساس ماژول تجمیع می‌شوند.
+- هیچ تغییری در Odoo Core مجاز نیست.
+- Workspace مالک داده کسب‌وکاری ماژول‌های منبع نیست.
+- UI جایگزین ACL، Record Rule و Method Check نیست.
 
 ## خط نسخه‌بندی فعال
 
@@ -57,33 +58,61 @@ specs/
 CAS UI Prototype v4 → CAS UI Workspace v7
 ```
 
-نسخه‌های ۵ و ۶ Release رسمی مستقل محسوب نمی‌شوند و Iterationهای داخلی طراحی بوده‌اند.
+نسخه‌های ۵ و ۶ Release رسمی مستقل نیستند و Iterationهای داخلی طراحی بوده‌اند.
 
-## اسناد فعال فعلی
+## Audit نسخه ۷
 
-### سطح پروژه و محصول
+مقایسه مستقیم Prototype نسخه ۴ و نسخه ۷ نشان داد:
 
-- [تاریخچه نسخه‌های رسمی رابط](00_Project/Version_History.md)
-- [اصول UX محصول Workspace](01_Product/UX_Principles.md)
+- ۶ Route عمومی جدید
+- ۶ Capability عمومی جدید
+- افزایش Functionهای رابط از ۹۷ به ۱۲۲
+- افزایش Actionهای UI از ۴۴ به ۸۰
+- توسعه Navigation تمام نقش‌ها
+- بیش از ۱۵۰۰ خط تغییر خالص در بسته Prototype
 
-### UI و UX
+مرجع کامل: [Change Set جامع Workspace v7](06_ChangeSets/CS-WORKSPACE-V7.md)
 
-- [میزکار کاربر عادی v7](02_UI_UX/Employee/Workspace.md)
+## اسناد صفحه‌ای v7
 
-### Decision Recordها
+### کاربر عادی
 
-- [سیستم Widget میزکار](04_Decisions/DEC-004-Workspace-Widget-System.md)
-- [گفتگو قابلیت سطح اول است](04_Decisions/DEC-005-Conversations-Are-First-Class.md)
-- [خوانایی و Theme سراسری](04_Decisions/DEC-006-Workspace-Theme-And-Readability.md)
+- [میزکار](02_UI_UX/Employee/Workspace.md)
+- [کارهای شخصی](02_UI_UX/Employee/Personal_Tasks.md)
+- [تقویم](02_UI_UX/Employee/Calendar.md)
+- [گفت‌وگوها](02_UI_UX/Employee/Conversations.md)
+- [جست‌وجوی سراسری](02_UI_UX/Employee/Global_Search.md)
+- [مرکز اعلان‌ها](02_UI_UX/Employee/Notifications_Center.md)
+- [تاریخچه اخیر](02_UI_UX/Employee/Recent_History.md)
+
+### مشترک همه نقش‌ها
+
+- [پوسته Workspace](02_UI_UX/Shared/Workspace_Shell.md)
+
+## Decision Recordهای v7
+
+- [سیستم Widget](04_Decisions/DEC-004-Workspace-Widget-System.md)
+- [گفتگو قابلیت سطح اول](04_Decisions/DEC-005-Conversations-Are-First-Class.md)
+- [Theme و خوانایی](04_Decisions/DEC-006-Workspace-Theme-And-Readability.md)
 - [Sidebar جمع‌شونده](04_Decisions/DEC-007-Collapsible-Sidebar.md)
-- [تقویم تعاملی میزکار](04_Decisions/DEC-008-Embedded-Calendar.md)
+- [تقویم تعاملی](04_Decisions/DEC-008-Embedded-Calendar.md)
+- [Route و Capabilityهای جدید](04_Decisions/DEC-009-Workspace-Route-And-Capability-Expansion.md)
+- [Provider Registryها](04_Decisions/DEC-010-Global-Provider-Registries.md)
+- [تفکیک Task، Action، Notification و History](04_Decisions/DEC-011-Separate-Task-Action-Notification-History.md)
 
-### معماری و تجمیع
+## ارزیابی اثر ماژول‌ها
 
-- [یادداشت معماری اتصال Workspace v7](05_Architecture/Workspace_UI_Integration_Notes.md)
-- [Change Set میزکار](06_ChangeSets/CS-EMPLOYEE-WORKSPACE.md)
-- [ماتریس تجمیع ماژول‌ها](Module_Aggregation_Matrix.md)
+- [`cas_workspace`](03_Modules/cas_workspace/V7_Impact_Assessment.md)
+- [`cas_action_hub`](03_Modules/cas_action_hub/V7_Impact_Assessment.md)
+- [`cas_work_report`](03_Modules/cas_work_report/V7_Impact_Assessment.md)
+- [اثر بین‌ماژولی سایر ماژول‌ها](03_Modules/Cross_Module_V7_Impact_Assessment.md)
+- [ماتریس تجمیع کامل](Module_Aggregation_Matrix.md)
+
+## Change Setها
+
+- [میزکار کاربر عادی](06_ChangeSets/CS-EMPLOYEE-WORKSPACE.md)
+- [Change Set جامع نسخه ۴ تا ۷](06_ChangeSets/CS-WORKSPACE-V7.md)
 
 ## وضعیت فعلی
 
-تصمیم‌های محصول و UX میزکار v7 ثبت شده‌اند، اما Specification ماژولی در `03_Modules` هنوز تولید نشده و پیاده‌سازی مجاز نیست تا صفحات و نقش‌های وابسته بررسی و تصمیم‌ها Consolidate شوند.
+صفحات جدید، تغییرات Shell، Routeها، Capabilityها و آثار اصلی ماژول‌ها ثبت شده‌اند. این مجموعه هنوز `Implementation Ready` نیست، زیرا باید اثر نسخه ۷ بر صفحه‌های نقش‌های سرپرست، مدیر، مدیرعامل، نگهبان، دبیرخانه، طراح فرم، طراح گردش‌کار، مدیر اسناد و مدیر سامانه نیز صفحه‌به‌صفحه بررسی و سپس Specification نهایی هر ماژول تدوین شود.
