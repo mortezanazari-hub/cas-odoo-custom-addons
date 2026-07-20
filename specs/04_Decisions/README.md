@@ -19,6 +19,7 @@
 - [`DEC-013` — انتخاب شرکت‌کننده و مجوز تخصیص وظیفه](DEC-013-Calendar-Attendee-Selection-And-Assignment-Authorization.md)
 - [`DEC-014` — استفاده از Discuss و قرارداد تعامل پیام](DEC-014-Discuss-Reuse-And-Message-Interaction.md)
 - [`DEC-015` — لایه‌بندی Overlay و مدیریت Focus](DEC-015-Overlay-Layering-And-Focus-Management.md)
+- [`DEC-016` — ادغام جست‌وجوی سازمانی و تاریخچه اخیر](DEC-016-Search-And-Recent-History-Consolidation.md)
 
 ## تصمیم‌های رزروشده قبلی
 
