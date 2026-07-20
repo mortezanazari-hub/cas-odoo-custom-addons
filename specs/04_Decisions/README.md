@@ -20,6 +20,7 @@
 - [`DEC-014` — استفاده از Discuss و قرارداد تعامل پیام](DEC-014-Discuss-Reuse-And-Message-Interaction.md)
 - [`DEC-015` — لایه‌بندی Overlay و مدیریت Focus](DEC-015-Overlay-Layering-And-Focus-Management.md)
 - [`DEC-016` — ادغام جست‌وجوی سازمانی و تاریخچه اخیر](DEC-016-Search-And-Recent-History-Consolidation.md)
+- [`DEC-017` — گزارش کار از Form Engine استفاده می‌کند](DEC-017-Work-Report-Domain-Uses-Form-Engine.md)
 
 ## تصمیم‌های رزروشده قبلی
 
