@@ -1,174 +1,227 @@
-# ماتریس تجمیع تغییرات ماژول‌ها
+# ماتریس تجمیع تغییرات ماژول‌ها — Workspace v8
 
-این فایل مرجع مرکزی اثر تصمیمات صفحه‌ای بر ماژول‌های پروژه است. ثبت در این ماتریس به‌تنهایی مجوز پیاده‌سازی نیست.
+| مشخصه | مقدار |
+|---|---|
+| نسخه فعال | `CAS UI Workspace v8 — Through Iteration 12` |
+| وضعیت | `Consolidated` |
+| مرجع بالادستی | `00_Project/V8_Canonical_Baseline.md` |
+
+این فایل نمای اجرایی اثر تصمیم‌های محصول بر ماژول‌هاست. وضعیت `Consolidated` به معنی هماهنگی معماری است، نه مجوز Production.
 
 ## وضعیت‌ها
 
-- `Collected`: ثبت شده ولی هنوز تجمیع اجرایی نشده است.
-- `Needs Review`: مرز مالکیت، امنیت یا API نیازمند تصمیم است.
-- `Consolidated`: در Specification ماژول تجمیع شده است.
-- `Implementation Ready`: آماده اجرا است.
+- `Historical`: فقط سابقه نسخه قبلی
+- `Agreed`: تصمیم محصولی تأییدشده
+- `Consolidated`: مالکیت و معماری هماهنگ شده
+- `Needs Implementation Detail`: API، Migration یا Test هنوز کامل نیست
+- `Implementation Ready`: تمام اسناد اجرایی کامل و تصویب شده
+- `Verified`: اجرا و Acceptance تأیید شده
 
-## خط نسخه‌بندی
+## ماتریس تصمیم‌ها
 
-```text
-CAS UI Prototype v4 → CAS UI Workspace v7 → CAS UI Workspace v8 / Iteration 11
-```
-
-## ماتریس تصمیمات Workspace v8
-
-| تصمیم/حوزه | ماژول یا سرویس | نوع اثر | وضعیت |
-|---|---|---|---|
-| دسته‌های Task شخصی / `DEC-012` | `cas_personal_task` پیشنهادی، `cas_workspace` | Data، CRUD، Ownership، Migration | Needs Review |
-| Selector شرکت‌کنندگان / `DEC-013` | HR Directory، Organization Resolver، Calendar، `cas_workspace` | Search، Security، Event/Task | Needs Review |
-| Discuss Reuse / `DEC-014` | Odoo Mail/Discuss/Bus، `cas_workspace` | Integration، Message، Realtime | Needs Review |
-| Overlay Stack / `DEC-015` | `cas_workspace`، Design System | Modal، Drawer، Focus، Scroll Lock | Needs Review |
-| Search/History Consolidation / `DEC-016` | `cas_workspace`، Search Registry، Preference | Router، Command Palette، History | Needs Review |
-| Action Hub source chips | `cas_action_hub`، `cas_workspace` | Filter State، UI | Collected |
-| Conversation compact rows | `cas_workspace`، Discuss Adapter | Layout، Density | Collected |
-| Conversation internal scroll | `cas_workspace`، Discuss Adapter | Scroll Contract، Accessibility | Needs Review |
-| Conversation bottom anchoring | Discuss Adapter، Message Pagination | Initial Position، Send، Pagination | Needs Review |
-| Native browser autoscroll | Workspace Shell | Global Scroll Contract | Collected |
-| Calendar RTL arrows | `cas_workspace`، Jalali UI | RTL Semantics | Collected |
+| تصمیم / حوزه | مالک اصلی | Integration / Provider | اثر | وضعیت |
+|---|---|---|---|---|
+| Workspace Action-First / `DEC-001` | `cas_workspace` | تمام Providerها | Shell، Widget، Priority | Consolidated |
+| SLA Presentation / `DEC-002` | Domain مالک Deadline | Workspace Renderer | UX Label | Consolidated |
+| Activity Standardization / `DEC-003` | `cas_activity_catalog` | Work Report، KPI | Catalog، Snapshot، Proposal | Consolidated |
+| Widget System / `DEC-004` | `cas_workspace` | Widget Providers | Registry، Layout | Consolidated |
+| Conversations / `DEC-005`, `DEC-014` | Odoo Mail/Discuss/Bus | Discuss Adapter | Reuse، Realtime، UI | Needs Odoo Verification |
+| Theme / `DEC-006` | `cas_workspace` | Company Policy | Tokens، Readability | Consolidated |
+| Sidebar / `DEC-007` | `cas_workspace` | — | Persistent Preference | Consolidated |
+| Calendar / `DEC-008`, `DEC-013` | Calendar Domain | Organization Core، Personal Task، Action Hub | Event، Attendee، Task Link | Needs Implementation Detail |
+| Route/Capability / `DEC-009` | `cas_workspace` | Security Model | Partially Superseded | Historical + v8 Mapping |
+| Provider Registry / `DEC-010` | `cas_workspace_contract` | Domain Providers | Protocol، Versioning | Consolidated |
+| Domain Separation / `DEC-011` | Domain Owners | Workspace | Ownership | Consolidated |
+| Personal Task Category / `DEC-012` | `cas_personal_task` | Workspace Provider | CRUD، Security | Consolidated |
+| Overlay / `DEC-015` | Odoo UI Services + Workspace Shell | همه صفحات | Focus، Stack، Scroll Lock | Consolidated |
+| Search/History / `DEC-016` | `cas_workspace` | Search Providers | Command Palette، History Ref | Consolidated |
+| Dynamic Work Report / `DEC-017` | `cas_work_report` | Form، Workflow، Approval | Dynamic Sections، Snapshot | Needs Implementation Detail |
+| Dashboard Governance / `DEC-018` | `cas_workspace` | Widget Providers | Admin Center، Versioning | Consolidated |
+| Shift Applicability / `DEC-019` | `cas_work_report` | Shift، Organization، Form | Shift Report، Multi-assignment | Consolidated |
+| Delegated Access / `DEC-020` | `cas_work_report` | Organization Core | Access Grant، Section Security | Consolidated |
+| Notification Reuse | Odoo Mail/Discuss/Bus | CAS Notification Adapter | Gap-driven Extension | Needs Gap Verification |
+| File Infrastructure Future | Odoo Attachment فعلی | Document Core | Evidence در v8؛ Redesign آینده | Out of Scope v8 |
 
 ## Route و Navigation Migration
 
-| مورد نسخه ۷ | تصمیم نسخه ۸ | اثر |
+| نسخه ۷ | نسخه ۸ | Migration |
 |---|---|---|
-| `global-search-page` | حذف Route و Navigation Item | Search از Command Palette باز می‌شود |
-| `recent-history` | حذف Route و Navigation Item | Recent Items داخل Query خالی Search |
-| `history.read` | حذف Capability مستقل | Permission هر Resource مرجع است |
-| Search Topbar/Hero | حفظ و یکپارچه‌سازی | همه Triggerها یک Overlay مشترک |
+| `global-search-page` | حذف | Triggerها به Command Palette نگاشت شوند |
+| `recent-history` | حذف | Query خالی Palette Recent Items را نشان دهد |
+| `history.read` | حذف | Permission منبع هر Resource مرجع است |
+| Search Topbar و Hero جدا | یک Overlay مشترک | Entry Pointها به Command Service مشترک متصل شوند |
+| Static Navigation | Capability/Provider Navigation | Configuration و Registry Migration |
 
-## `cas_workspace` — اثر بسیار زیاد
+## مالکیت ماژول‌ها
 
-مسئولیت‌ها:
+### `cas_workspace`
 
-- Shell، Router و Navigation
-- Command Palette مشترک Search/History
-- Search Provider Registry و Safe Result Navigation
-- Recent History UI و Preference Adapter
-- Overlay Manager و Focus Restore
-- Scroll Contract سراسری
-- Conversation Layout و Initial Scroll
-- Calendar Attendee Selector
-- Widget و Theme Preferences
+مالک:
 
-نباید مالک این داده‌ها باشد:
+- Shell
+- Dashboard Configuration
+- UI Preference
+- Command Palette Orchestration
+- Recent Resource Reference
 
-- Message و Conversation
-- Calendar Event و Invitation
-- Task رسمی
-- Employee/Hierarchy
-- Document، Correspondence و Workflow Record
+مالک نیست:
 
-وضعیت: `Needs Review`.
+- Personal Task
+- Action
+- Event
+- Message
+- Notification Delivery
+- Work Report
+- Document
+- Organization Assignment
 
-## `cas_action_hub` — اثر زیاد
+وضعیت: `Consolidated`; API/Migration/Test لازم است.
 
-- حفظ مرزبندی Action رسمی از Task شخصی
-- فیلتر زمانی تک‌انتخابی
-- فیلتر منبع به‌صورت چیپ تک‌انتخابی
-- Sort مستقل به‌صورت Dropdown
-- Provider برای Search، Notification و Calendar Deadline
+### `cas_workspace_contract`
 
-وضعیت: `Needs Review`.
+- Provider Protocol
+- Widget/Search/Action Metadata
+- Resource Reference
+- Contract Versioning
 
-## Search Provider Registry — اثر زیاد
+وضعیت: `Consolidated`; نام و API نهایی لازم است.
 
-- Query Server-side
-- Provider Whitelist
-- Cursor/Pagination
-- ACL، Record Rule و Company Scope
-- عدم افشای عنوان و Count غیرمجاز
-- Safe Serializer و Deep Link
+### `cas_personal_task`
 
-وضعیت: `Needs Review` تا تصویب API.
+- Personal Task و Category
+- Self-task Calendar Integration
+- Workspace Provider
 
-## Recent History / Preference Service — اثر متوسط
+وضعیت: `Consolidated`; Implementation Detail لازم است.
 
-- Resource Reference حداقلی
-- User-scoped Storage
-- Retention محدود
-- Permission Revalidation
-- Exclusion مسیرهای حساس
-- حذف History بدون تغییر رکورد منبع
+### `cas_action_hub`
 
-تصمیم: فعلاً ماژول مستقل `cas_recent_history` ساخته نمی‌شود.
+- Action سازمانی برای دیگران
+- Calendar Assigned Action
+- Workspace/Search Provider
 
-## Odoo Mail/Discuss/Bus — اثر زیاد
+وضعیت: مرزبندی `Consolidated`; Specification اجرایی مستقل لازم است.
 
-- Conversation، Message، Member و Unread
-- Reply، Forward، Reaction، Pin، Mute و Archive
-- Message Pagination و Realtime
-- Initial Scroll به آخرین پیام
-- حفظ Anchor هنگام Load Older Messages
-- New-message Indicator زمانی که کاربر Near-bottom نیست
+### `cas_organization_core`
 
-وضعیت: `Needs Review`؛ تطبیق دقیق با Odoo 19 Community لازم است.
+- Effective Assignment
+- Reporting Scope
+- Delegation سازمانی
+- Directory Purpose Scope
 
-## HR Directory و Organization Resolver — اثر زیاد
+وضعیت: `Consolidated`; Domain/API/Security Detail لازم است.
 
-- Search Server-side شرکت‌کنندگان
-- Company Scope و حداقل Metadata
-- تعیین رابطه مدیریتی و Delegation
-- مجوز دعوت و Task Assignment
+### `cas_activity_catalog`
 
-وضعیت: `Needs Review`.
+- Activity Definition
+- Proposal
+- Evidence Policy Reference
+- KPI Mapping Reference
 
-## Calendar/Event Integration — اثر زیاد
+وضعیت: `Consolidated`; Implementation Detail لازم است.
 
-- Event، Attendee، Invitation و RSVP
-- تفکیک Invitation از Task
-- Event-to-Task Link
-- Timezone و Jalali Adapter
-- Partial Failure Policy
+### `cas_work_report`
 
-وضعیت: `Needs Review`.
+- Report per Shift Occurrence
+- Composite Sections
+- Profile و Applicability
+- Access Grant
+- Evidence Relation
+- Reporting Projection
 
-## Jalali Suite — اثر متوسط
+وضعیت: `Consolidated`; Migration و Test Strategy کامل لازم است.
 
-- Parse تاریخ شمسی Search
-- ورودی و نمایش تقویم
-- معنای صحیح ماه قبل/بعد در RTL
-- حفظ ذخیره Date/Datetime استاندارد
+### Form Engine
 
-وضعیت: `Needs Review`.
+نیازهای v8 Work Report:
 
-## قرارداد امنیت مشترک
+- Form Version Pinning
+- Conditional Logic
+- Repeatable/Structured Sections، در صورت Profile
+- File/Image/Evidence Field Contract
+- Immutable Revision/Snapshot
+- Typed Reporting Projection
+- Reviewer-safe Answer Access
 
-- بدون `sudo()` برای Query کاربرمحور
-- ACL، Record Rule، Company Scope و Method Check
-- جلوگیری از ID Tampering
-- Provider Whitelist
-- Permission مستقل Attachment و Forward
-- عدم نشت Search/History
-- Audit برای عملیات حساس
+وضعیت: `Needs Implementation Detail`.
+
+### Odoo Mail/Discuss/Bus
+
+- Conversation و Message
+- Notification Delivery
+- Realtime Update
+
+وضعیت: `Needs Odoo 19 Community Verification`; سیستم موازی ممنوع است.
+
+## امنیت مشترک
+
+- No broad `sudo`
+- ACL + Record Rule + Method Check
+- Provider Permission
+- Multi-company Isolation
+- Purpose-aware Organization Scope
+- Section/Field Filtering
+- Access Grant Expiry/Revocation
+- Export Security
+- Audit
+
+## Migrationهای اجباری
+
+- Route/Navigation v7 → v8
+- Workspace Preference و Dashboard Version
+- Personal Task Ownership، در صورت داده قبلی
+- Static Work Report → Shift Report + Sections + Form Submission
+- Form Snapshot Revision
+- Reviewer Answer Access
+- Search/History References
+- Provider Keys و Deep Links
 
 ## تست‌های اجباری
 
-- نبود Routeهای حذف‌شده
-- Command Palette و `Ctrl+K`
-- Search/History Security
-- Middle-click Auto-scroll در Routeهای عادی
-- نبود Scroll کلی در Conversation Route
-- Scroll مستقل List و Message Body
-- ورود به انتهای گفتگو و حفظ انتها پس از Send
-- حفظ Anchor هنگام Pagination معکوس
-- Overlay Parent/Child، Escape و Focus Restore
-- RTL ماه قبل/بعد
-- چیپ منبع تک‌انتخابی Action Hub
-- Responsive، Keyboard و Screen Reader
+### Workspace
 
-## اسناد مرجع
+- Command Palette و Shortcut Integration
+- Search/History Permission
+- Provider Partial Failure
+- Dashboard Lock/Publish/Rollback
+- Native Scroll و Conversation Scroll
+- Overlay Parent/Child و Focus
+- RTL و Accessibility
 
-- `02_UI_UX/Employee/Global_Search.md`
-- `02_UI_UX/Employee/Recent_History.md`
-- `02_UI_UX/Employee/Conversations.md`
-- `04_Decisions/DEC-016-Search-And-Recent-History-Consolidation.md`
-- `05_Architecture/V8-Search-History-And-Scroll-Contracts.md`
-- `06_ChangeSets/CS-WORKSPACE-V8.md`
+### Work Report
+
+- Shift عبوری از نیمه‌شب
+- Idempotent Draft
+- Multi-assignment Sections
+- Applicability Disabled
+- Reviewer/Approver Resolution
+- Delegated Access
+- Section-level Visibility
+- Export Leakage
+- Form Version Immutability
+- Migration Reconciliation
+
+### Security
+
+- Direct RPC و ID Tampering
+- Cross-company
+- Search/Count Leakage
+- Attachment Leakage
+- Expired/Revoked Grant
+- Client Capability Tampering
+
+## اسناد مرجع فعال
+
+- `00_Project/V8_Canonical_Baseline.md`
+- `00_Project/Traceability_Matrix.md`
+- `03_Modules/V8_Module_Ownership_Map.md`
+- `03_Modules/V8_Dependency_Map.md`
+- `03_Modules/V8_Provider_Registry.md`
+- `05_Architecture/Module_Boundaries.md`
+- `05_Architecture/Capability_And_Security_Model.md`
+- `05_Architecture/Assignment_Model.md`
+- `03_Modules/cas_work_report/Specification.md`
 
 ## وضعیت نهایی
 
-این ماتریس تا Prototype `ui-workspace-v8-iteration11.zip` به‌روزرسانی شده است. هیچ ردیفی هنوز `Implementation Ready` نیست مگر پس از تدوین Specification مستقل ماژول مربوط.
+تصمیم‌های محصولی و مرزبندی معماری نسخه ۸ تا Iteration 12 تجمیع شده‌اند. هیچ ماژولی صرفاً با این ماتریس `Implementation Ready` نیست؛ تکمیل API، Security، Migration و Test Strategy همان ماژول همچنان الزامی است.
