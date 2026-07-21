@@ -1,34 +1,43 @@
 # 05 — Architecture
 
-اسناد معماری کلان و بین‌ماژولی در این بخش نگهداری می‌شوند.
+این بخش Architecture Contractهای فعال `CAS UI Workspace v8 — Through Iteration 12` را نگهداری می‌کند.
 
-## اسناد فعلی
+## معماری‌های پایه
 
-- [یادداشت معماری اتصال Workspace v7](Workspace_UI_Integration_Notes.md) — وضعیت `Needs Review`
-- [قراردادهای تعامل و Integration نسخه ۸](V8-Interaction-And-Integration-Contracts.md) — وضعیت `Needs Review`
-- [قراردادهای Search، Recent History و Scroll نسخه ۸](V8-Search-History-And-Scroll-Contracts.md) — وضعیت `Needs Review`
-- [معماری جامع گزارش کار مبتنی بر Form Engine](Work_Report_Form_Engine_Architecture.md) — وضعیت `Needs Review`
+- [System Context](System_Context.md)
+- [Domain Model](Domain_Model.md)
+- [Module Boundaries](Module_Boundaries.md)
+- [Data Flow](Data_Flow.md)
+- [Integration Map](Integration_Map.md)
+- [Assignment Model](Assignment_Model.md)
+- [Capability and Security Model](Capability_And_Security_Model.md)
+- [Provider Architecture](Provider_Architecture.md)
+- [Dashboard Configuration Architecture](Dashboard_Configuration_Architecture.md)
+- [Odoo Notification Gap Analysis](Odoo_Notification_Gap_Analysis.md)
 
-## دامنه معماری نسخه ۸
+## قراردادهای تخصصی نسخه ۸
 
-- Overlay، Focus، Scroll و Outside Click
-- Directory Search و Organization Scope
-- Calendar Event و Task Assignment
-- Discuss Adapter و Message Layout
-- Command Palette مشترک Search/History
-- Dynamic Work Report Profile Resolver
-- Form Version، Submission و Snapshot
-- Context Providerهای HR، Shift و Attendance
-- Reporting Projection برای داده‌های پویا
-- Accessibility، Performance، Security و Observability
+- [Interaction و Integration Contracts](V8-Interaction-And-Integration-Contracts.md)
+- [Search، Recent History و Scroll Contracts](V8-Search-History-And-Scroll-Contracts.md)
+- [معماری Work Report مبتنی بر Form Engine](Work_Report_Form_Engine_Architecture.md)
 
-## فایل‌های آینده
+## سند تاریخی
 
-- `System_Context.md`
-- `Domain_Model.md`
-- `Data_Flow.md`
-- `Integration_Map.md`
-- `Assignment_Model.md`
-- `Security_Model.md`
+- `Workspace_UI_Integration_Notes.md` مرجع تاریخی نسخه ۷ است و در تعارض با معماری‌های بالا مرجع اجرا نیست.
 
-این اسناد باید پس از تجمیع تصمیمات صفحات به‌روزرسانی شوند و به‌تنهایی مجوز پیاده‌سازی نیستند.
+## اصول
+
+- No Core Edit
+- Domain Ownership صریح
+- Reuse Odoo before Rebuild
+- Provider-based Integration
+- Fail-closed Security
+- Effective-dated Organization Scope
+- Shift-based Work Report
+- Immutable Historical Snapshot
+- Idempotent Cross-domain Commands
+- Multi-company Isolation
+
+## آمادگی اجرا
+
+Architecture Contract مسیر طراحی را تثبیت می‌کند، اما هر Module برای `Implementation Ready` شدن به API، Security، Migration و Test Strategy مستقل نیاز دارد.
