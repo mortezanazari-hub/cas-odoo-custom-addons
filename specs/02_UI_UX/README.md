@@ -1,45 +1,66 @@
 # 02 — UI & UX
 
-برای هر صفحه و نقش کاربری، یک سند تصمیم مستقل در این بخش نگهداری می‌شود. هر سند باید هدف، تغییر نسبت به خط مبنا، تصمیمات قطعی، جریان‌ها، قواعد کسب‌وکار، اثر ماژولی، سؤال‌های باز و معیار پذیرش داشته باشد.
+این بخش Page Specificationهای `CAS UI Workspace v8 — Through Iteration 12` را نگهداری می‌کند.
 
-## خط نسخه‌بندی فعال
+## قاعده مرجعیت
 
-```text
-CAS UI Prototype v4 → CAS UI Workspace v7 → CAS UI Workspace v8
-```
+- [Workspace Home نسخه ۸](Employee/Workspace_V8.md) مرجع فعال میزکار است.
+- [Workspace Shell نسخه ۸](Shared/Workspace_Shell_V8.md) مرجع فعال پوسته مشترک است.
+- فایل‌های قدیمی `Workspace.md` و `Workspace_Shell.md` Historical Reference نسخه ۷ هستند.
+- سایر صفحه‌های Employee که صریحاً v8 را ثبت کرده‌اند، در کنار Baseline و Decisionهای نسخه ۸ خوانده می‌شوند.
 
-نسخه‌های ۵ و ۶ Release رسمی مستقل نیستند.
+## صفحات کاربر عادی
 
-## اسناد کاربر عادی
-
-- [میزکار کاربر عادی](Employee/Workspace.md)
-- [کارهای شخصی — به‌روزشده برای v8](Employee/Personal_Tasks.md)
-- [تقویم — به‌روزشده برای v8](Employee/Calendar.md)
-- [گفت‌وگوها — به‌روزشده برای v8](Employee/Conversations.md)
-- [جست‌وجوی سراسری سازمان](Employee/Global_Search.md)
+- [میزکار نسخه ۸](Employee/Workspace_V8.md)
+- [کارهای شخصی](Employee/Personal_Tasks.md)
+- [تقویم](Employee/Calendar.md)
+- [گفت‌وگوها](Employee/Conversations.md)
+- [Command Palette و جست‌وجوی سازمانی](Employee/Global_Search.md)
 - [مرکز اعلان‌ها](Employee/Notifications_Center.md)
-- [تاریخچه اخیر](Employee/Recent_History.md)
-- [صفحه پویا گزارش روزانه](Employee/Dynamic_Work_Report.md)
+- [Recent History داخل Command Palette](Employee/Recent_History.md)
+- [گزارش کار پویا و شیفت‌محور](Employee/Dynamic_Work_Report.md)
+
+## صفحات ادمین
+
+- [مرکز مدیریت داشبورد](Admin/Dashboard_Management_Center.md)
 
 ## مشترک همه نقش‌ها
 
-- [پوسته مشترک Workspace](Shared/Workspace_Shell.md)
+- [پوسته مشترک Workspace v8](Shared/Workspace_Shell_V8.md)
 
-## دامنه ویژه نسخه ۸
+## دامنه قطعی نسخه ۸
 
-- مدیریت دسته‌های شخصی و سیستمی
-- Selector مقیاس‌پذیر شرکت‌کنندگان
-- تجربه گفتگو بر پایه Mail/Discuss
-- Command Palette مشترک Search/History
-- Scroll و Overlay Contract
-- گزارش کار پویا براساس Profile، Assignment و Form Version
-- Context خودکار، Snapshot و Renderer تخصصی
+- Workspace عملیاتی و Action-First
+- Widgetهای Provider-based و قابل جابه‌جایی
+- Dashboard Governance برای ادمین
+- Personal Task با مالک مستقل
+- Calendar با Attendee Selector مقیاس‌پذیر
+- تفکیک Invitation، Self Task و Assigned Action
+- Conversation مبتنی بر Odoo Mail/Discuss/Bus
+- Command Palette مشترک Search و Recent History
+- Native Scroll برای Routeهای عادی
+- Scroll مستقل Conversation List و Message Body
+- Overlay و Focus هماهنگ با Odoo UI Services
+- Notification Center مستقل با Reuse زیرساخت Odoo
+- Work Report براساس Shift Occurrence
+- یک گزارش ترکیبی با Sectionهای چند Assignment
+- Applicability قابل Required، Optional یا Disabled
+- دسترسی تفویض‌شده مستقل از زیردستی
 
-مراجع جامع:
+## الزامات مشترک هر صفحه
 
-- `../06_ChangeSets/CS-WORKSPACE-V8.md`
-- `../06_ChangeSets/CS-WORK-REPORT-DYNAMIC-FORM.md`
+هر Page Specification باید این موارد را تعیین کند:
+
+- هدف و نقش‌ها
+- Route و Entry Point
+- Capability و Permission Expectations
+- Stateهای Loading، Empty، Forbidden، Unavailable، Error و Ready
+- Primary و Secondary Actions
+- Keyboard، Focus، RTL و Responsive Behavior
+- Provider و Domain Owner
+- Acceptance Criteria
+- Decisionها و Architecture Contractهای مرتبط
 
 ## وضعیت
 
-تصمیم‌های محصولی ثبت شده‌اند، اما این اسناد به‌تنهایی مجوز پیاده‌سازی Production نیستند. Specification و قراردادهای امنیتی ماژول‌های متأثر باید تصویب شوند.
+تصمیم‌های محصولی نسخه ۸ تجمیع شده‌اند. آمادگی اجرای هر صفحه تابع آماده‌شدن Module Specification، API، Security، Migration و Test Strategy ماژول‌های مالک است.
