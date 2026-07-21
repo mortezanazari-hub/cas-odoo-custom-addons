@@ -6,7 +6,7 @@
 | وضعیت | `Active` |
 | نوع سند | Process / Governance |
 | مالک | Product & Architecture Governance |
-| آخرین چرخه فعال | `CAS UI Review Cycle 8 — Through Iteration 12` |
+| آخرین چرخه فعال | `CAS UI Review Cycle 9 — Through Iteration 13` |
 
 ## 1. هدف
 
@@ -29,10 +29,10 @@
 Iteration اصلاح داخلی درون یک Cycle است. مثال:
 
 ```text
-Cycle 8 / Iteration 12
+Cycle 9 / Iteration 13
 ```
 
-یعنی دوازدهمین اصلاح داخلی در هشتمین چرخه بازنگری UI.
+یعنی سیزدهمین اصلاح داخلی در نهمین چرخه بازنگری UI.
 
 ## 4. چرخه QA
 
@@ -50,19 +50,16 @@ Backend Existing State
 → Accepted / Reopened
 ```
 
-## 5. ورود Cycle جدید
+## 5. وضعیت Cycle 9
 
-هنگام ورود Cycle 9:
-
-1. Cycle 9 آخرین چرخه فعال بازنگری UI می‌شود.
+1. Cycle 9 آخرین چرخه فعال بازنگری UI است.
 2. Cycle 8 به‌عنوان منبع تاریخی بازنگری باقی می‌ماند.
-3. تصمیم‌های Active کشف‌شده در Cycle 8 خودکار باطل نمی‌شوند.
-4. تفاوت‌های Cycle 9 با اسناد Active استخراج می‌شوند.
-5. فقط تصمیم‌های صریحاً تغییرکرده Supersede می‌شوند.
-6. Change Set جدید ساخته می‌شود.
-7. Traceability به‌روزرسانی می‌شود.
-8. Backend Impact برای تغییرات جدید ثبت می‌شود.
-9. سناریوهای Revalidation تعریف می‌شوند.
+3. تصمیم‌های Active کشف‌شده در Cycle 8 خودکار باطل نشده‌اند.
+4. فقط موارد صریح ثبت‌شده در `UI_Review_Cycle_9_Register.md` Supersede شده‌اند.
+5. Change Set مرجع Cycle 9 برابر `../06_ChangeSets/CS-UIR09-WORKSPACE-UX-CONSOLIDATION.md` است.
+6. تصمیم تجمیعی Cycle 9 برابر `../04_Decisions/DEC-010-UIR09-Consolidated-Workspace-And-Operational-UX.md` است.
+7. وضعیت UI Prototype تا Iteration 13 به‌عنوان Review Baseline پذیرفته شده است.
+8. وضعیت Backend همچنان `Gap Identified` و اعتبارسنجی Production برابر `Pending Revalidation` است.
 
 ## 6. مرجع مؤثر
 
@@ -108,6 +105,16 @@ Active Decisions
 - Status
 - Owner
 
-## 9. نتیجه نهایی
+## 9. ورود Cycle بعدی
+
+هنگام ورود Cycle 10:
+
+1. Cycle 10 آخرین چرخه فعال می‌شود.
+2. Cycle 9 حذف نمی‌شود و Historical Review Source خواهد شد.
+3. تصمیم‌های Active Cycle 9 فقط با Supersede صریح تغییر می‌کنند.
+4. تغییرات CSS و تنظیمات پیشرفته Widget که در Cycle 9 Deferred شده‌اند باید Observation و Decision مستقل بگیرند.
+5. Traceability، Version History، Change Set و Revalidation Plan باید هم‌زمان اصلاح شوند.
+
+## 10. نتیجه نهایی
 
 هدف Cycle تولید «نسخه نهایی نرم‌افزار» نیست؛ هدف کشف و ثبت دقیق تغییرات لازم برای نزدیک‌ترشدن UI و Backend به محصول باکیفیت نهایی است.
