@@ -1,96 +1,120 @@
-# سند تصمیم جست‌وجوی سراسری سازمان
+# Page Specification — جست‌وجوی سازمانی در Command Palette
 
 | مشخصه | مقدار |
 |---|---|
 | شناسه | `PAGE-EMP-SEARCH-001` |
-| نسخه هدف | `CAS UI Workspace v8` |
+| نسخه هدف | `CAS UI Workspace v8 — Through Iteration 12` |
 | وضعیت محصول | `Agreed` |
-| وضعیت معماری | `Needs Review` |
-| نوع تجربه | Modal / Command Palette؛ بدون صفحه مستقل |
+| وضعیت معماری | `Consolidated` |
+| نوع تجربه | Command Palette مشترک؛ بدون صفحه مستقل |
+| Capability ابزار | `search.use` |
+| مالک UI | `cas_workspace` |
+| مالک نتایج | Providerهای منبع |
 
 ## تصمیم نهایی نسخه ۸
 
-صفحه و Route مستقل `global-search-page` حذف می‌شود. جست‌وجوی سازمانی یک ابزار عبور سریع است و از Topbar، Launcher میزکار، آیکن موبایل و میانبر `Ctrl+K` در یک Modal مشترک باز می‌شود.
+صفحه، Navigation Item و Route مستقل `global-search-page` حذف می‌شوند. Search یک ابزار عبور سریع و اجرای Command است که از Topbar، Hero، Mobile Trigger و میانبر هماهنگ با Command System استاندارد Odoo باز می‌شود.
 
-## ساختار Modal
+Workspace نباید Listener سراسری متعارض با Odoo برای `Ctrl+K` ایجاد کند. Trigger صفحه‌کلید باید از Registry یا Service استاندارد Command استفاده کند.
 
-1. Header فشرده با عنوان، راهنمای میانبر و Close
-2. ورودی Autofocus با Debounce و امکان لغو Request قبلی
-3. چیپ‌های تک‌انتخابی نوع نتیجه
-4. بدنه نتایج گروه‌بندی‌شده
-5. Recent Items در حالت Query خالی
-6. Loading، Empty، Error و Unavailable State
+## ساختار Palette
 
-## حالت خالی جست‌وجو
+1. Header فشرده و Close
+2. ورودی Autofocus
+3. فیلتر تک‌انتخابی نوع Resource
+4. نتایج Group‌شده Providerها
+5. Recent Items و Quick Actions در Query خالی
+6. Loading، Empty، Partial Failure، Error و Unavailable
 
-تا پیش از تایپ کاربر، Modal می‌تواند این موارد را نمایش دهد:
+## Query خالی
 
-- اخیراً مشاهده‌شده‌ها
-- جست‌وجوهای اخیر
-- موارد سنجاق‌شده
-- عملیات پرتکرار مجاز
+می‌تواند این موارد را نشان دهد:
 
-با شروع تایپ، این محتوا با نتایج جست‌وجو جایگزین می‌شود.
+- Recently opened Resourceهای مجاز
+- Quick Actions مجاز
+- Searchهای اخیر، در صورت Policy و Retention مصوب
+- موارد Pin‌شده، در صورت Provider معتبر
 
-## دامنه نتایج
+با شروع Query، محتوای اولیه با نتایج Search جایگزین می‌شود.
 
+## دامنه Providerها
+
+- Personal Task
+- Organizational Action
 - اشخاص و ساختار سازمانی
-- اقدام‌های نیازمند انجام
-- فرم و Submission
+- Calendar Event
+- Work Report و Review Route
+- Form و Submission، در محدوده مجاز
 - Workflow و Approval
-- مکاتبات
-- اسناد
-- Routeها و عملیات مجاز Workspace
-- رکوردهای سایر Providerهای نصب‌شده
+- Correspondence
+- Document
+- Conversation
+- Routeها و Quick Actionهای مجاز
+- سایر Providerهای نصب‌شده و سازگار
 
 ## رفتار تعامل
 
-- `Ctrl+K` Modal را باز می‌کند.
-- Escape، Close و Outside Click آن را می‌بندند.
-- Focus پس از Close به Trigger برمی‌گردد.
-- انتخاب نتیجه Modal را می‌بندد و Deep Link صحیح را باز می‌کند.
-- فیلتر نوع نتیجه تک‌انتخابی است.
-- در موبایل Modal به Sheet تمام‌عرض کنترل‌شده تبدیل می‌شود.
+- همه Triggerها یک Palette و یک State مشترک را باز می‌کنند.
+- Escape فقط Overlay بالایی را می‌بندد.
+- Focus پس از Close به Trigger بازمی‌گردد.
+- Keyboard Navigation کامل است.
+- انتخاب Result، Deep Link امن را باز می‌کند.
+- در Mobile به Sheet تمام‌عرض کنترل‌شده تبدیل می‌شود.
+- Provider Timeout نتیجه سایر Providerها را حذف نمی‌کند.
 
 ## قرارداد داده و Performance
 
-- Search به‌صورت Server-side انجام می‌شود.
-- هر Provider حداقل سه نویسه یا سیاست مخصوص خود را اعمال می‌کند.
-- Queryها Debounce و Request قبلی Cancel می‌شوند.
-- نتایج Limit و Pagination/Cursor دارند.
-- Providerهای اختیاری در نبود ماژول، `unavailable` کنترل‌شده برمی‌گردانند.
+- Query کاملاً Server-side است.
+- Provider Threshold می‌تواند براساس Resource متفاوت باشد.
+- Requestها Debounce و Stale Requestها Cancel می‌شوند.
+- Cursor/Pagination الزامی است.
+- Provider Registry و Contract Version بررسی می‌شوند.
+- Result Limit، Stable Sort و Ranking قابل پیش‌بینی است.
+- Providerهای اختیاری `unavailable` یا Partial Error کنترل‌شده می‌دهند.
 
 ## امنیت
 
-- هر Provider فقط فیلدهای Whitelist‌شده را جست‌وجو و Serialize می‌کند.
-- ACL، Record Rule، Company Scope و Method Permission در Backend اعمال می‌شوند.
-- عنوان، Count یا Metadata رکورد غیرمجاز نباید افشا شود.
-- UI جایگزین Permission Check نیست.
+- `search.use` فقط Palette را فعال می‌کند.
+- هر Provider ACL، Record Rule، Company Scope و Method Permission خود را اعمال می‌کند.
+- Search هیچ Permission جدیدی ایجاد نمی‌کند.
+- Label، Count، Snippet یا Metadata رکورد غیرمجاز افشا نمی‌شود.
+- Workspace و Search Aggregator از broad `sudo` استفاده نمی‌کنند.
+- Deep Link در مقصد Permission را دوباره بررسی می‌کند.
+- Company Switch نتایج و Cache را invalidate می‌کند.
 
-## اثر ماژولی
+## Recent Resource
 
-| ماژول/دامنه | اثر |
-|---|---|
-| `cas_workspace` | Command Palette، Overlay، Provider Registry، State و Result Navigation |
-| ماژول‌های منبع | Search Adapter و Safe Serializer |
-| `cas_jalali_search` | Parse تاریخ شمسی و تبدیل به Date/Datetime استاندارد |
-| Access Resolver | کنترل Provider و نتیجه مجاز |
+پس از بازشدن موفق و مجاز Resource، Workspace فقط Reference فنی حداقلی را ثبت می‌کند. داده کسب‌وکاری یا محتوای محرمانه در History کپی نمی‌شود.
 
-## تصمیمات
+## Jalali و تاریخ
 
-- `PAGE-EMP-SEARCH-DEC-001`: Search قابلیت مشترک Workspace است، نه Route سطح اول.
-- `PAGE-EMP-SEARCH-DEC-002`: صفحه مستقل و Navigation Item حذف می‌شوند.
-- `PAGE-EMP-SEARCH-DEC-003`: همه Triggerها یک Modal و یک Service را استفاده می‌کنند.
-- `PAGE-EMP-SEARCH-DEC-004`: Query خالی Recent Items را نشان می‌دهد.
-- `PAGE-EMP-SEARCH-DEC-005`: Provider Whitelist و عدم نشت نتیجه الزامی است.
-- `PAGE-EMP-SEARCH-DEC-006`: Search داده و Command Navigation در UI یک تجربه دارند ولی قرارداد Backend جدا دارند.
-- `PAGE-EMP-SEARCH-DEC-007`: ورودی تاریخ شمسی بدون تغییر ذخیره استاندارد Parse می‌شود.
+Providerهای تاریخ‌محور می‌توانند Query شمسی را Parse و به Date/Datetime استاندارد Odoo تبدیل کنند. تاریخ شمسی به‌عنوان تاریخ اصلی ذخیره نمی‌شود.
+
+## Stateها
+
+- Loading
+- Empty
+- Ready
+- Partial Provider Failure
+- Provider Unavailable
+- Forbidden Tool Access
+- Error
 
 ## معیارهای پذیرش
 
-- `global-search-page` در Router و Navigation وجود نداشته باشد.
-- `Ctrl+K` و Triggerهای UI یک Modal مشترک را باز کنند.
-- Recent Items فقط در Query خالی دیده شوند.
-- نتایج گروه‌بندی و فیلترپذیر باشند.
-- هیچ داده غیرمجاز نشت نکند.
-- Focus و Keyboard Navigation کامل باشند.
+1. `global-search-page` در Router و Navigation وجود نداشته باشد.
+2. همه Triggerها یک Palette مشترک را باز کنند.
+3. Shortcut با Command System استاندارد Odoo تعارض نداشته باشد.
+4. Query خالی Recent Items مجاز را نمایش دهد.
+5. Permission هر Provider در Backend اعمال شود.
+6. داده غیرمجاز در Result، Count یا Metadata نشت نکند.
+7. Failure یک Provider سایر نتایج را از بین نبرد.
+8. Focus، Keyboard، RTL و Mobile کامل باشند.
+
+## اسناد مرتبط
+
+- `../../04_Decisions/DEC-016-Search-And-Recent-History-Consolidation.md`
+- `../../05_Architecture/V8-Search-History-And-Scroll-Contracts.md`
+- `../../03_Modules/V8_Provider_Registry.md`
+- `../../05_Architecture/Capability_And_Security_Model.md`
+- `../../00_Project/V8_Canonical_Baseline.md`

@@ -3,134 +3,169 @@
 | مشخصه | مقدار |
 |---|---|
 | شناسه | `CS-WORKSPACE-V8` |
-| خط مبنا | `CAS UI Workspace v7` |
-| نسخه هدف | `CAS UI Workspace v8` |
-| Prototype نهایی این مرحله | `ui-workspace-v8-iteration11.zip` |
-| وضعیت | `Collected` |
-| مجوز Production | ندارد تا Specificationها تصویب شوند |
+| خط مبنا تاریخی | `CAS UI Workspace v7` |
+| نسخه هدف | `CAS UI Workspace v8 — Through Iteration 12` |
+| وضعیت | `Consolidated` |
+| مجوز Production | فقط پس از تکمیل Specification اجرایی هر ماژول |
+| مرجع بالادستی | `../00_Project/V8_Canonical_Baseline.md` |
 
 ## دامنه نسخه ۸
 
-نسخه ۸ این حوزه‌ها را تکمیل کرده است:
-
-1. حاکمیت دسته‌های کار شخصی
-2. Selector مقیاس‌پذیر شرکت‌کنندگان تقویم
-3. تفکیک دعوت از تخصیص وظیفه
-4. تجربه عملیاتی گفتگو بر پایه Mail/Discuss
-5. Overlay Stack و Focus Management
-6. حذف صفحات مستقل Search و Recent History
-7. Command Palette مشترک Search/History
-8. اصلاح تراکم ردیف گفتگو و جهت تقویم RTL
-9. چیپ تک‌انتخابی منبع در «نیازمند اقدام»
-10. قرارداد Scroll بومی Workspace و Scroll داخلی گفتگو
-11. بازشدن گفتگو از آخرین پیام
+1. Workspace عملیاتی و Action-First
+2. Widget System و Dashboard Governance
+3. Personal Task با مالک مستقل
+4. Calendar و Attendee Selector مقیاس‌پذیر
+5. تفکیک Invitation، Self Task و Assigned Action
+6. Conversation مبتنی بر Odoo Mail/Discuss/Bus
+7. Overlay و Focus هماهنگ با Odoo UI Services
+8. Command Palette مشترک Search و Recent History
+9. Native Scroll در Routeهای عادی
+10. Scroll مستقل Conversation List و Message Body
+11. Notification Center مستقل با Reuse Odoo
+12. Dynamic Work Report مبتنی بر Form Engine
+13. Shift-based Reporting
+14. Multi-assignment Composite Sections
+15. Applicability قابل Required/Optional/Disabled
+16. Delegated Work Report Access
+17. Activity Catalog مستقل
 
 ## تاریخچه Iterationها
 
-- Iteration 1–4: دسته‌ها، شرکت‌کنندگان، Discuss Interaction و اصلاح Layering
-- Iteration 5: فشرده‌سازی ردیف گفتگو و اصلاح فلش ماه قبل/بعد در RTL
-- Iteration 6: تبدیل فیلتر منبع Action Hub به چیپ تک‌انتخابی
-- Iteration 7: حذف صفحات مستقل Search/History و ایجاد Command Palette
-- Iteration 8: بازگرداندن Scroll بومی و Auto-scroll دکمه وسط موس در Routeهای عادی
-- Iteration 9: محدودکردن Scroll صفحه گفتگو به List و Message Body
-- Iteration 10: افزایش داده نمونه برای آزمون Scroll طولانی
-- Iteration 11: شروع گفتگو از آخرین پیام و حفظ انتهای چت پس از Send
+- Iteration 1–4: دسته‌ها، Attendee، Discuss Interaction و Overlay/Focus
+- Iteration 5: تراکم Conversation و RTL Calendar Navigation
+- Iteration 6: Action Hub Source Chip
+- Iteration 7: حذف Search/History Route و Command Palette
+- Iteration 8: Native Scroll Routeهای عادی
+- Iteration 9: Conversation Internal Scroll
+- Iteration 10: داده و سناریوی Scroll طولانی
+- Iteration 11: Initial Bottom و Send Anchoring در Conversation
+- Iteration 12: Dynamic Shift-based Work Report و Form Engine Integration
 
-## کارهای شخصی
+## Personal Task
 
-- دسته‌های سیستمی قفل هستند.
-- دسته‌های شخصی CRUD و ترتیب دارند.
-- حذف دسته Taskها را حذف نمی‌کند و انتقال اتمیک انجام می‌شود.
-- مالکیت پیشنهادی در `cas_personal_task` هنوز نیازمند Specification است.
+- مالک قطعی: `cas_personal_task`
+- Workspace مالک داده نیست.
+- Category سیستمی Backend-protected است.
+- Category شخصی CRUD و Reorder دارد.
+- حذف Category Taskها را منتقل می‌کند.
+- Self Task از Calendar به Personal Task Service می‌رود.
 
-## تقویم
+## Calendar
 
-- فهرست کامل کارکنان داخل Modal ممنوع است.
-- Selector مستقل با Search Server-side، Scope، Department و Pagination استفاده می‌شود.
-- دعوت و Task دو Operation مستقل هستند.
-- Task فقط برای Target مجاز طبق Hierarchy/Delegation ساخته می‌شود.
-- Selector به‌عنوان Child Overlay بالاتر از Modal باز می‌شود.
-- جهت کنترل ماه در RTL براساس مفهوم «ماه قبل/بعد» است، نه جهت خام آیکن.
+- Directory Server-side و Purpose-aware است.
+- Invitation و Assignment Permission جدا هستند.
+- Self Task در Personal Task ایجاد می‌شود.
+- Task برای دیگری در Action Hub ایجاد می‌شود.
+- Command UUID و Idempotency لازم است.
+- Partial Failure باید تفصیلی باشد.
+- Timezone و Jalali صحیح و استاندارد Odoo باقی می‌ماند.
 
-## گفتگوها
+## Conversations
 
-- ردیف‌ها فشرده و Preview یک‌خطی هستند.
-- Header و Composer ثابت‌اند.
-- Route گفت‌وگو Scroll کلی ندارد.
-- فقط List و Message Body اسکرول مستقل دارند.
-- هر دو ناحیه Wheel، Scrollbar، Keyboard، Touch و Auto-scroll دکمه وسط موس را پشتیبانی می‌کنند.
-- ورود و تغییر گفتگو از آخرین پیام آغاز می‌شود.
-- ارسال پیام جدید انتهای چت را حفظ می‌کند.
-- Reply، Forward، Reaction، Pin، Mute و Archive از Discuss Adapter استفاده می‌کنند.
+- Message Model موازی ساخته نمی‌شود.
+- Odoo Mail/Discuss/Bus Reuse می‌شود.
+- Route Scroll کلی ندارد.
+- List و Message Body Scroll مستقل دارند.
+- Initial Position در آخرین پیام است.
+- Send در Near-bottom انتها را حفظ می‌کند.
+- Extension فقط برای Gap تأییدشده است.
 
 ## Search و Recent History
 
-- Routeهای `global-search-page` و `recent-history` حذف شده‌اند.
-- هر دو Navigation Item حذف شده‌اند.
-- Search از Topbar، Hero و `Ctrl+K` در Command Palette باز می‌شود.
-- Query خالی Recent Items، Searchهای اخیر و Pinها را نشان می‌دهد.
-- Query غیرخالی نتایج گروه‌بندی‌شده و فیلتر نوع نتیجه را نشان می‌دهد.
-- `history.read` به‌عنوان Capability مستقل حذف می‌شود؛ Resource Permission مرجع است.
-- ماژول مستقل `cas_recent_history` فعلاً ساخته نمی‌شود.
+- Routeهای `global-search-page` و `recent-history` حذف‌اند.
+- `history.read` حذف است.
+- Capability ابزار: `search.use`.
+- Query خالی Recent Resourceهای مجاز را نشان می‌دهد.
+- Provider Permission منبع را enforce می‌کند.
+- ماژول مستقل `cas_recent_history` ساخته نمی‌شود.
 
-## Action Hub
+## Notifications
 
-- فیلتر زمانی تک‌انتخابی باقی می‌ماند.
-- فیلتر منبع از Dropdown به چیپ تک‌انتخابی تبدیل شده است.
-- انتخاب منبع جدید، منبع قبلی را غیرفعال می‌کند.
-- Sort همچنان Dropdown مستقل است.
+- `notifications-center` Route مستقل است.
+- Odoo Mail/Discuss/Activity/Bus زیرساخت Delivery است.
+- `cas_notification_core` کامل تصویب نشده است.
+- CAS فقط Deep Link، Severity، Action Metadata یا Aggregation Gap واقعی را Extend می‌کند.
+- Gap Analysis اجباری است.
 
-## قرارداد Scroll سراسری
+## Dashboard Administration
 
-- Routeهای عادی Workspace باید Scroll Container بومی مرورگر داشته باشند.
-- اعمال `overflow:hidden` سراسری روی `html`، `body` یا `.main-content` ممنوع است.
-- Scroll Lock فقط هنگام Overlay لازم و با Scope روشن مجاز است.
-- Routeهای خاص مانند گفتگو می‌توانند Scroll داخلی داشته باشند، اما نباید Scroll سایر صفحات را مختل کنند.
+- Dashboard Management Center برای ادمین الزامی است.
+- Configuration در Scope System، Company و Role/Profile نسخه‌بندی می‌شود.
+- Preview، Publish، Rollback و Reset دارد.
+- Company Policy می‌تواند Lock کند.
+- کاربر عادی در v8 فقط Reorder مجاز دارد.
 
-## ماژول‌ها و زیرساخت‌های متأثر
+## Work Report — Iteration 12
 
-| دامنه | اثر |
+- هر شخص و Shift Occurrence حداکثر یک Report دارد.
+- Shift عبوری از نیمه‌شب یک Report است.
+- چند Assignment یک Report ترکیبی با Sectionهای مستقل می‌سازد.
+- Applicability: Required/Optional/Disabled.
+- Disabled هیچ Form، Draft یا Reminder شخصی ندارد.
+- Access می‌تواند مستقل از زیردستی تفویض شود.
+- Activity Catalog مستقل است.
+- Form Engine ساختار و Answer را مالک است؛ Work Report Lifecycle را مالک نیست.
+
+## مالکیت‌های قطعی
+
+| دامنه | مالک |
 |---|---|
-| `cas_workspace` | Router، Navigation، Command Palette، History UI، Overlay، Scroll Contract، Conversation Layout |
-| `cas_action_hub` | فیلتر منبع تک‌انتخابی و State |
-| Mail/Discuss/Bus | Message، Conversation، Pagination، Realtime و تعاملات |
-| Search Provider Registry | Query امن چندمنبعی |
-| Preference/History Service | Recent Resource Reference و Search History |
-| HR Directory/Hierarchy | Attendee Search و Assignment Scope |
-| Calendar/Event | Event، Invitation، RSVP و Task Link |
-| Jalali Suite | ورودی تاریخ و جهت/معنای ناوبری ماه |
+| Workspace UI/Preferences | `cas_workspace` |
+| Provider Contract | `cas_workspace_contract` |
+| Personal Task | `cas_personal_task` |
+| Organization Scope | `cas_organization_core` |
+| Activity Catalog | `cas_activity_catalog` |
+| Work Report | `cas_work_report` |
+| Conversation/Notification Delivery | Odoo Mail/Discuss/Bus |
 
 ## امنیت
 
-- بدون `sudo()` برای Query کاربرمحور
-- ACL، Record Rule، Company Scope و Method Check در Backend
-- عدم افشای عنوان و Count در Search/History
-- جلوگیری از ID Tampering در Task Assignment
-- Permission مستقل Attachment و Forward
-- Workspace مالک داده کسب‌وکاری Providerها نیست
+- No broad `sudo`
+- Capability + ACL + Record Rule + Method Check
+- Purpose-aware Organization Scope
+- Provider Permission
+- Multi-company isolation
+- Section/Field filtering
+- Access Grant expiry/revocation
+- Secure Export و Attachment
+- Audit
+
+## Migrationهای لازم
+
+- Route/Navigation v7 → v8
+- Dashboard Preference/Version
+- Personal Task Ownership
+- Search/History References
+- Static Work Report → Shift Report + Sections + Form Submission
+- Form Snapshot Revision
+- Reviewer Answer Access
+- Provider Keys و Deep Links
 
 ## تست‌های Regression
 
-- نبود دو Route حذف‌شده در Router/Sidebar
-- بازشدن Command Palette از تمام Triggerها و `Ctrl+K`
-- Query خالی و غیرخالی Search
-- عدم نشت رکورد غیرمجاز در Search/History
-- Auto-scroll دکمه وسط موس در صفحات عادی
-- نبود Scroll کلی در گفتگو
-- Scroll مستقل List و Message Body
-- شروع گفتگو از آخرین پیام
-- حفظ انتهای چت پس از Send
-- حفظ Anchor هنگام Load پیام قدیمی در Production
-- Modal + Child Drawer + Escape + Focus Restore
-- RTL ماه قبل/بعد
-- چیپ منبع تک‌انتخابی Action Hub
+- نبود Routeهای حذف‌شده
+- Command Palette و Odoo Shortcut Integration
+- Search/History leakage
+- Provider Partial Failure
+- Dashboard Publish/Lock/Rollback
+- Native Scroll و Conversation Scroll
+- Overlay Focus/Escape
+- Calendar Idempotency و Permission
+- Shift crossing midnight
+- Multi-assignment Report
+- Disabled Applicability
+- Delegated Section Access
+- Notification Odoo Reuse
+- RTL، Timezone، Mobile و Accessibility
 
 ## شرط `Implementation Ready`
 
-1. تصویب مالکیت Personal Task
-2. تعیین Search Provider API و Safe Serializer
-3. تعیین History Storage و Retention
-4. تطبیق Discuss Adapter با Odoo 19 Community
-5. تصویب Scroll/Overlay Accessibility Contract
-6. تعیین Event/Invitation/Task Transaction Policy
-7. تدوین Security، Migration، Performance و Test Strategy هر ماژول
+1. API Contract هر ماژول
+2. Security کامل
+3. Migration و Rollback
+4. Test Strategy و Acceptance Criteria
+5. Odoo 19 Verification برای Discuss/Notification
+6. Performance و Observability
+7. تطبیق Traceability Matrix
+
+تصمیم‌های محصولی و مالکیت‌ها Consolidated هستند؛ جزئیات اجرایی باز نباید Baseline v8 را کاهش دهند.
