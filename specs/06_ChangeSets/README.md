@@ -1,15 +1,32 @@
 # 06 — Change Sets
 
-هر جلسه یا دامنه نهایی‌شده یک Change Set غیراجرایی در این بخش دارد. Change Set تصمیم‌ها، Routeها، Capabilityها، اثر ماژولی و الزامات امنیت/پیاده‌سازی را ثبت می‌کند، اما تا زمان تجمیع ماژولی مجوز تغییر کد نیست.
+Change Set دامنه و اثر تغییر را ثبت می‌کند، اما به‌تنهایی مجوز تغییر Production نیست.
 
-## اسناد فعلی
+## Change Setهای فعال نسخه ۸
 
-- [Change Set میزکار کاربر عادی](CS-EMPLOYEE-WORKSPACE.md)
-- [Change Set جامع Workspace v7 نسبت به نسخه ۴](CS-WORKSPACE-V7.md)
-- [Change Set جامع Workspace v8 نسبت به نسخه ۷](CS-WORKSPACE-V8.md)
+- [تجمیع کامل Specificationهای Workspace v8](CS-SPECS-V8-CONSOLIDATION.md)
+- [Workspace v8 نسبت به v7](CS-WORKSPACE-V8.md)
+- [Dynamic Work Report مبتنی بر Form Engine](CS-WORK-REPORT-DYNAMIC-FORM.md)
+- [میزکار کاربر عادی](CS-EMPLOYEE-WORKSPACE.md)
+
+## Change Set تاریخی
+
+- `CS-WORKSPACE-V7.md` مرجع Historical انتقال نسخه ۴ به ۷ است.
 
 ## رابطه اسناد
 
-- `CS-WORKSPACE-V7` مرجع Audit کامل نسخه ۴ به ۷ است.
-- `CS-WORKSPACE-V8` مرجع کامل دسته‌های کار شخصی، Modal تقویم، انتخاب شرکت‌کنندگان، گفتگوها و Overlay Infrastructure است.
-- `CS-EMPLOYEE-WORKSPACE` فقط تصمیم‌های صفحه میزکار را نگه می‌دارد و جایگزین Change Setهای جامع نیست.
+- `CS-SPECS-V8-CONSOLIDATION` تصمیم‌های محصولی تا Iteration 12، مالکیت‌ها، معماری پایه و سؤالات پاسخ‌داده‌شده را یکپارچه می‌کند.
+- `CS-WORKSPACE-V8` تغییرات UI و Interaction نسخه ۸ را ثبت می‌کند.
+- `CS-WORK-REPORT-DYNAMIC-FORM` دامنه گزارش کار پویا را ثبت می‌کند.
+- Canonical Baseline و Decision Recordها در صورت تعارض مرجع بالاتر هستند.
+
+## الزام Change Set
+
+هر Change Set باید:
+
+- Baseline و Target را مشخص کند.
+- اسناد Superseded را فهرست کند.
+- Module Impact را ثبت کند.
+- Security، Migration و Test اثرپذیر را مشخص کند.
+- سؤال‌های باز را از تصمیم‌های قطعی جدا کند.
+- وضعیت `Implementation Ready` را فقط با وجود Specification اجرایی اعلام کند.
