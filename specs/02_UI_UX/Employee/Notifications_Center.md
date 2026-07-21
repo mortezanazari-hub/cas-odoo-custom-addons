@@ -1,47 +1,139 @@
-# سند تصمیم صفحه مرکز اعلان‌ها
+# Page Specification — مرکز اعلان‌ها
 
 | مشخصه | مقدار |
 |---|---|
 | شناسه | `PAGE-EMP-NOTIF-001` |
-| خط مبنا | نسخه ۴ |
-| نسخه هدف | نسخه ۷ |
+| نسخه هدف | `Workspace v8 through iteration 12` |
 | وضعیت محصول | `Agreed` |
-| وضعیت معماری | `Needs Review` |
-| نقش‌ها | کاربران دارای `notification.read` |
+| وضعیت معماری | `Consolidated / Needs Odoo Gap Verification` |
+| Route | `notifications-center` |
+| Capability ابزار | `notifications.use` |
+| مالک Delivery | Odoo Mail/Discuss/Bus |
+| مالک View | `cas_workspace` |
 
-## تغییر نسبت به نسخه ۴
+## هدف
 
-نسخه ۴ اعلان را فقط به‌صورت Action/لایه موقت ارائه می‌کرد. نسخه ۷ Route مستقل `notifications-center`، Capability مستقل `notification.read`، شمارنده Navigation و صفحه کامل مرکز اعلان‌ها را اضافه کرده است.
+مرکز اعلان‌ها یک Route مستقل برای مشاهده اعلان‌های مجاز و مرتبط با کاربر است. این صفحه Action Hub یا Inbox موازی Odoo نیست و Notification System را از صفر بازسازی نمی‌کند.
 
-## تصمیمات
+## تصمیم پایه
 
-- `PAGE-EMP-NOTIF-DEC-001`: اعلان با «نیازمند اقدام» یکی نیست؛ اعلان اطلاع‌رسانی است و Action Hub مسئول کار منتظر اقدام باقی می‌ماند.
-- `PAGE-EMP-NOTIF-DEC-002`: هر اعلان باید نوع، منبع، زمان، وضعیت خوانده‌شدن و Route مقصد داشته باشد.
-- `PAGE-EMP-NOTIF-DEC-003`: اعلان مهم می‌تواند کاربر را به Action یا رکورد منبع هدایت کند، ولی رکورد اصلی را کپی نمی‌کند.
-- `PAGE-EMP-NOTIF-DEC-004`: شمارنده خوانده‌نشده در Sidebar و Topbar باید از منبع واحد محاسبه شود.
-- `PAGE-EMP-NOTIF-DEC-005`: اعلان‌های Conversation، Workflow، Approval، Correspondence، Document، Attendance، Shift و System Health باید از Adapterهای منبع دریافت شوند.
-- `PAGE-EMP-NOTIF-DEC-006`: نبود سرویس Push فقط Realtime را غیرفعال می‌کند و صفحه باید با Polling یا Fetch معمولی قابل استفاده بماند.
+```text
+Odoo Mail / Discuss / Activity / Bus
+= زیرساخت اصلی Message و Notification Delivery
 
-## اثر ماژولی
+CAS Notification Center
+= نمای تجمیعی، Deep Link و Extension محدود برای Gapهای واقعی
+```
 
-| ماژول/دامنه | اثر |
-|---|---|
-| `cas_workspace` | Route، UI، Count و Navigation |
-| `cas_action_hub` | مرزبندی اعلان با اقدام |
-| Mail/Bus | Push و همگام‌سازی Realtime |
-| ماژول‌های کسب‌وکاری | Notification Adapter و Deep Link |
-| Access Resolver | حذف اعلان منبع غیرمجاز |
+قبل از ساخت مدل یا سرویس جدید، `Odoo_Notification_Gap_Analysis.md` باید بررسی و با Odoo 19 Community Verify شود.
 
-## قواعد
+## تفاوت Notification و Action
 
-- اعلان رکورد غیرمجاز نباید نمایش داده شود.
-- حذف اعلان نباید رکورد منبع را حذف کند.
-- خوانده‌شدن اعلان مستقل از انجام Action است.
-- اعلان بحرانی باید سطح اهمیت و مقصد روشن داشته باشد.
+- Notification اطلاع‌رسانی است.
+- Action نیازمند انجام یا تصمیم است.
+- خواندن Notification به معنی انجام Action نیست.
+- Notification می‌تواند به Action یا رکورد منبع Deep Link داشته باشد، ولی آن را کپی نمی‌کند.
 
-## معیارهای پذیرش
+## منابع
 
-- Route مستقل و شمارنده خوانده‌نشده وجود داشته باشد.
-- اعلان به رکورد منبع صحیح هدایت شود.
-- وضعیت خوانده‌شدن بین Topbar و صفحه همگام باشد.
-- اعلان و Action در UI و مدل مفهومی از هم جدا بمانند.
+- Odoo Mail/Discuss
+- Workflow و Approval
+- Action Hub
+- Calendar
+- Correspondence
+- Documents
+- Attendance و Shift
+- Work Report
+- System Health، فقط در صورت Scope
+
+هر منبع از Provider/Adapter امن استفاده می‌کند.
+
+## ساختار صفحه
+
+### Filterها
+
+- همه
+- خوانده‌نشده
+- نیازمند توجه
+- نوع یا منبع
+- بازه زمانی
+
+### Notification Item
+
+- عنوان
+- خلاصه حداقلی
+- منبع
+- زمان
+- وضعیت خوانده‌شدن
+- Severity، در صورت Extension معتبر
+- Primary Deep Link
+- Action Button، فقط در صورت Contract و Permission
+
+### Bulk Actions
+
+فقط اگر زیرساخت Odoo و Security اجازه دهد:
+
+- Mark as Read
+- Mark as Unread
+- Archive/Hide from Center
+
+Bulk Action نباید رکورد منبع را تغییر دهد مگر Action صریح Domain اجرا شود.
+
+## Count
+
+- Sidebar و Topbar از یک Provider/Source of Truth استفاده می‌کنند.
+- Count باید Permission-aware باشد.
+- رکورد Forbidden در Count افشا نمی‌شود.
+- در نبود Realtime، Fetch یا Polling امن قابل استفاده است.
+
+## Deep Link
+
+- Resource Reference استاندارد دارد.
+- Permission در مقصد دوباره بررسی می‌شود.
+- رکورد حذف‌شده یا از دسترس خارج‌شده Unavailable State نشان می‌دهد.
+- Notification نباید Label حساس رکورد Forbidden را افشا کند.
+
+## Stateها
+
+- Loading
+- Empty
+- Ready
+- Provider Partial Failure
+- Realtime Unavailable
+- Forbidden
+- Source Record Unavailable
+- Error
+
+## Realtime
+
+Bus استاندارد Odoo در صورت امکان Reuse می‌شود. نبود Realtime نباید صفحه را غیرقابل استفاده کند.
+
+## Extensionهای مجاز فقط پس از Gap Analysis
+
+- CAS Deep Link Metadata
+- Severity سازمانی
+- Actionable Metadata
+- Aggregation Category
+- Company Policy
+- Retention مکمل
+
+مدل Notification کامل موازی، Bus موازی یا Email Queue موازی ممنوع است.
+
+## امنیت
+
+- Provider Permission منبع را enforce می‌کند.
+- `sudo` عمومی برای Count و List ممنوع است.
+- Multi-company context کنترل می‌شود.
+- Bulk Read/Archive نیازمند Method Check است.
+- Action Button از Service رسمی Domain استفاده می‌کند.
+
+## معیار پذیرش
+
+1. Route مستقل `notifications-center` وجود داشته باشد.
+2. Odoo زیرساخت Delivery باقی بماند.
+3. Notification و Action جدا باشند.
+4. Count در Topbar و صفحه همگام و Permission-aware باشد.
+5. Deep Link به رکورد صحیح و مجاز برود.
+6. Provider Failure به‌صورت Partial نمایش داده شود.
+7. نبود Bus صفحه را از کار نیندازد.
+8. هیچ مدل موازی بدون Gap اثبات‌شده ایجاد نشود.
