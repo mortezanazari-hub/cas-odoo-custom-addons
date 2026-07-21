@@ -8,6 +8,7 @@
 - [حاکمیت و مرجعیت مستندات](Documentation_Governance.md)
 - [تاریخچه نسخه‌های رسمی رابط CAS](Version_History.md)
 - [ماتریس ردیابی نسخه ۸](Traceability_Matrix.md)
+- [فهرست اسناد Historical و Superseded](Historical_Document_Register.md)
 - [سؤالات باز و موضوعات آینده](Open_Questions.md)
 
 ## قاعده استفاده
