@@ -2,222 +2,331 @@
 
 | مشخصه | مقدار |
 |---|---|
-| نسخه | `CAS UI Workspace v8` |
-| وضعیت | `Needs Review` |
-| نوع سند | Impact Assessment؛ نه Specification اجرایی |
-| Change Set | `../06_ChangeSets/CS-WORKSPACE-V8.md` |
+| نسخه | `CAS UI Workspace v8 — Through Iteration 12` |
+| وضعیت | `Consolidated` |
+| نوع سند | Impact Assessment؛ نه مجوز Production |
+| مرجع | `../00_Project/V8_Canonical_Baseline.md` |
 
 ## خلاصه
 
-نسخه ۸ سه حوزه را تکمیل می‌کند: مدیریت دسته‌های Task شخصی، انتخاب مقیاس‌پذیر شرکت‌کنندگان رویداد، و تجربه کامل‌تر گفت‌وگو بر پایه Odoo Mail/Discuss. اثر اصلی روی `cas_workspace` است، اما چند Provider و ماژول منبع نیز باید قراردادهای جدید ارائه دهند.
+نسخه ۸ شامل Workspace Home، Personal Tasks، Calendar، Conversations، Command Palette، Recent History، Notifications Center، Dashboard Management و Dynamic Work Report است.
+
+تصمیم‌های مالکیت و معماری اصلی دیگر باز نیستند:
+
+- Personal Task ماژول مستقل دارد.
+- Workspace فقط مالک UI Configuration است.
+- Organization Scope ماژول مستقل دارد.
+- Notification زیرساخت Odoo را Reuse می‌کند.
+- Work Report Shift-based و Multi-assignment است.
+- Access Report مستقل از زیردستی قابل تفویض است.
 
 ## ۱. `cas_workspace` — اثر بسیار زیاد
 
-### مسئولیت‌های افزوده
+### مسئولیت‌ها
 
-- Overlay Manager مشترک
-- Stack لایه‌ها و Parent/Child Overlay
-- Focus Trap و Focus Restore
-- Scroll Lock
-- Attendee Selector Component
-- Directory Search Adapter
-- Organization Scope Adapter
-- Context Menu و Emoji Picker Infrastructure
-- Conversation Layout با Composer ثابت
-- Personal Category UI
+- Shell، Router و Navigation
+- Command Palette
+- Dashboard Configuration و User Preference
+- Widget Provider Orchestration
+- Recent Resource Reference
+- Overlay Coordination بر پایه Odoo UI Services
+- Notification Center View
+- Scroll Policy
 
-### مواردی که نباید مالک شود
-
-- Employee و Organization Assignment
-- Calendar Event واقعی
-- Invitation و Attendee Record
-- Task رسمی زیرمجموعه
-- Message، Channel و Reaction
-- Category/Task شخصی در صورت تصویب ماژول مستقل
-
-### API/Serviceهای موردنیاز
-
-- `search_people(query, department_id, scope, cursor, limit)`
-- `get_assignment_capability(target_ids, event_context)`
-- `create_calendar_event(payload, recipient_modes)`
-- `get_personal_task_categories()`
-- `create_personal_task_category(name)`
-- `rename_personal_task_category(id, name)`
-- `delete_personal_task_category(id)`
-- Discuss Adapter برای Reply/Forward/Reaction/Pin/Mute/Archive
-
-نام نهایی APIها هنوز تصویب نشده است.
-
-## ۲. `cas_personal_task` پیشنهادی — اثر ساختاری
-
-### مسئولیت پیشنهادی
+### مالک نیست
 
 - Personal Task
-- Personal Category
-- System Category Seed
-- Reminder
-- Ownership Rule
-- Archive/Retention
+- Action
+- Calendar Event
+- Message/Conversation
+- Notification Delivery
+- Work Report
+- Organization Assignment
+- Document
 
-### قواعد کلیدی
+### وضعیت
 
-- Category سیستمی قفل است.
-- Category شخصی User-scoped است.
-- حذف Category، Taskها را منتقل می‌کند.
-- تبدیل Task به Work Report از طریق Adapter انجام می‌شود.
+Specification پایه تدوین شده است؛ API، Migration و Test Strategy اجرایی لازم است.
 
-### سؤال معماری
-
-آیا این دامنه از ابتدا ماژول مستقل باشد یا موقتاً داخل `cas_workspace` بماند؟ پیشنهاد این سند: ماژول مستقل، به‌دلیل مالکیت داده و Lifecycle جدا.
-
-## ۳. `cas_action_hub` — اثر متوسط
-
-- دریافت Task/Action ایجادشده از Event برای زیرمجموعه مجاز
-- حفظ مرزبندی با Task شخصی
-- Deep Link به Event منبع
-- Notification و Deadline
-- بررسی Capability و Assignment Scope
-
-Action Hub نباید Permission رابطه مدیریتی را از Frontend بپذیرد؛ باید Backend Resolver را فراخوانی کند.
-
-## ۴. HR/Employee Directory — اثر زیاد
-
-### نیازها
-
-- Search Server-side نام، سمت، واحد و شناسه پرسنلی
-- Pagination/Cursor
-- Company Scope
-- نمایش محدود اطلاعات
-- جلوگیری از نشت افراد غیرمجاز
-
-### خروجی حداقلی
-
-- employee/partner identifier
-- display name
-- avatar reference
-- job title
-- department
-- effective relationship badge
-- invitation eligibility
-- task assignment eligibility
-
-## ۵. Organization Hierarchy Resolver — اثر زیاد
-
-این Resolver ممکن است داخل ماژول سازمانی موجود یا یک Service مشترک قرار گیرد.
+## ۲. `cas_workspace_contract` — ماژول فنی جدید
 
 ### مسئولیت
 
-- تعیین زیرمجموعه مستقیم/غیرمستقیم
-- بررسی تاریخ مؤثر Assignment
-- بررسی Delegation
-- Multi-company
-- محاسبه Scope برای Task Assignment
+- Provider Protocol
+- Widget/Search/Action Metadata
+- Resource Reference
+- Contract Versioning
+- Error Contract
 
-نتیجه Resolver باید در Backend معتبر باشد و Cache آن با تغییر ساختار سازمانی Invalid شود.
+### دلیل
+
+Domain Providerها نباید برای ثبت Provider به UI Module وابسته شوند.
+
+### وضعیت
+
+معماری Consolidated؛ نام و API نهایی نیازمند Implementation Specification است.
+
+## ۳. `cas_personal_task` — ماژول مستقل قطعی
+
+### مسئولیت
+
+- Personal Task
+- Personal/System Category
+- Reminder و State شخصی
+- Self Task از Calendar
+- Workspace/Search Provider
+
+### قواعد
+
+- Task برای شخص دیگر به Action Hub می‌رود.
+- Workspace هیچ Personal Task ذخیره نمی‌کند.
+- دسته سیستمی Backend-protected است.
+
+### وضعیت
+
+Specification پایه تدوین شده است.
+
+## ۴. `cas_action_hub` — اثر زیاد
+
+- مالک Action سازمانی برای دیگران
+- دریافت Assigned Action از Calendar
+- حفظ تفکیک از Personal Task
+- Provider برای Workspace و Search
+- استفاده از Organization Scope برای مجوز تخصیص
+
+Specification اجرایی v8 مستقل هنوز باید تکمیل شود.
+
+## ۵. `cas_organization_core` — ماژول مستقل قطعی
+
+### مسئولیت
+
+- Effective Assignment
+- Reporting Relationship
+- Delegation سازمانی
+- Purpose-aware Scope
+- Directory Search Scope
+- Reviewer Candidate Resolution پایه
+
+### مصرف‌کنندگان
+
+Calendar، Action Hub، Work Report، Search و Directory.
+
+### وضعیت
+
+Specification و Assignment Architecture تدوین شده است؛ Domain/API/Security Detail لازم است.
 
 ## ۶. Calendar/Event Integration — اثر زیاد
 
 ### مسئولیت
 
-- ایجاد/ویرایش Event
-- Attendee Management
-- Invitation Delivery
-- RSVP State
-- Timezone
-- Jalali Input Adapter
-- Event-to-Task linkage
+- Event، Attendee، Invitation و RSVP
+- Timezone و Jalali Adapter
+- Self Task از Personal Task Service
+- Assigned Action از Action Hub Service
+- Idempotency و Result Contract
 
-### Transaction Policy
+### تصمیم Transaction
 
-ایجاد Event، ارسال Invitation و ساخت Task می‌توانند Failureهای متفاوت داشته باشند. سیاست Atomic یا Partial Success باید پیش از پیاده‌سازی تصویب شود و نتیجه به کاربر گزارش شود.
+- Event و داده هم‌دامنه Transactional هستند.
+- Cross-domain Actionها Command UUID و Retry امن دارند.
+- Notification پس از موفقیت داده اصلی ارسال می‌شود.
+- Partial Failure باید صریح به کاربر گزارش شود و رکورد تکراری نسازد.
+
+### وضعیت
+
+محصول Consolidated؛ API دقیق و Test Strategy لازم است.
 
 ## ۷. Odoo Mail/Discuss/Bus — اثر زیاد
 
-### قابلیت‌های مورد استفاده
+### Reuse
 
-- Channel/Conversation
+- Conversation/Thread
 - Message
 - Member
 - Unread
-- Reply/Thread reference
-- Forward یا Extension سازگار
-- Reaction
-- Pin یا Extension سازگار
-- Mute/Notification preference
-- Archive/User preference
+- Reaction/Reply و قابلیت‌های استاندارد
 - Realtime Bus
+- Notification Delivery
 
-### اصل
+### قواعد
 
-هیچ مدل موازی Conversation/Message در Workspace ایجاد نمی‌شود.
+- مدل موازی Message/Conversation ممنوع است.
+- Extension فقط برای Gap تأییدشده است.
+- Notification Center یک View تجمیعی است، نه Delivery System جدید.
 
-## ۸. `cas_document_core` — اثر کم تا متوسط
+### وضعیت
 
-- Permission دانلود فایل گفتگو در صورت Link به Document
-- نمایش فایل‌های مرتبط در Drawer
-- عدم افشای Metadata فایل غیرمجاز
+نیازمند Spike و Verification روی Odoo 19 Community.
 
-Attachment ساده Mail لزوماً Document Core نیست؛ Adapter باید نوع منبع را تشخیص دهد.
+## ۸. Notification Extension — اثر مشروط
 
-## ۹. Notification Core — اثر متوسط
+`cas_notification_core` کامل تصویب نشده است.
 
-- Invitation Sent/Failed
-- Task Created/Failed
-- Message Notification
-- Mute Policy
-- Realtime و fallback
-- Deep Link
+Extension فقط در صورت Gap واقعی برای این موارد مجاز است:
 
-## ۱۰. Jalali Suite — اثر کم
+- CAS Deep Link
+- Severity
+- Action Metadata
+- Aggregation Category
+- Company Policy
 
-- Date Picker و نمایش Modal
-- تبدیل ورودی جلالی به Datetime استاندارد
-- عدم تغییر ذخیره UTC
+مرجع: `../05_Architecture/Odoo_Notification_Gap_Analysis.md`.
+
+## ۹. `cas_activity_catalog` — ماژول مستقل قطعی
+
+### مسئولیت
+
+- Activity Definition
+- Activity Proposal
+- Evidence Policy Reference
+- KPI Mapping Reference
+- Effective Scope
+
+### قواعد
+
+- گزارش منتظر Proposal نمی‌ماند.
+- Snapshot اولیه کاربر حفظ می‌شود.
+
+### وضعیت
+
+Specification پایه تدوین شده است.
+
+## ۱۰. `cas_work_report` — اثر بسیار زیاد
+
+### تصمیم‌های قطعی
+
+- یک Report برای هر Person + Shift Occurrence
+- یک Report ترکیبی با Sectionهای چند Assignment
+- Applicability: Required/Optional/Disabled
+- Profile و Form Version در سطح Section
+- Access Grant مستقل از زیردستی
+- Reviewer/Approver و Operationهای جدا
+- Reporting Projection برای داده پویا
+
+### وابستگی‌ها
+
+- Organization Core
+- Shift/Attendance Contract
+- Form Engine
+- Workflow Core
+- Approval Core
+- Activity Catalog
+- Attachment/Document
+
+### وضعیت
+
+Specification و Security پایه تدوین شده‌اند؛ Migration و Test Strategy کامل لازم است.
+
+## ۱۱. Form Engine — اثر بسیار زیاد
+
+برای Work Report باید پشتیبانی کند:
+
+- Form Version Pinning
+- Conditional Logic
+- Typed Validation
+- Structured/Repeatable Sections، در صورت نیاز Profile
+- File/Image/Evidence Field Contract
+- Immutable Revision/Snapshot
+- Answer Access از رابطه Report Section
+- Reporting Projection
+
+Form Engine مالک Report Lifecycle نیست.
+
+## ۱۲. Workflow و Approval — اثر زیاد
+
+- Workflow مالک Process State است.
+- Approval مالک Decision رسمی است.
+- Work Report State Projection از این منابع مشتق می‌شود.
+- State Machine موازی و مستقل ممنوع است.
+
+## ۱۳. Attachment/Document — اثر محدود در v8
+
+در v8:
+
+- Odoo Attachment/Document فایل را نگهداری می‌کند.
+- Form Engine Field Contract را تعریف می‌کند.
+- Work Report Evidence Relation را نگهداری می‌کند.
+
+بازطراحی بنیادی Document Infrastructure خارج از v8 است.
+
+## ۱۴. Dashboard Administration — اثر جدید
+
+`cas_workspace` باید پشتیبانی کند:
+
+- Company/Role/Profile Scope
+- Widget Registry Validation
+- Draft/Publish/Version/Rollback
+- Company Lock
+- User Preference Reset
+- Audit
+
+## ۱۵. Jalali Suite — اثر متوسط
+
+- ورودی و نمایش Jalali
+- Timezone صحیح
+- جهت ماه قبل/بعد در RTL
+- ذخیره Date/Datetime استاندارد Odoo
 
 ## Dependency پیشنهادی
 
 ```text
-cas_core
-├── cas_personal_task (پیشنهادی)
+Odoo Standard
+↓
+CAS Foundation
+├── cas_workspace_contract
+├── cas_organization_core
+├── cas_activity_catalog
+├── cas_form_core
+├── cas_workflow_core
+└── cas_approval_core
+↓
+CAS Domains
+├── cas_personal_task
 ├── cas_action_hub
-├── cas_workspace
-│   ├── hr / employee directory
-│   ├── mail / discuss / bus
-│   ├── calendar/event integration
-│   └── jalali adapters
-└── notification core (در صورت تصویب)
+├── cas_work_report
+└── سایر Domainها
+↓
+CAS Experience
+└── cas_workspace + Bridge/Adapterها
 ```
-
-`cas_workspace` نباید dependency سخت به تمام Providerهای عملیاتی داشته باشد؛ Adapterهای اختیاری و حالت `unavailable` لازم‌اند.
 
 ## امنیت مشترک
 
-- بدون `sudo()` برای Queryهای کاربرمحور
-- Company Scope
-- ACL و Record Rule ماژول منبع
-- Method-level permission
-- Provider Whitelist
-- جلوگیری از ID tampering
-- Attachment permission
-- Audit برای Task Assignment و Delete Message
+- No broad `sudo`
+- ACL + Record Rule + Method Check
+- Provider Permission
+- Purpose-aware Organization Scope
+- Multi-company isolation
+- Section/Field filtering
+- Access Grant expiry/revocation
+- Secure Export
+- Audit
 
 ## Migration
 
-- Seed دسته‌های سیستمی با XML ID پایدار
-- Migration دسته‌های Prototype وجود ندارد مگر داده واقعی قبلاً ذخیره شده باشد
-- Preferenceهای Pin/Mute/Archive باید Versioned شوند
-- Extensionهای Mail باید با Upgrade Odoo 19 سازگار باشند
+- Routeهای v7 به v8
+- Dashboard Preference/Version
+- Personal Task Ownership
+- Static Work Report به Shift Report و Dynamic Sections
+- Form Snapshot Revision
+- Reviewer Answer Access
+- Provider Keys و Deep Links
 
-## Test Strategy حداقلی
+## تست حداقلی
 
-- Unit: Category Rules، Scope Resolver، Permission
-- Integration: Event + Invitation + Task
-- Integration: Discuss actions
-- Security: RPC tampering و multi-company
-- UI: Overlay، Focus، Scroll، RTL و Mobile
-- Load: Directory Search با داده حجیم
-- Realtime: Bus reconnect
+- Provider Partial Failure
+- Search/History Leakage
+- Calendar Event + Self/Assigned Task Idempotency
+- Discuss Integration
+- Dashboard Publish/Rollback
+- Shift crossing midnight
+- Multi-assignment Work Report
+- Disabled Applicability
+- Delegated Section Access
+- Export/Attachment Security
+- Multi-company
+- RTL، Keyboard، Focus و Mobile
 
 ## وضعیت نهایی
 
-این سند `Implementation Ready` نیست. برای هر ماژول باید Specification، API، Security، Migration و Test Strategy مستقل نوشته و تصویب شود.
+مرزبندی و مالکیت نسخه ۸ Consolidated است. هیچ ماژولی صرفاً با این Impact Assessment `Implementation Ready` نیست.
