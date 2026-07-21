@@ -46,7 +46,7 @@ UI Observation
 
 ## Cycle 9 Traceability
 
-| Observation ID | Cycle/Iteration | Page / Role / Scenario | Decision ID | Page Spec / Register | Module Owner | Affected Modules | Backend Requirement | Security Reference | Change Set | Implementation | Evidence | Revalidation | Final Status | Supersedes |
+| Observation ID | Cycle/Iteration | Page / Role / Scenario | Decision ID | Page Spec / Register | Module Owner | Affected Modules | Backend Requirement | Security / Architecture Reference | Change Set | Implementation | Evidence | Revalidation | Final Status | Supersedes |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `OBS-UIR09-NAV-001` | UIR09 I1–I3 | Workspace / all roles / navigation | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Workspace | `cas_workspace`, `cas_workspace_contract` | tree navigation، parent resolution، breadcrumb، preference migration | Capability model + direct route check | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | Flat navigation baseline |
 | `OBS-UIR09-ATT-001..003` | UIR09 I4 | Attendance / employee-supervisor-auditor | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Attendance domain | attendance، approval/delegation | correction request/ledger، random audit، CEO escalation | ACL/Record Rule/Method/Delegation/Audit | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | N/A |
@@ -54,7 +54,8 @@ UI Observation
 | `OBS-UIR09-WR-001..002` | UIR09 I5–I7,I12–I13 | Dashboard work report / employee | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Work Report + Activity Catalog | `cas_work_report`, `cas_activity_catalog` | proposed activity، original label، searchable selector، custom duration | record ownership، method validation، audit | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | standalone unknown-activity button |
 | `OBS-UIR09-FORM-001` | UIR09 I7,I9 | Form Builder / form designer | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Form Engine | `cas_form_core`, `cas_form_builder`, `cas_dynamic_form` | activity reference fields، dynamic matrix provider/rendering | field/row/cell security، server-side pagination | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | N/A |
 | `OBS-UIR09-DASH-001..004` | UIR09 I7–I11 | Dashboard / user | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Workspace | `cas_workspace` | header settings، visibility، shortcuts، command center، home link | user/company scope، policy lock، capability filter | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | Reorder-only personalization |
-| `OBS-UIR09-LAYOUT-001` | UIR09 I13 | Dashboard / employee | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Workspace + Work Report | `cas_workspace`, `cas_work_report` | remove progress widget، full-width quick report، spacing | N/A beyond existing access | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | Work Progress widget baseline |
+| `OBS-UIR09-LAYOUT-001` | UIR09 I13 | Dashboard / employee | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Workspace + Work Report | `cas_workspace`, `cas_work_report` | remove progress widget، full-width quick report، spacing | `ARCH-CSS-DS-001` + existing access controls | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | Work Progress widget baseline |
+| `OBS-UIR09-CSS-001` | UIR09 post-freeze documentation hardening | All UI surfaces / all roles / maintainability and future visual changes | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` + `Workspace_CSS_And_Design_System_Contract.md` | Workspace Design System + each UI module owner | all UI-producing custom addons | token registry، shared primitives، namespaced selectors، central breakpoints، Odoo asset layering، lint and visual regression | `ARCH-CSS-DS-001` | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | Commit `533f6578d349ea896f1199b959d2435c4d498a0a` and linked documentation commits | Pending | Pending Revalidation | implicit/non-contractual CSS practices |
 
 ## قواعد
 
@@ -67,6 +68,7 @@ UI Observation
 7. یک Requirement می‌تواند در چند Cycle اعتبارسنجی شود.
 8. Version نرم‌افزار فقط در صورت Release واقعی ثبت می‌شود.
 9. Prototype Cycle 9 شواهد تصمیم‌سازی است، نه Implementation Evidence.
+10. Documentation commit برای قرارداد CSS فقط Evidence مستندسازی است و Evidence پیاده‌سازی محسوب نمی‌شود.
 
 ## وضعیت فعلی
 
