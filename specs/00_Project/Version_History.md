@@ -1,119 +1,102 @@
-# تاریخچه نسخه‌های رسمی رابط CAS
+# تاریخچه چرخه‌های بازنگری رابط کاربری CAS
 
 | مشخصه | مقدار |
 |---|---|
-| وضعیت | `Agreed` |
-| دامنه | Product / UI Versioning |
-| نسخه فعال | `CAS UI Workspace v8 — Through Iteration 12` |
-| مرجع | `V8_Canonical_Baseline.md` |
+| وضعیت | `Active` |
+| دامنه | UI Review History |
+| آخرین چرخه فعال | `CAS UI Review Cycle 8 — Through Iteration 12` |
+| نسخه نرم‌افزار | مستقل و در این سند تعریف نمی‌شود |
+| مرجع فرایند | `UI_Review_Lifecycle.md` |
 
-## خط نسخه‌بندی رسمی
+## اصل تفسیری
+
+اعداد 4، 7 و 8 در این سند شماره چرخه بازنگری UI هستند، نه نسخه نرم‌افزار و نه Release محصول.
+
+## خط تاریخی
 
 ```text
-CAS UI Prototype v4 → CAS UI Workspace v7 → CAS UI Workspace v8
+UI Review Cycle 4
+→ UI Review Cycle 7
+→ UI Review Cycle 8 / Iteration 12
+→ Future UI Review Cycle 9
 ```
 
-نسخه‌های ۵ و ۶ Release رسمی مستقل نیستند و Iterationهای داخلی طراحی محسوب می‌شوند.
+نسخه‌های 5 و 6 Release یا Cycle رسمی مستقل ثبت‌شده نیستند و در تاریخ پروژه به‌عنوان Iterationهای میانی طراحی شناخته می‌شوند.
 
-## نسخه ۴ — Historical Baseline
+## Cycle 4 — منبع تاریخی
 
 - معماری اولیه نقش‌محور
 - صفحات تخصصی ماژول‌ها
 - نگهبانی کارت‌محور
-- داشبوردهای سرپرست، مدیر و مدیرعامل
+- داشبوردهای نقش‌های مدیریتی
 - قراردادهای اولیه Workspace و Odoo
 
-## نسخه ۷ — Historical Baseline
+## Cycle 7 — منبع تاریخی
 
-- تبدیل میزکار کاربر عادی به مرکز فرمان شخصی
-- Routeهای مستقل Personal Tasks، Calendar، Conversations، Search، Notifications و History
+- تبدیل میزکار به مرکز فرمان شخصی
+- Routeهای مستقل
 - Widgetهای قابل جابه‌جایی
 - تقویم تعاملی
 - گفتگو به‌عنوان قابلیت سطح اول
-- Theme و خوانایی سراسری
-- Sidebar جمع‌شونده
+- Theme و Sidebar
 - Provider Registryهای اولیه
 
-نسخه ۷ برای تاریخچه نگهداری می‌شود. هر بخش آن که با v8 تعارض داشته باشد، مرجع پیاده‌سازی نیست.
+Cycle 7 منبع تاریخی است. تصمیم‌های آن فقط در صورت Supersede صریح بی‌اعتبار می‌شوند.
 
-مرجع تاریخی: `../06_ChangeSets/CS-WORKSPACE-V7.md`
+## Cycle 8 — آخرین چرخه فعال بازنگری UI
 
-## نسخه ۸ — Baseline فعال
+Cycle 8 مجموعه مشاهدات، اصلاحات و تصمیم‌های UI تا Iteration 12 را ثبت می‌کند.
 
-نسخه ۸ مجموعه تصمیم‌های تأییدشده تا Iteration 12 است و باید بدون کاهش دامنه مبنای طراحی و اصلاح ماژول‌ها قرار گیرد.
+### Iteration 1 تا 4
 
-### Iteration 1 — Personal Task Categories و عملیات پایه پیام
-
-- تفکیک دسته‌های سیستمی و شخصی
-- CRUD دسته شخصی
-- حذف امن دسته و انتقال Taskها
+- Personal Task Categories
 - عملیات پایه پیام
+- Scroll و Context Menu
+- Assignment Rule
+- Attendee Selector
+- Overlay، Layering و Focus
 
-### Iteration 2 — Scroll، Context Menu و Assignment Rule
+### Iteration 5 تا 11
 
-- قرارداد Scroll برای گفتگوها
-- Context Menu و Emoji
-- تفکیک Invitation و Task Assignment
-
-### Iteration 3 — Attendee Selector مقیاس‌پذیر
-
-- جست‌وجوی Server-side
-- فیلتر واحد و Scope سازمانی
-- Selection Summary و Chip
-
-### Iteration 4 — Overlay، Layering و Focus
-
-- Overlay Stack
-- Focus Trap و Focus Restore
-- Scroll Lock
-- Outside Click
-- Child Overlay روی Parent
-
-### Iteration 5 و 6 — اصلاحات داخلی طراحی
-
-این Iterationها Release مستقل نیستند و در Specificationهای نهایی نسخه ۸ جذب شده‌اند.
-
-### Iteration 7 تا 11 — Consolidation نسخه ۸
-
-- حذف Route مستقل `global-search-page`
-- حذف Route مستقل `recent-history`
-- Command Palette مشترک از Topbar، Hero و `Ctrl+K`
-- Recent Items در Query خالی
+- Command Palette
+- حذف Routeهای مستقل Search و Recent History
 - Scroll بومی Routeهای عادی
-- Scroll مستقل فهرست گفتگو و Message Body
-- شروع گفتگو از آخرین پیام و حفظ انتهای چت پس از Send
-- فشرده‌سازی ردیف‌های گفتگو
-- اصلاح جهت ماه قبل و بعد در RTL
-- تک‌انتخابی‌شدن منبع در Action Hub
+- Scroll مستقل گفتگو
+- شروع گفتگو از آخرین پیام
+- اصلاح تراکم
+- RTL Calendar
+- Action Hub Source Filter
 
-### Iteration 12 — Dynamic Work Report
+### Iteration 12
 
-- گزارش کار مبتنی بر Profile، Assignment و Form Version
-- یک گزارش برای هر Shift Occurrence
-- گزارش ترکیبی با Sectionهای چند Assignment
-- قابلیت `Required`، `Optional` و `Disabled` در Profile یا شخص
-- Activity Catalog مستقل
-- Snapshot و Context خودکار
-- دسترسی Reviewer، سازمانی و تفویض‌شده
-- Reporting Projection برای داده‌های پویا
+- Dynamic Work Report
+- Shift Occurrence به‌عنوان واحد گزارش
+- Sectionهای چند Assignment
+- Applicability
+- Activity Catalog
+- Snapshot
+- Delegated Access
+- Reporting Projection
 
-## تصمیم‌های تکمیلی تثبیت‌شده در Consolidation
+## ورود Cycle 9
 
-- Workspace فقط مالک تنظیمات ظاهری و Preferenceهای خودش است.
-- `cas_personal_task` مالک Personal Task است.
-- `cas_organization_core` مالک Organization Scope و Assignment مؤثر است.
-- `cas_activity_catalog` مالک فرهنگ فعالیت‌های استاندارد است.
-- Notification Center از زیرساخت Odoo استفاده می‌کند و CAS فقط Gapها را تکمیل می‌کند.
-- Dashboard Management Center برای ادمین به نسخه ۸ افزوده شده است.
-- بازطراحی زیرساخت Document/File خارج از دامنه v8 و موضوع نسخه آینده است.
+با ورود Cycle 9:
 
-## قاعده نسخه‌بندی آینده
+- Cycle 9 آخرین چرخه فعال می‌شود.
+- Cycle 8 حذف نمی‌شود.
+- تصمیم‌های Active Cycle 8 باقی می‌مانند.
+- تغییرات Cycle 9 در Change Set جدید ثبت می‌شوند.
+- فقط تصمیم‌هایی که صریحاً جایگزین شده‌اند Superseded می‌شوند.
 
-یک نسخه فقط زمانی Release رسمی محسوب می‌شود که:
+## قاعده ثبت Cycle جدید
 
-1. دامنه و Baseline آن ثبت شود.
-2. Page Specificationها به‌روزرسانی شوند.
-3. Decision Recordها ثبت شوند.
-4. Architecture Contractها و Module Ownership مشخص شوند.
-5. Change Set و Traceability Matrix به‌روزرسانی شوند.
-6. برای اجرا، API، Security، Migration و Test Strategy تصویب شوند.
+1. شناسه Cycle
+2. تاریخ شروع
+3. محدوده صفحات و نقش‌ها
+4. Build یا Prototype منبع
+5. Observation Register
+6. Decision Links
+7. Module Impacts
+8. Change Set
+9. Revalidation Plan
+10. وضعیت پایان Cycle
