@@ -1,66 +1,80 @@
+---
+document_id: INDEX-UI-001
+title: UI and UX Documentation Index
+document_type: Section Index
+document_status: Active
+implementation_status: N/A
+ui_validation_status: Pending Revalidation
+source_ui_review_cycle: CAS UI Review Cycle 10
+source_iteration: 13
+owner: Product UX Governance
+domain_owner: Page Governance
+created_at: N/A
+updated_at: 2026-07-22
+canonical: true
+supersedes: []
+superseded_by: []
+related_decisions: [DEC-UIR09-010-CONSOLIDATED, DEC-UIR10-016-CONSOLIDATED]
+related_modules: [cas_workspace]
+related_pages: []
+related_capabilities: []
+---
+
 # 02 — UI & UX
 
-این بخش Page Specificationهای `CAS UI Workspace v8 — Through Iteration 12` را نگهداری می‌کند.
+این بخش Page Specificationها و Shared UI Component Specificationهای CAS را نگهداری می‌کند.
 
-## قاعده مرجعیت
+> آخرین چرخه فعال بازنگری UI: **Cycle 10 — Through Iteration 13**  
+> وضعیت Production UI برای تغییرات Cycle 10: `Pending Revalidation`.
 
-- [Workspace Home نسخه ۸](Employee/Workspace_V8.md) مرجع فعال میزکار است.
-- [Workspace Shell نسخه ۸](Shared/Workspace_Shell_V8.md) مرجع فعال پوسته مشترک است.
-- فایل‌های قدیمی `Workspace.md` و `Workspace_Shell.md` Historical Reference نسخه ۷ هستند.
-- سایر صفحه‌های Employee که صریحاً v8 را ثبت کرده‌اند، در کنار Baseline و Decisionهای نسخه ۸ خوانده می‌شوند.
+## Navigation مرکزی
 
-## صفحات کاربر عادی
+- [Page Registry](../00_Project/Page_Registry.md)
+- [Role-to-Page Matrix](../00_Project/Role_To_Page_Matrix.md)
+- [Capability Registry](../00_Project/Capability_Registry.md)
+- [Implementation Gap Registry](../00_Project/Implementation_Gap_Registry.md)
 
-- [میزکار نسخه ۸](Employee/Workspace_V8.md)
+## صفحات پایه Workspace
+
+- [میزکار Workspace](Employee/Workspace_V8.md)
 - [کارهای شخصی](Employee/Personal_Tasks.md)
 - [تقویم](Employee/Calendar.md)
 - [گفت‌وگوها](Employee/Conversations.md)
-- [Command Palette و جست‌وجوی سازمانی](Employee/Global_Search.md)
+- [Command Palette و Search](Employee/Global_Search.md)
 - [مرکز اعلان‌ها](Employee/Notifications_Center.md)
 - [Recent History داخل Command Palette](Employee/Recent_History.md)
 - [گزارش کار پویا و شیفت‌محور](Employee/Dynamic_Work_Report.md)
+- [Workspace Shell](Shared/Workspace_Shell_V8.md)
 
-## صفحات ادمین
+## صفحات و کامپوننت‌های Cycle 10
+
+- [تفویض‌های من و مدیریت تفویض](Employee/Delegation.md)
+- [Shared People Picker](Common/Shared_People_Picker.md)
+- [دبیرخانه و دفتر وارده/صادره](Administrative/Secretariat.md)
+- [ایستگاه سریع ثبت تردد نگهبانی](Security/Guard_Attendance_Station.md)
+
+## صفحات مدیریتی
 
 - [مرکز مدیریت داشبورد](Admin/Dashboard_Management_Center.md)
+- سایر Pageهای تفصیلی Admin Center برای user/access، organization، settings و audit در [Open Item Registry](../00_Project/Open_Item_Registry.md) ثبت شده‌اند.
 
-## مشترک همه نقش‌ها
+## Surfaceهای دارای Decision ولی فاقد Page Spec کامل
 
-- [پوسته مشترک Workspace v8](Shared/Workspace_Shell_V8.md)
+- Attendance Correction Request/Ledger؛
+- Delegated Random Attendance Audit؛
+- Overtime صفحات own/request/history/cancel؛
+- Form Builder Activity Providers و Dynamic Matrix؛
+- جریان‌های جزئی مکاتبات متأثر از Cycle 10.
 
-## دامنه قطعی نسخه ۸
+این موارد در Page Registry و Gap Registry ثبت شده‌اند و نباید از روی Prototype یا کد فعلی حدس زده شوند.
 
-- Workspace عملیاتی و Action-First
-- Widgetهای Provider-based و قابل جابه‌جایی
-- Dashboard Governance برای ادمین
-- Personal Task با مالک مستقل
-- Calendar با Attendee Selector مقیاس‌پذیر
-- تفکیک Invitation، Self Task و Assigned Action
-- Conversation مبتنی بر Odoo Mail/Discuss/Bus
-- Command Palette مشترک Search و Recent History
-- Native Scroll برای Routeهای عادی
-- Scroll مستقل Conversation List و Message Body
-- Overlay و Focus هماهنگ با Odoo UI Services
-- Notification Center مستقل با Reuse زیرساخت Odoo
-- Work Report براساس Shift Occurrence
-- یک گزارش ترکیبی با Sectionهای چند Assignment
-- Applicability قابل Required، Optional یا Disabled
-- دسترسی تفویض‌شده مستقل از زیردستی
+## Historical و Superseded
 
-## الزامات مشترک هر صفحه
+- `Employee/Workspace.md` و `Shared/Workspace_Shell.md` منابع Historical Cycle 7 هستند؛
+- Routeهای مستقل `global-search-page` و `recent-history` Superseded شده‌اند؛
+- UI لیستی ثبت نگهبانی با Cycle 10 Superseded شده است؛
+- OCR و DMS Navigation در آلفا خارج از Scope هستند.
 
-هر Page Specification باید این موارد را تعیین کند:
+## الزامات هر Page Specification
 
-- هدف و نقش‌ها
-- Route و Entry Point
-- Capability و Permission Expectations
-- Stateهای Loading، Empty، Forbidden، Unavailable، Error و Ready
-- Primary و Secondary Actions
-- Keyboard، Focus، RTL و Responsive Behavior
-- Provider و Domain Owner
-- Acceptance Criteria
-- Decisionها و Architecture Contractهای مرتبط
-
-## وضعیت
-
-تصمیم‌های محصولی نسخه ۸ تجمیع شده‌اند. آمادگی اجرای هر صفحه تابع آماده‌شدن Module Specification، API، Security، Migration و Test Strategy ماژول‌های مالک است.
+Page ID، عنوان، Route/Entry، Roles، Capability، Owner، Source Cycle/Iteration، Goal، States، Actions، Data Sources، Security، RTL، Responsive، Accessibility، Performance، Module Impact، Acceptance و Revalidation Scenario باید مشخص باشند.
