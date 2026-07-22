@@ -5,7 +5,7 @@
 | وضعیت | `Active` |
 | هدف | ردیابی کامل Observation تا UI Revalidation |
 | مرجع | `UI_Review_Lifecycle.md` |
-| آخرین چرخه فعال | `CAS UI Review Cycle 9 — Through Iteration 13` |
+| آخرین چرخه فعال | `CAS UI Review Cycle 10 — Through Iteration 13` |
 
 ## مسیر اجباری
 
@@ -55,7 +55,19 @@ UI Observation
 | `OBS-UIR09-FORM-001` | UIR09 I7,I9 | Form Builder / form designer | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Form Engine | `cas_form_core`, `cas_form_builder`, `cas_dynamic_form` | activity reference fields، dynamic matrix provider/rendering | field/row/cell security، server-side pagination | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | N/A |
 | `OBS-UIR09-DASH-001..004` | UIR09 I7–I11 | Dashboard / user | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Workspace | `cas_workspace` | header settings، visibility، shortcuts، command center، home link | user/company scope، policy lock، capability filter | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | Reorder-only personalization |
 | `OBS-UIR09-LAYOUT-001` | UIR09 I13 | Dashboard / employee | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` | Workspace + Work Report | `cas_workspace`, `cas_work_report` | remove progress widget، full-width quick report، spacing | `ARCH-CSS-DS-001` + existing access controls | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | N/A | Pending | Pending Revalidation | Work Progress widget baseline |
-| `OBS-UIR09-CSS-001` | UIR09 post-freeze documentation hardening | All UI surfaces / all roles / maintainability and future visual changes | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` + `Workspace_CSS_And_Design_System_Contract.md` | Workspace Design System + each UI module owner | all UI-producing custom addons | token registry، shared primitives، namespaced selectors، central breakpoints، Odoo asset layering، lint and visual regression | `ARCH-CSS-DS-001` | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | Commit `533f6578d349ea896f1199b959d2435c4d498a0a` and linked documentation commits | Pending | Pending Revalidation | implicit/non-contractual CSS practices |
+| `OBS-UIR09-CSS-001` | UIR09 documentation hardening | All UI surfaces / maintainability | `DEC-010-UIR09-CONSOLIDATED` | `UI_Review_Cycle_9_Register.md` + CSS contract | Workspace Design System | all UI-producing addons | token registry، shared primitives، asset layering، lint and visual regression | `ARCH-CSS-DS-001` | `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` | Gap Identified | Documentation commits | Pending | Pending Revalidation | implicit CSS practices |
+
+## Cycle 10 Traceability
+
+| Observation ID | Cycle/Iteration | Page / Role / Scenario | Decision ID | Page Spec / Register | Module Owner | Affected Modules | Backend Requirement | Security / Architecture Reference | Change Set | Implementation | Evidence | Revalidation | Final Status | Supersedes |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `OBS-UIR10-CORR-001` | UIR10 I1–I2 | Correspondence / sender-recipient / delegated send and action request | `DEC-016-UIR10-CONSOLIDATED` | `UI_Review_Cycle_10_Register.md` | Correspondence | correspondence, delegation, tasks, workspace | official sender/actual actor، action request، receiver task decision، print/PDF access | principal/actor audit، delegation method check، export security | `CS-UIR10-ALPHA-WORKSPACE-REFINEMENT` | Gap Identified | Prototype only; not implementation evidence | Cycle 10 post-implementation | Pending Revalidation | conflicting prototype behavior only |
+| `OBS-UIR10-DELEG-001` | UIR10 I3–I8 | Delegation / user and admin | `DEC-016-UIR10-CONSOLIDATED` | `../02_UI_UX/Employee/Delegation.md` | Delegation domain | delegation providers, correspondence, tasks, approvals, work reports | principal fixed for public form، admin scope، domain capabilities، validity، decree، revocation | ACL/Record Rule/Method/Scope/Audit/Impersonation | `CS-UIR10-ALPHA-WORKSPACE-REFINEMENT` | Gap Identified | N/A | Cycle 10 post-implementation | Pending Revalidation | generic mixed delegation form |
+| `OBS-UIR10-PEOPLE-001` | UIR10 I4,I12 | Shared picker / all consumers / single-multiple selection | `DEC-016-UIR10-CONSOLIDATED` | `../02_UI_UX/Common/Shared_People_Picker.md` | Workspace shared components | workspace + HR/organization providers | shared provider contract، normalized IDs، cumulative selection، chip removal، filtering | search/count/metadata leakage، ID tampering، scoped cache | `CS-UIR10-ALPHA-WORKSPACE-REFINEMENT` | Gap Identified | Prototype interaction evidence only | Cycle 10 post-implementation | Pending Revalidation | duplicated person selectors |
+| `OBS-UIR10-ADMIN-001` | UIR10 I9 | Admin center / system administrators | `DEC-016-UIR10-CONSOLIDATED` | `UI_Review_Cycle_10_Register.md` | Security governance | security groups, workspace | granular admin groups and composite super-admin | least privilege، SoD، audit viewer read-only | `CS-UIR10-ALPHA-WORKSPACE-REFINEMENT` | Gap Identified | N/A | Cycle 10 post-implementation | Pending Revalidation | absolute system-admin group concept |
+| `OBS-UIR10-SEC-001` | UIR10 I10 | Secretariat / administrative specialist | `DEC-016-UIR10-CONSOLIDATED` | `../02_UI_UX/Administrative/Secretariat.md` | Secretariat Registry | correspondence, secretariat, workspace, attachments | incoming/outgoing models or extensions، sequences، delivery status، register reports | sequence authorization، export/attachment security، append-only corrections | `CS-UIR10-ALPHA-WORKSPACE-REFINEMENT` | Gap Identified | N/A | Cycle 10 post-implementation | role-title secretariat and manual numbering baselines |
+| `OBS-UIR10-GUARD-001` | UIR10 I11–I12 | Guard attendance / guard operator / rapid batch entry | `DEC-016-UIR10-CONSOLIDATED` | `../02_UI_UX/Security/Guard_Attendance_Station.md` | Attendance Operations | `cas_attendance_operations`, `cas_attendance_core`, workspace | UX over existing batch/event models، manual time audit، conflicts، recent log | site/company scope، direct RPC، append-only event، duplicate control | `CS-UIR10-ALPHA-WORKSPACE-REFINEMENT` | Gap Identified | Existing model docs + prototype; no implementation evidence | Cycle 10 post-implementation | Pending Revalidation | list-oriented guard registration UI |
+| `OBS-UIR10-SCOPE-001` | UIR10 I10–I13 | Alpha scope / all roles | `DEC-016-UIR10-CONSOLIDATED` | `../07_Out_Of_Scope/V10_Alpha_Out_Of_Scope.md` | Product Governance | workspace, OCR references, document management | remove OCR/DMS menu-route-product dependencies while retaining attachment | attachment access and no parallel repository | `CS-UIR10-ALPHA-WORKSPACE-REFINEMENT` | Planned Removal / Gap Identified | N/A | Cycle 10 post-implementation | OCR/DMS alpha presence |
 
 ## قواعد
 
@@ -65,11 +77,9 @@ UI Observation
 4. `Accepted` در Production بدون UI Revalidation مجاز نیست.
 5. Cycle جدید ردیف‌های قبلی را حذف نمی‌کند.
 6. تصمیم تغییرکرده باید Supersede صریح داشته باشد.
-7. یک Requirement می‌تواند در چند Cycle اعتبارسنجی شود.
-8. Version نرم‌افزار فقط در صورت Release واقعی ثبت می‌شود.
-9. Prototype Cycle 9 شواهد تصمیم‌سازی است، نه Implementation Evidence.
-10. Documentation commit برای قرارداد CSS فقط Evidence مستندسازی است و Evidence پیاده‌سازی محسوب نمی‌شود.
+7. Prototype شواهد تصمیم‌سازی است، نه Implementation Evidence.
+8. Documentation commit فقط Evidence مستندسازی است.
 
 ## وضعیت فعلی
 
-Cycle 9 آخرین Cycle فعال بازنگری UI است. Cycle 8 Historical Review Source باقی می‌ماند و تصمیم‌های Active آن فقط در موارد صریح Cycle 9 Supersede شده‌اند. تمام ردیف‌های Cycle 9 از نظر اجرا `Gap Identified` و از نظر UI Production برابر `Pending Revalidation` هستند.
+Cycle 10 آخرین Cycle فعال بازنگری UI است. Cycleهای 8 و 9 Historical Review Source باقی می‌مانند و تصمیم‌های Active آن‌ها فقط در موارد صریح Cycle 10 Supersede شده‌اند. تمام ردیف‌های Cycle 10 از نظر اجرا `Gap Identified` یا `Planned Removal` و از نظر UI Production برابر `Pending Revalidation` هستند.
