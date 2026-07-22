@@ -31,6 +31,10 @@ related_capabilities: []
 
 | سؤال | مرجع مرکزی |
 |---|---|
+| وضعیت جاری مستندات و Baseline چیست؟ | همین فایل و [Project Governance Index](README.md) |
+| سند جدید را کجا و چگونه ذخیره کنم؟ | [Documentation Contribution Guide](Documentation_Contribution_Guide.md) |
+| پایان Cycle چه چیزهایی باید کنترل شود؟ | [Cycle Closeout Checklist](Cycle_Closeout_Checklist.md) |
+| AI از کجا شروع کند؟ | [AI Working Guide](AI_Working_Guide.md) |
 | درباره یک موضوع چه تصمیمی گرفته شده است؟ | [Decision Registry](Decision_Registry.md) |
 | مالک یک Capability یا نام مترادف آن چیست؟ | [Capability Registry](Capability_Registry.md) |
 | یک صفحه، Route یا نقش به چه اسنادی متصل است؟ | [Page Registry](Page_Registry.md) و [Role-to-Page Matrix](Role_To_Page_Matrix.md) |
@@ -69,20 +73,24 @@ related_capabilities: []
 ## ۳. ترتیب مطالعه اجباری
 
 1. [`../README.md`](../README.md)
-2. [UI Review Lifecycle](UI_Review_Lifecycle.md)
-3. [Documentation Governance](Documentation_Governance.md)
-4. [Version History](Version_History.md)
-5. [Traceability Matrix](Traceability_Matrix.md)
-6. [Historical Document Register](Historical_Document_Register.md)
-7. [Open Item Registry](Open_Item_Registry.md)
-8. [`../01_Product/Terminology.md`](../01_Product/Terminology.md)
-9. [`../01_Product/UX_Principles.md`](../01_Product/UX_Principles.md)
-10. [Module Registry](Module_Registry.md)
-11. [`../03_Modules/V8_Dependency_Map.md`](../03_Modules/V8_Dependency_Map.md)
-12. [`../03_Modules/V8_Provider_Registry.md`](../03_Modules/V8_Provider_Registry.md)
-13. [`../05_Architecture/Module_Boundaries.md`](../05_Architecture/Module_Boundaries.md)
-14. [`../05_Architecture/Capability_And_Security_Model.md`](../05_Architecture/Capability_And_Security_Model.md)
-15. تمام Decisionها، Page Specها، Module Specها و Change Setهای مرتبط با موضوع.
+2. [این نقشه مستندات](Documentation_Map.md)
+3. [Documentation Contribution Guide](Documentation_Contribution_Guide.md)
+4. [Repository Information Architecture](Repository_Information_Architecture.md)
+5. [AI Working Guide](AI_Working_Guide.md) برای عامل‌های هوش مصنوعی
+6. [UI Review Lifecycle](UI_Review_Lifecycle.md)
+7. [Documentation Governance](Documentation_Governance.md)
+8. [Version History](Version_History.md)
+9. [Traceability Matrix](Traceability_Matrix.md)
+10. [Historical Document Register](Historical_Document_Register.md)
+11. [Open Item Registry](Open_Item_Registry.md)
+12. [`../01_Product/Terminology.md`](../01_Product/Terminology.md)
+13. [`../01_Product/UX_Principles.md`](../01_Product/UX_Principles.md)
+14. [Module Registry](Module_Registry.md)
+15. [`../03_Modules/V8_Dependency_Map.md`](../03_Modules/V8_Dependency_Map.md)
+16. [`../03_Modules/V8_Provider_Registry.md`](../03_Modules/V8_Provider_Registry.md)
+17. [`../05_Architecture/Module_Boundaries.md`](../05_Architecture/Module_Boundaries.md)
+18. [`../05_Architecture/Capability_And_Security_Model.md`](../05_Architecture/Capability_And_Security_Model.md)
+19. تمام Decisionها، Page Specها، Module Specها و Change Setهای مرتبط با موضوع.
 
 ## ۴. مراجع Cycle 10
 
@@ -101,6 +109,15 @@ Cycleهای 8 و 9 Historical Review Source هستند، اما Decisionهای A
 - [Cycle 9 Register](UI_Review_Cycle_9_Register.md)
 - [`DEC-010-UIR09-CONSOLIDATED`](../04_Decisions/DEC-010-UIR09-Consolidated-Workspace-And-Operational-UX.md)
 
-## ۶. قاعده نگهداری Registryها
+## ۶. قالب و بستن Cycleهای آینده
+
+- [قالب استاندارد Cycle جدید](../02_UI_UX/Review_Cycles/_Template/README.md)
+- [راهنمای اجرای Review](Review_Process_Guide.md)
+- [چرخه عمر مستندات](Documentation_Lifecycle.md)
+- [چک‌لیست اجباری پایان Cycle](Cycle_Closeout_Checklist.md)
+
+هر Cycle جدید باید از قالب رسمی استفاده کند و نتیجه آن پیش از بسته‌شدن به Registryها و Specificationهای Canonical منتقل شود.
+
+## ۷. قاعده نگهداری Registryها
 
 هر Decision، Capability، Module، Page یا Gap جدید باید در همان Change Set به Registry متناظر افزوده شود. Registry Entry بدون Source Document، Owner یا Status ناقص است. اسناد تفصیلی مرجع حقیقت باقی می‌مانند و در تعارض، سلسله‌مراتب `specs/README.md` اعمال می‌شود.
