@@ -1,841 +1,302 @@
-# CAS Specifications Constitution
+# CAS Specifications — Mandatory Entry Point
 
-> **وضعیت:** `Canonical / Mandatory`
->
-> **دامنه:** تمام فایل‌ها، تصمیم‌ها، طراحی‌ها، قراردادها، Change Setها و سوابق داخل پوشه `specs`
->
-> **آخرین چرخه فعال بازنگری UI:** `CAS UI Review Cycle 10 — Through Iteration 13`
->
-> **نسخه نرم‌افزار:** مستقل از شماره چرخه‌های بازنگری UI و فقط در اسناد Release نرم‌افزار تعیین می‌شود.
->
-> **مخاطب:** انسان، توسعه‌دهنده، تحلیل‌گر، طراح، مدیر محصول، معمار، بازبین و هر AI Agent
->
-> **قاعده مطلق:** هیچ شخص یا Agent حق ندارد پیش از مطالعه کامل این فایل، سندی در `specs` ایجاد، ویرایش، حذف، انتقال، Supersede، Commit، Push یا Merge کند.
+> **Status:** `Canonical / Mandatory`  
+> **Scope:** تمام فایل‌ها و تغییرات داخل `specs/`  
+> **Audience:** انسان، توسعه‌دهنده، تحلیل‌گر، طراح، بازبین و هر AI Agent  
+> **Active UI review baseline:** `CAS UI Review Cycle 10 — Through Iteration 13`
 
----
+## چرا این پوشه وجود دارد؟
 
-# 0. ماهیت این سند
+`specs/` حافظه مهندسی CAS است. هدف آن زیادکردن تعداد فایل‌ها نیست؛ هدف آن کاهش زمان فهم، جلوگیری از تکرار تصمیم‌ها، مشخص‌کردن حقیقت جاری و تبدیل بازخورد UI به تغییر قابل‌پیاده‌سازی و قابل‌اعتبارسنجی است.
 
-این README یک معرفی ساده نیست؛ «قانون اساسی مستندسازی CAS» و نقطه شروع اجباری هر فعالیت مستندی است.
-
-هر عامل انسانی یا ماشینی که روی `specs` کار می‌کند، با انجام نخستین تغییر اعلام می‌کند که:
-
-1. این فایل را کامل خوانده است.
-2. هدف واقعی پوشه `specs` را می‌داند.
-3. تفاوت UI Review Cycle، Iteration، Document Version و Software Release را می‌داند.
-4. زنجیره رفت‌وبرگشتی UI ↔ تحلیل محصول ↔ Backend ↔ اعتبارسنجی مجدد را رعایت می‌کند.
-5. هیچ تصمیمی را فقط در چت، Commit message یا توضیح PR رها نمی‌کند.
-6. مالکیت داده و دامنه را از روی حدس تعیین نمی‌کند.
-7. هیچ تصمیم Active را صرفاً برای هماهنگی با کد فعلی تضعیف نمی‌کند.
-8. هیچ چرخه UI را به‌اشتباه نسخه نرم‌افزار یا نسخه نهایی محصول معرفی نمی‌کند.
-9. هر تغییر را در تمام اسناد وابسته ردیابی می‌کند.
-10. وضعیت اسناد را صادقانه اعلام می‌کند.
+> **اصل حاکم:** هر تغییر مستندی فقط زمانی ارزشمند است که هزینه فهم پروژه را کاهش دهد. اگر تغییری باعث ابهام، تکرار، شلوغی یا سخت‌ترشدن ناوبری شود، باید بازطراحی یا رد شود؛ حتی اگر محتوای آن به‌تنهایی صحیح باشد.
 
 ---
 
-# 1. هدف واقعی پوشه `specs`
+## 1. قبل از هر کار چه بخوانم؟
 
-پوشه `specs` حافظه مهندسی چرخه تضمین کیفیت محصول است.
+هر انسان یا AI Agent پیش از ایجاد، ویرایش، حذف، انتقال، Commit، Push یا Merge در `specs/` باید این مسیر را طی کند:
 
-این پوشه برای آن ساخته شده که:
+1. همین فایل؛
+2. [نقشه مرکزی مستندات](00_Project/Documentation_Map.md)؛
+3. Registry مرتبط با موضوع؛
+4. Specificationها و Decisionهای Canonical مرتبط؛
+5. در صورت تغییر مستندات، [راهنمای مشارکت](00_Project/Documentation_Contribution_Guide.md).
 
-1. ماژول‌های موجود مبنای طراحی اولیه UI قرار گیرند.
-2. UI به‌صورت صفحه‌به‌صفحه، نقش‌به‌نقش و سناریوبه‌سناریو بررسی شود.
-3. مشکلات، کمبودها، اضافات، ابهام‌ها و نیازهای جدید در UI کشف شوند.
-4. هر مشاهده UI به تصمیم محصولی یا معماری قابل‌اجرا تبدیل شود.
-5. مشخص شود کدام ماژول موجود باید تغییر کند.
-6. مشخص شود کدام ماژول جدید باید ایجاد شود.
-7. مشخص شود کدام قابلیت باید حذف، جابه‌جا یا بازطراحی شود.
-8. تیم Backend بعداً دقیقاً بداند چه چیزی باید پیاده‌سازی کند.
-9. پس از پیاده‌سازی، همان موضوع دوباره در UI اعتبارسنجی شود.
-10. نتیجه اعتبارسنجی به `Accepted` یا `Reopened` تبدیل شود.
-11. حافظه محدود انسان یا AI باعث تکرار بحث یا ازبین‌رفتن تصمیم نشود.
-12. کیفیت نهایی محصول از طریق رفت‌وبرگشت کنترل‌شده افزایش یابد.
+برای کارهای پیچیده یا چندماژولی، این اسناد نیز اجباری‌اند:
 
-چرخه مرجع:
+- [Documentation Governance](00_Project/Documentation_Governance.md)
+- [AI Working Guide](00_Project/AI_Working_Guide.md)
+- [Documentation Lifecycle](00_Project/Documentation_Lifecycle.md)
+- [Review Process Guide](00_Project/Review_Process_Guide.md)
+- [Cycle Closeout Checklist](00_Project/Cycle_Closeout_Checklist.md)
+- [Metadata and ID Standard](00_Project/Metadata_And_ID_Standard.md)
 
-```text
-Existing Modules / Current Backend
-        ↓
-UI Design or UI Review Build
-        ↓
-Page-by-Page and Role-by-Role Evaluation
-        ↓
-UI Observation / Problem / Opportunity
-        ↓
-Product Decision and Architecture Decision
-        ↓
-Module Impact and Backend Change Specification
-        ↓
-Implementation / Migration / Tests
-        ↓
-UI Revalidation
-        ↓
-Accepted or Reopened
-        ↺
-Next UI Review Cycle
-```
-
-`specs` فقط «توضیح ظاهر UI» نیست و فقط «مستند معماری Backend» هم نیست؛ این پوشه حلقه اتصال این دو و حافظه کامل چرخه QA است.
+**خواندن فقط فایل هدف کافی نیست.** موضوع باید در Registryها، تصمیم‌های فعال، ماژول‌ها، صفحات و Change Setهای مرتبط ردیابی شود.
 
 ---
 
-# 2. تفکیک قطعی انواع نسخه
+## 2. نقشه حقیقت پروژه
 
-## 2.1. UI Review Cycle
-
-نمونه:
+ساختار مرجع CAS چهار لایه دارد:
 
 ```text
-CAS UI Review Cycle 7
-CAS UI Review Cycle 8
-CAS UI Review Cycle 9
+specs/README.md
+    ↓
+Documentation Map
+    ↓
+Central Registries
+    ↓
+Canonical Decisions, Specifications and Contracts
 ```
 
-این اعداد فقط شماره چرخه‌های بازنگری کلی رابط کاربری هستند.
+### `README`
 
-- Cycle 8 نسخه هشتم نرم‌افزار نیست.
-- Cycle 8 نسخه نهایی محصول نیست.
-- Cycle 8 مانع ورود Cycle 9 نیست.
-- با ورود Cycle 9، Cycle 9 آخرین چرخه فعال بازنگری UI می‌شود.
-- Cycle 8 به سابقه بازنگری تبدیل می‌شود.
-- تصمیم‌های کشف‌شده در Cycle 8 فقط در صورتی منقضی می‌شوند که سند جدید صریحاً آن‌ها را Supersede کند.
+فقط نقطه ورود، قواعد طلایی و مسیر مطالعه است.
 
-## 2.2. Iteration
+### `Documentation Map`
 
-Iteration اصلاح داخلی درون یک UI Review Cycle است.
+GPS مستندات است و می‌گوید پاسخ هر نوع سؤال در کدام مرجع قرار دارد.
 
-نمونه:
+### Registryها
 
-```text
-UI Review Cycle 8
-├── Iteration 1
-├── Iteration 2
-└── Iteration 12
-```
+برای پیدا کردن وضعیت، مالک، ارتباط و مرجع Canonical استفاده می‌شوند. Registry جای Specification را نمی‌گیرد.
 
-Iteration 12 دوازدهمین اصلاح داخلی Cycle 8 است، نه نسخه 12 نرم‌افزار.
+### Canonical Documents
 
-## 2.3. Document Version
+Decision، Module Specification، Page Specification، Architecture/Security Contract و Change Set فعال، مرجع محتوایی حقیقت هستند.
 
-هر سند می‌تواند نسخه خودش را داشته باشد، مانند:
+### Historical Evidence
 
-```text
-Document Version: 1.0
-Document Version: 1.1
-Document Version: 2.0
-```
-
-این شماره فقط تاریخچه همان سند است و با UI Review Cycle یا Software Release یکی نیست.
-
-## 2.4. Software Release
-
-نسخه نرم‌افزار مستقل است و فقط در اسناد Release تعیین می‌شود، مانند:
-
-```text
-CAS Software 1.0
-CAS Software 1.1
-CAS Software 2.0
-```
-
-تا زمانی که Release Strategy رسمی تعیین نشده، هیچ UI Review Cycle نباید Software Version نامیده شود.
+Review Cycleها، Iterationها، Screenshotها، Prototypeها و اسناد Superseded برای حفظ تاریخچه و شواهد نگه‌داری می‌شوند؛ ولی به‌تنهایی مرجع تصمیم جاری نیستند.
 
 ---
 
-# 3. مرجع مؤثر برای Backend
+## 3. از کدام Registry استفاده کنم؟
 
-مرجع پیاده‌سازی Backend «آخرین UI ZIP» یا «شماره یک Cycle» نیست.
+| نیاز | مرجع |
+|---|---|
+| تصمیم جاری یا Superseded | [Decision Registry](00_Project/Decision_Registry.md) |
+| Capability و مالک آن | [Capability Registry](00_Project/Capability_Registry.md) |
+| صفحه، Route و ارتباطات | [Page Registry](00_Project/Page_Registry.md) |
+| دسترسی نقش‌ها به صفحات | [Role-to-Page Matrix](00_Project/Role_To_Page_Matrix.md) |
+| مالک ماژول و داده | [Module Registry](00_Project/Module_Registry.md) |
+| تفاوت مستندات و پیاده‌سازی | [Implementation Gap Registry](00_Project/Implementation_Gap_Registry.md) |
+| سؤال، تعارض، ریسک یا مورد Deferred | [Open Item Registry](00_Project/Open_Item_Registry.md) |
+| زنجیره Observation تا Revalidation | [Traceability Matrix](00_Project/Traceability_Matrix.md) |
+| وضعیت اسناد قدیمی | [Historical Document Register](00_Project/Historical_Document_Register.md) |
 
-مرجع مؤثر برابر است با:
+Registryها Index هستند. متن کامل الزام باید در سند Canonical مرتبط قرار گیرد.
+
+---
+
+## 4. قواعد طلایی
+
+1. **هدف مستندسازی، بهبود عملکرد است؛ نه تولید فایل.**
+2. **یک مفهوم، یک مرجع Canonical دارد.** از ساخت سند موازی جلوگیری شود.
+3. **اطلاعات تفصیلی در README یا Registry کپی نمی‌شود.** فقط خلاصه و لینک ثبت می‌شود.
+4. **تصمیم فقط در چت، Commit message، Prototype یا Screenshot باقی نمی‌ماند.**
+5. **کد فعلی حقیقت محصول نیست.** اختلاف کد با Specification فعال، `Implementation Gap` است.
+6. **Cycle جدید تصمیم‌های گذشته را خودکار باطل نمی‌کند.** فقط `Supersedes` صریح معتبر است.
+7. **وضعیت سند، وضعیت اجرا و وضعیت UI Validation مستقل‌اند.**
+8. **مالک Domain، داده و Capability از روی حدس تعیین نمی‌شود.**
+9. **هر تغییر Cross-layer باید اثر UI، Backend، Security، Migration، Test، Audit و Revalidation را بررسی کند.**
+10. **هر فایل جدید باید در همان Change Set به مسیر ناوبری و Registryهای لازم متصل شود.**
+11. **اسناد Historical حذف نمی‌شوند؛ به‌درستی طبقه‌بندی می‌شوند.**
+12. **اگر سندی پیدا کردن حقیقت را سخت‌تر کند، باید ادغام، کوتاه یا بازطراحی شود.**
+
+---
+
+## 5. مرجع مؤثر برای پیاده‌سازی
+
+Backend یا UI نباید فقط از روی آخرین ZIP، آخرین Cycle یا یک سند منفرد پیاده‌سازی شود.
 
 ```text
-All Active and Agreed Decisions
+Effective Specification
+=
+Active / Agreed Decisions
 + Active Module Specifications
-+ Active Architecture Contracts
-+ Active Security Contracts
-+ Approved Changes from the Latest UI Review
++ Active Page Specifications
++ Active Architecture and Security Contracts
++ Approved Change Sets
 - Superseded Requirements
 - Historical-only Statements
 ```
 
-بنابراین:
+در تعارض، ترتیب مرجعیت چنین است:
 
-- Cycle جدید همه تصمیم‌های Cycle قبلی را خودکار باطل نمی‌کند.
-- فقط تصمیم‌هایی که صریحاً تغییر کرده‌اند Supersede می‌شوند.
-- تصمیم Active می‌تواند در Cycle 8 کشف شده باشد و در Cycle 9 همچنان معتبر بماند.
-- کد باید با مجموعه Specificationهای مؤثر و Active منطبق شود، نه با یک شماره UI.
-- اختلاف کد با اسناد Active یک `Implementation Gap` است.
-- اختلاف UI جدید با تصمیم Active یک `Review Conflict` است و باید تحلیل شود.
-
----
-
-# 4. وضعیت‌های رسمی
-
-## 4.1. وضعیت سند
-
-- `Draft`
-- `Under Review`
-- `Agreed`
-- `Active`
-- `Superseded`
-- `Historical`
-- `Rejected`
-- `Archived`
-
-## 4.2. وضعیت اجرا
-
-- `Not Assessed`
-- `Gap Identified`
-- `Planned`
-- `In Development`
-- `Implemented`
-- `Partially Implemented`
-- `Blocked`
-- `Deprecated`
-
-## 4.3. وضعیت اعتبارسنجی UI
-
-- `Not Validated`
-- `Pending Revalidation`
-- `Validated`
-- `Accepted`
-- `Reopened`
-- `Failed Validation`
-
-این سه محور مستقل‌اند. سندی می‌تواند `Active`، از نظر اجرا `Implemented` و از نظر UI `Pending Revalidation` باشد.
+1. تصمیم صریح و جدید مالک محصول؛
+2. این README و قواعد Governance؛
+3. Decisionهای Active و Supersede Records؛
+4. Architecture و Security Contracts؛
+5. Module Specifications؛
+6. Page Specifications؛
+7. Change Sets و Acceptance Criteria؛
+8. Traceability و Impact Matrices؛
+9. UI Observations و Review Evidence؛
+10. Prototype، Screenshot و Mock Data؛
+11. کد فعلی؛
+12. گفتگو و حافظه اشخاص.
 
 ---
 
-# 5. سلسله‌مراتب مرجعیت
+## 6. تفاوت نسخه‌ها
 
-در تعارض میان اسناد، ترتیب زیر اعمال می‌شود:
+این چهار مفهوم نباید با هم مخلوط شوند:
 
-1. تصمیم صریح و جدید مالک محصول
-2. این Constitution
-3. فهرست تصمیم‌های Active و Supersede Records
-4. Architecture Decisions و Security Decisions
-5. Module Specifications فعال
-6. Page Specifications فعال
-7. Change Sets
-8. Traceability و Impact Matrices
-9. UI Review Observations
-10. Prototype، Screenshot و Mock Data
-11. کد فعلی
-12. گفتگو، Commit Message یا حافظه اشخاص
+- **UI Review Cycle:** یک چرخه بازنگری کلی رابط کاربری؛
+- **Iteration:** اصلاح داخلی داخل همان Cycle؛
+- **Document Version:** نسخه یک سند مشخص؛
+- **Software Release:** نسخه واقعی نرم‌افزار.
 
-کد فعلی برای تشخیص Gap مهم است، اما نمی‌تواند تصمیم Active را خودکار باطل کند.
+برای مثال، `UI Review Cycle 10` به معنی `CAS Software 10` نیست.
+
+جزئیات چرخه‌ها در [UI Review Lifecycle](00_Project/UI_Review_Lifecycle.md) و [Version History](00_Project/Version_History.md) نگه‌داری می‌شود.
 
 ---
 
-# 6. ترتیب مطالعه اجباری Agent
+## 7. وضعیت‌های رسمی
 
-پیش از هر تغییر:
+### Document Status
 
-1. `specs/README.md`
-2. `00_Project/UI_Review_Lifecycle.md`
-3. `00_Project/Documentation_Governance.md`
-4. `00_Project/Version_History.md`
-5. `00_Project/Traceability_Matrix.md`
-6. `00_Project/Historical_Document_Register.md`
-7. `00_Project/Open_Questions.md`
-8. `01_Product/Terminology.md`
-9. `01_Product/UX_Principles.md`
-10. Module Ownership Map
-11. Dependency Map
-12. Provider Registry
-13. Module Boundaries
-14. Capability and Security Model
-15. تمام Decisionها، Page Specها، Module Specها و Change Setهای مرتبط
+`Draft` · `Under Review` · `Agreed` · `Active` · `Superseded` · `Historical` · `Rejected` · `Archived`
 
-Agent حق ندارد فقط فایل هدف را بخواند.
+### Implementation Status
+
+`Not Assessed` · `Gap Identified` · `Planned` · `In Development` · `Implemented` · `Partially Implemented` · `Blocked` · `Deprecated`
+
+### UI Validation Status
+
+`Not Validated` · `Pending Revalidation` · `Validated` · `Accepted` · `Reopened` · `Failed Validation`
+
+تعریف و کاربرد دقیق این وضعیت‌ها در [Metadata and ID Standard](00_Project/Metadata_And_ID_Standard.md) قرار دارد.
 
 ---
 
-# 7. پروتکل اجباری پیش از نگارش
+## 8. پروتکل تغییر مستندات
 
-Agent باید:
+پیش از نگارش:
 
-1. موضوع تغییر را یک جمله دقیق تعریف کند.
-2. چرخه UI منبع را مشخص کند.
-3. Observation یا نیاز اولیه را ثبت کند.
-4. در کل `specs` برای نام قابلیت، مترادف‌ها، Module، Route، Capability، Entity و Decision جست‌وجو کند.
-5. تصمیم‌های Active و Superseded مرتبط را جدا کند.
-6. مالک Domain را مشخص کند.
-7. مشخص کند تغییر UI-only، Backend-only یا Cross-layer است.
-8. اثر امنیت، Migration، Test، Reporting و Audit را بررسی کند.
-9. فایل‌های لازم برای تغییر را فهرست کند.
-10. از ساخت سند موازی جلوگیری کند.
-11. در صورت تعارض، Conflict Record بسازد.
-12. فقط بعد از این مراحل نگارش را شروع کند.
+1. مسئله یا تغییر را در یک جمله دقیق تعریف کن؛
+2. در Documentation Map و Registryها جست‌وجو کن؛
+3. مرجع Canonical موجود را پیدا کن؛
+4. تصمیم‌های Active، Superseded و موارد باز را تفکیک کن؛
+5. Domain Owner و اثرهای Cross-layer را مشخص کن؛
+6. تصمیم بگیر سند موجود باید اصلاح شود یا سند جدید واقعاً لازم است؛
+7. فقط پس از این مراحل نگارش را آغاز کن.
 
----
-
-# 8. واحد پایه ثبت تغییر
-
-هر تغییر ناشی از UI باید حداقل این زنجیره را داشته باشد:
+هنگام ثبت تغییر:
 
 ```text
-UI Observation
-→ Decision
-→ Module Impact
-→ Backend Requirement
+Observation / Need
+→ Decision or Clarification
+→ Page and Module Impact
+→ Backend / Security Requirement
+→ Change Set
 → Implementation Status
 → UI Revalidation
-→ Final Outcome
+→ Accepted or Reopened
 ```
 
-## 8.1. UI Observation
+پس از تغییر:
 
-باید شامل:
-
-- شناسه Observation
-- UI Review Cycle
-- Iteration
-- صفحه
-- نقش
-- سناریو
-- رفتار مشاهده‌شده
-- مشکل یا فرصت
-- شواهد
-- شدت
-- وضعیت
-- اسناد مرتبط
-
-## 8.2. Decision
-
-باید شامل:
-
-- شناسه Decision
-- تصمیم دقیق
-- دلیل
-- گزینه‌های ردشده
-- اثر محصولی
-- اثر معماری
-- مالک Domain
-- تصمیم‌های Superseded
-- Source Observation
-- وضعیت
-
-## 8.3. Module Impact
-
-باید شامل:
-
-- ماژول موجود یا جدید
-- نوع تغییر
-- Models
-- Fields
-- Services
-- Access
-- Migration
-- Tests
-- Dependencies
-- Risks
-
-## 8.4. UI Revalidation
-
-باید شامل:
-
-- Build یا Cycle اعتبارسنجی
-- سناریو
-- نقش
-- نتیجه
-- Evidence
-- Acceptance Criteria
-- Outcome: `Accepted` یا `Reopened`
+- Metadata و لینک‌های دوطرفه را اصلاح کن؛
+- Registryهای مرتبط را به‌روزرسانی کن؛
+- Traceability را حفظ کن؛
+- Broken link و تعارض ایجاد نکن؛
+- از [Cycle Closeout Checklist](00_Project/Cycle_Closeout_Checklist.md) استفاده کن.
 
 ---
 
-# 9. قواعد ورود UI Review Cycle جدید
+## 9. قواعد ویژه AI Agent
 
-هنگام ورود Cycle جدید:
+هر AI Agent باید:
 
-1. Cycle جدید به‌عنوان آخرین چرخه فعال بازنگری UI ثبت می‌شود.
-2. Cycle قبلی حذف نمی‌شود.
-3. Cycle قبلی فقط Historical Review Source می‌شود.
-4. تمام صفحات و سناریوهای Cycle جدید فهرست می‌شوند.
-5. تفاوت‌ها با اسناد Active استخراج می‌شوند.
-6. هر تفاوت طبقه‌بندی می‌شود:
-   - New Requirement
-   - Modification
-   - Removal
-   - UI-only Change
-   - Backend Change
-   - New Module
-   - Security Change
-   - Workflow Change
-   - Reversal
-   - Bug Fix
-7. تغییرات صریح Decision Record می‌گیرند.
-8. تصمیم قبلی فقط با `Supersedes` صریح باطل می‌شود.
-9. Module Impact و Change Set به‌روزرسانی می‌شوند.
-10. Traceability Matrix اصلاح می‌شود.
-11. هیچ سندی صرفاً به‌دلیل قدیمی‌تر بودن حذف نمی‌شود.
-12. وضعیت «آخرین چرخه فعال» در Indexها به‌روزرسانی می‌شود.
+- قبل از پاسخ یا تغییر، منبع Canonical را پیدا کند؛
+- بین «آنچه تصمیم گرفته شده»، «آنچه اجرا شده» و «آنچه فقط در UI دیده شده» تفکیک کند؛
+- نبود اطلاعات را با حدس پر نکند؛
+- تصمیم جدید را به‌عنوان تصمیم قبلی جا نزند؛
+- Prototype را Implementation Evidence معرفی نکند؛
+- تغییرات را در تمام مراجع وابسته ردیابی کند؛
+- در پایان اعلام کند چه چیزی تغییر کرده، چه چیزی تغییر نکرده و چه Gapهایی باقی مانده است.
+
+راهنمای اجرایی کامل: [AI Working Guide](00_Project/AI_Working_Guide.md)
 
 ---
 
-# 10. Metadata اجباری هر سند
+## 10. معیار کیفیت یک سند
 
-هر سند باید متناسب با نوع خود این Metadata را داشته باشد:
+هر سند باید حداقل یکی از این خروجی‌ها را بهتر کند:
 
-```text
-Document ID
-Document Type
-Title
-Status
-Document Version
-Created At
-Updated At
-Owner
-Reviewers
-Source UI Review Cycle
-Source Iteration
-Effective From
-Supersedes
-Superseded By
-Domain Owner
-Affected Modules
-Implementation Status
-UI Validation Status
-Related Decisions
-Related Observations
-Related Change Sets
-```
+- یافتن حقیقت؛
+- تصمیم‌گیری؛
+- پیاده‌سازی؛
+- Review؛
+- تست و پذیرش؛
+- انتقال دانش؛
+- جلوگیری از دوباره‌کاری.
 
-فیلد نامرتبط می‌تواند `N/A` باشد، اما حذف بدون دلیل ممنوع است.
+یک سند ناموفق است اگر:
+
+- همان محتوا را در چند محل تکرار کند؛
+- معلوم نباشد مرجع است یا تاریخچه؛
+- Owner، Status یا ارتباطات آن مشخص نباشد؛
+- برای فهم آن مجبور باشیم فایل‌های نامرتبط زیادی بخوانیم؛
+- پس از خواندن، اقدام بعدی روشن نباشد.
+
+**معیار عملی:** یک فرد یا AI آشنا با Repository باید بتواند در کمتر از ده دقیقه مرجع جاری، موارد باز، Gapهای اجرا و مسیر ادامه یک موضوع را پیدا کند.
 
 ---
 
-# 11. نام‌گذاری فایل‌ها و شناسه‌ها
+## 11. ایجاد UI Review Cycle جدید
 
-## 11.1. Observation
+برای Cycle جدید از قالب رسمی استفاده شود:
 
-```text
-OBS-UIR08-EMP-GUARD-001
-```
+[`02_UI_UX/Review_Cycles/_Template/`](02_UI_UX/Review_Cycles/_Template/)
 
-## 11.2. Decision
+Cycle جدید تا زمانی بسته محسوب نمی‌شود که:
 
-```text
-DEC-021-Guard-Attendance-Interaction
-```
-
-## 11.3. Change Set
-
-```text
-CS-UIR09-GUARD-REDESIGN
-```
-
-## 11.4. Module Specification
-
-```text
-specs/03_Modules/cas_guard/Specification.md
-```
-
-## 11.5. Page Specification
-
-```text
-specs/02_UI_UX/Guard/Attendance_Registration.md
-```
-
-شناسه‌ها هرگز Reuse نمی‌شوند.
+- Observationها تعیین تکلیف شده باشند؛
+- Decisionها و Impactها ثبت شده باشند؛
+- Registryها و Traceability به‌روز باشند؛
+- موارد باز به Open Item Registry منتقل شده باشند؛
+- Validation Report و Change Summary تکمیل شده باشند؛
+- [Cycle Closeout Checklist](00_Project/Cycle_Closeout_Checklist.md) پاس شده باشد.
 
 ---
 
-# 12. قواعد زبان و نگارش
+## 12. نقطه شروع بر اساس نوع کار
 
-- زبان اصلی توضیحات فارسی است.
-- نام فنی Model، Field، Route، API و Capability انگلیسی و داخل Backtick است.
-- جمله باید قطعی، آزمون‌پذیر و بدون ابهام باشد.
-- «در صورت نیاز»، «احتمالاً»، «شاید» و «بهتر است» بدون تعیین تصمیم یا شرط ممنوع‌اند.
-- هر الزام باید Subject، Action و Condition روشن داشته باشد.
-- واژه‌های `MUST`، `SHOULD` و `MAY` فقط با معنی دقیق استفاده شوند.
-- اصطلاح جدید باید در Terminology ثبت شود.
-- یک مفهوم نباید چند نام متناقض داشته باشد.
-- مثال‌ها نباید جای Rule را بگیرند.
-- متن باید تفاوت Observation، Decision و Implementation Proposal را روشن نگه دارد.
+### طراحی یا Review یک صفحه
 
----
+`Page Registry` → Page Specification → Role Matrix → Decisionها → Module Impact
 
-# 13. قواعد Decision Record
+### تغییر Backend یا ماژول
 
-Decision جدید زمانی لازم است که:
+`Module Registry` → Module Specification → Decisions → Architecture/Security Contracts → Gaps
 
-- رفتار محصول تغییر کند.
-- مالک Domain تغییر کند.
-- ماژول جدید لازم شود.
-- Route یا Capability اضافه/حذف شود.
-- امنیت یا Scope تغییر کند.
-- Lifecycle یا State Machine تغییر کند.
-- تصمیم قبلی برگشت داده شود.
-- قرارداد Integration تغییر کند.
-- یک UI Observation اثر چندماژولی داشته باشد.
+### بررسی دسترسی و امنیت
 
-هر Decision باید:
+`Capability Registry` → Role Matrix → Security Contract → Module Security → Acceptance Criteria
 
-1. Context
-2. Problem
-3. Decision
-4. Rationale
-5. Consequences
-6. Alternatives
-7. Domain Owner
-8. Module Impact
-9. Security Impact
-10. Migration Impact
-11. Test Impact
-12. Source Observation
-13. Supersedes
-14. Acceptance Criteria
+### پاسخ به سؤال «قبلاً چه تصمیمی گرفتیم؟»
 
-داشته باشد.
+`Decision Registry` → Decision Canonical → Supersedes/Superseded By → Change Set
+
+### ادامه یک مورد ناقص
+
+`Open Item Registry` یا `Implementation Gap Registry` → Source Document → Owner → Next Action
+
+### شروع Cycle جدید
+
+`Review Cycle Template` → UI Review Lifecycle → Review Process Guide → Closeout Checklist
 
 ---
 
-# 14. قواعد Module Specification
+## 13. مسئولیت نگهداری
 
-هر Module Specification باید شامل:
+هر تغییر‌دهنده مسئول است که مستندات را **قابل‌استفاده‌تر از قبل** تحویل دهد.
 
-1. Purpose
-2. In Scope
-3. Out of Scope
-4. Domain Ownership
-5. Dependencies
-6. Entities and Models
-7. State Machines
-8. Services and Commands
-9. Queries
-10. Events
-11. Provider Interfaces
-12. ACL
-13. Record Rules
-14. Method Checks
-15. Field/Section Security
-16. Multi-company
-17. Audit
-18. Migration
-19. Performance
-20. Observability
-21. Failure Modes
-22. Test Strategy
-23. Acceptance Criteria
-24. UI Review Sources
-25. Revalidation Plan
+افزودن سند بدون اتصال به نقشه، Registry، Owner، Status و مرجع Canonical ناقص است. اصلاح یک سند بدون بررسی وابستگی‌های آن نیز ناقص است.
 
-باشد.
-
----
-
-# 15. قواعد Page Specification
-
-هر Page Specification باید شامل:
-
-1. Page ID
-2. Route
-3. Roles
-4. Capabilities
-5. Source UI Review Cycle
-6. Goal
-7. Entry Conditions
-8. Layout
-9. Components
-10. Data Sources
-11. Actions
-12. States
-13. Loading
-14. Empty
-15. Error
-16. Forbidden
-17. Unavailable
-18. Responsive
-19. RTL
-20. Accessibility
-21. Keyboard
-22. Security
-23. Performance
-24. Analytics
-25. Module Impacts
-26. Acceptance Criteria
-27. Revalidation Scenarios
-
-باشد.
-
----
-
-# 16. قواعد امنیت
-
-هر تغییر باید بررسی کند:
-
-- ACL
-- Record Rule
-- Company Scope
-- Organization Scope
-- Delegation
-- Method Permission
-- Field Security
-- Section Security
-- Export Security
-- Search Leakage
-- Count Leakage
-- Metadata Leakage
-- ID Tampering
-- Attachment Permission
-- Audit
-- Retention
-- Impersonation Risk
-- `sudo()` misuse
-- Cross-company access
-- Revocation behavior
-
-مخفی‌شدن دکمه یا Route کنترل امنیتی کافی نیست.
-
----
-
-# 17. قواعد Backend Impact
-
-برای هر تغییر باید روشن شود:
-
-- ماژول موجود تغییر می‌کند یا ماژول جدید ایجاد می‌شود؟
-- مالک داده کیست؟
-- Model جدید لازم است؟
-- Field جدید لازم است؟
-- Constraint چیست؟
-- Migration چیست؟
-- API یا Service چیست؟
-- Provider چیست؟
-- Event چیست؟
-- Permission چیست؟
-- Performance Risk چیست؟
-- Test چیست؟
-- Rollback چیست؟
-- UI چگونه مجدداً اعتبارسنجی می‌شود؟
-
-عبارت «Backend باید اصلاح شود» به‌تنهایی غیرقابل‌قبول است.
-
----
-
-# 18. قواعد Odoo
-
-- Odoo Core نباید ویرایش شود.
-- قابلیت استاندارد ابتدا Gap Analysis می‌شود.
-- قابلیت استاندارد مناسب Reuse می‌شود.
-- Extension فقط برای Gap اثبات‌شده مجاز است.
-- Override باید Upgrade Risk و Test داشته باشد.
-- ذخیره تاریخ استاندارد Odoo باقی می‌ماند؛ Jalali لایه UI است.
-- `sudo()` برای عبور از Permission کاربر ممنوع است.
-- Workspace مالک Business Data نیست.
-- هیچ مدل موازی برای Mail، Discuss، Calendar یا Attachment بدون Decision ساخته نمی‌شود.
-
----
-
-# 19. Traceability اجباری
-
-هر Requirement فعال باید در Traceability قابل دنبال‌کردن باشد:
-
-```text
-Observation ID
-Decision ID
-Page Spec
-Module Spec
-Architecture Contract
-Security Contract
-Change Set
-Implementation Ticket/Commit
-Test Evidence
-UI Revalidation Evidence
-Final Status
-```
-
-ردیف بدون Owner، Status یا Source ناقص است.
-
----
-
-# 20. Change Set
-
-Change Set باید تفاوت را ثبت کند، نه اینکه جای Decision یا Specification را بگیرد.
-
-هر Change Set باید شامل:
-
-- Source UI Review Cycle
-- Scope
-- Observations
-- Added
-- Changed
-- Removed
-- Superseded
-- Module Impacts
-- Security Impacts
-- Migration
-- Tests
-- Revalidation Plan
-- Open Questions
-- Risks
-- Rollback
-
-باشد.
-
----
-
-# 21. Historical و Superseded
-
-- Historical یعنی منبع تاریخی و غیرمرجع برای رفتار جاری.
-- Superseded یعنی تصمیم یا بخش مشخص با تصمیم جدید جایگزین شده است.
-- Cycle قبلی به‌خودی‌خود تمام تصمیم‌هایش را Supersede نمی‌کند.
-- حذف فایل تاریخی ممنوع است مگر دلیل حقوقی یا امنیتی وجود داشته باشد.
-- لینک `Superseded By` و `Supersedes` باید دوطرفه باشد.
-- بخش‌های هنوز معتبر می‌توانند Active بمانند، حتی اگر منبع کشف آن‌ها Cycle قدیمی باشد.
-
----
-
-# 22. Implementation Gap
-
-Gap باید شامل:
-
-- Gap ID
-- Active Requirement
-- Current Behavior
-- Expected Behavior
-- Affected Module
-- Severity
-- Security Impact
-- Migration Need
-- Proposed Work
-- Owner
-- Status
-- Test
-- UI Revalidation
-
-باشد.
-
-Gap دلیل تغییر Requirement نیست؛ Gap نشان می‌دهد کد هنوز با Requirement منطبق نیست.
-
----
-
-# 23. Conflict Record
-
-در تعارض میان UI جدید و اسناد Active:
-
-1. هیچ‌کدام خودکار حذف نمی‌شوند.
-2. Conflict ثبت می‌شود.
-3. منبع هر دو طرف ذکر می‌شود.
-4. اثر محصولی و Backend تحلیل می‌شود.
-5. مالک تصمیم مشخص می‌شود.
-6. Decision جدید Conflict را حل می‌کند.
-7. فقط سپس Supersede انجام می‌شود.
-
----
-
-# 24. Test و Acceptance
-
-هر قابلیت باید حسب نیاز این آزمون‌ها را پوشش دهد:
-
-- Unit
-- Integration
-- Security
-- Multi-company
-- Migration
-- Regression
-- UI
-- Accessibility
-- RTL
-- Responsive
-- Load
-- Failure Recovery
-- Audit
-- Revalidation
-
-Acceptance Criteria باید قابل مشاهده، قابل اندازه‌گیری و دارای نتیجه Pass/Fail باشد.
-
----
-
-# 25. پروتکل AI Agent
-
-Agent باید:
-
-1. درخواست کاربر را دقیق بازگو کند.
-2. نوع کار را تشخیص دهد.
-3. اسناد اجباری را بخواند.
-4. جست‌وجوی سراسری انجام دهد.
-5. Source UI Review را تعیین کند.
-6. Active و Historical را جدا کند.
-7. Ownership را بررسی کند.
-8. فایل‌های متأثر را مشخص کند.
-9. تغییر را ثبت کند.
-10. Traceability را اصلاح کند.
-11. Indexها را اصلاح کند.
-12. Change Set را اصلاح کند.
-13. تناقض‌ها را بررسی کند.
-14. Diff را بازبینی کند.
-15. فقط فایل‌های مرتبط را Commit کند.
-16. در گزارش نهایی فایل‌ها، تصمیم‌ها، Gapها و Open Questionها را ذکر کند.
-
-Agent نباید:
-
-- شماره UI را Software Version بنامد.
-- Cycle جدید را بدون بررسی جایگزین همه تصمیم‌های قبلی کند.
-- سند موازی بسازد.
-- تصمیم را از روی کد حدس بزند.
-- Scope را برای آسان‌شدن پیاده‌سازی کاهش دهد.
-- Historical را حذف کند.
-- امنیت را فقط در UI تعریف کند.
-- Push یا Merge خارج از درخواست انجام دهد.
-- `Implementation Ready` را بدون شواهد اعلام کند.
-
----
-
-# 26. چک‌لیست قبل از Commit و Push
-
-- [ ] هدف واقعی تغییر ثبت شده است.
-- [ ] Source UI Review Cycle مشخص است.
-- [ ] Observation ثبت شده است.
-- [ ] تصمیم‌های مرتبط بررسی شده‌اند.
-- [ ] Supersede صریح است.
-- [ ] Module Ownership مشخص است.
-- [ ] Backend Impact دقیق است.
-- [ ] Security بررسی شده است.
-- [ ] Migration بررسی شده است.
-- [ ] Tests تعریف شده‌اند.
-- [ ] UI Revalidation تعریف شده است.
-- [ ] Traceability اصلاح شده است.
-- [ ] Change Set اصلاح شده است.
-- [ ] Indexها اصلاح شده‌اند.
-- [ ] لینک‌ها معتبرند.
-- [ ] هیچ UI Cycle به‌عنوان Software Version معرفی نشده است.
-- [ ] Diff فقط شامل فایل‌های مرتبط است.
-- [ ] وضعیت‌ها صادقانه‌اند.
-
----
-
-# 27. دستور اجرایی استاندارد برای Agent آینده
-
-هنگامی که کاربر می‌گوید «مستندات را به‌روز کن»، Agent باید این درخواست را چنین تفسیر کند:
-
-> آخرین تغییرات UI، تصمیم‌های محصولی یا نیازهای Backend را در زنجیره کامل Observation → Decision → Module Impact → Implementation Requirement → Revalidation ثبت کن؛ تاریخچه را حفظ کن؛ فقط موارد صریح را Supersede کن؛ شماره چرخه UI را با نسخه نرم‌افزار اشتباه نگیر؛ و تمام Indexها، Traceability و Change Setهای متأثر را هماهنگ کن.
-
----
-
-# 28. وضعیت فعلی
-
-- آخرین چرخه فعال بازنگری UI: `CAS UI Review Cycle 10 — Through Iteration 13`
-- Cycle 10 نسخه نرم‌افزار نیست.
-- Cycle 10 نسخه نهایی و غیرقابل‌تغییر محصول نیست.
-- Cycle 9 به‌عنوان Historical Review Source حفظ می‌شود.
-- تصمیم‌های Active از چرخه‌های قبلی تا زمان Supersede صریح معتبر می‌مانند.
-- Backend باید با مجموعه Specificationهای مؤثر و Active منطبق شود.
-- ثبت رسمی Cycle 10 در `00_Project/UI_Review_Cycle_10_Register.md` نگهداری می‌شود.
-- فایل `00_Project/UI_Review_Lifecycle.md` مرجع تفصیلی مدیریت چرخه‌هاست.
-
----
-
-# 29. اصل نهایی
-
-```text
-UI Review Cycle discovers and validates.
-Specifications preserve and translate.
-Backend implements.
-Tests verify.
-UI revalidates.
-History remains traceable.
-```
-
-هر تغییر مستندی که این چرخه را ناقص کند، تغییر کامل محسوب نمی‌شود.
+این README باید کوتاه، مسیرمحور و قابل‌خواندن باقی بماند. جزئیات تخصصی در اسناد اختصاصی نگه‌داری می‌شود و فقط از اینجا لینک می‌گیرد.
