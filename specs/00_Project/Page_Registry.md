@@ -22,7 +22,7 @@ related_capabilities: []
 
 # رجیستری مرکزی صفحات CAS
 
-Registry فقط Index است. Layout، رفتار، State، Security و Acceptance در Page Specification اصلی قرار دارد.
+Registry فقط Index است. Layout، رفتار، State، Security و Acceptance در Page Specification اصلی قرار دارد. Document، Backend Implementation و UI Validation سه محور مستقل‌اند.
 
 ## ۱. صفحات Workspace و کاربر
 
@@ -39,7 +39,7 @@ Registry فقط Index است. Layout، رفتار، State، Security و Acceptan
 
 ## ۲. تفویض و مدیریت
 
-| Page ID | عنوان | Route | Owner | نقش‌ها | Capability | Source | UI Status | Backend | Spec |
+| Page ID | عنوان | Route | Owner | نقش‌ها | Capability | Source | UI Status | Backend Status | Spec |
 |---|---|---|---|---|---|---|---|---|---|
 | `PAGE-EMP-DELEGATION-MY` | تفویض‌های من / My Delegations | `/workspace/delegations` | Delegation Domain | کاربر عمومی، سرپرست، مدیر واحد برای خود | `CAP-DELEGATION-001` | Cycle 10 I3–I8 | Pending Revalidation | Gap Identified | [Delegation](../02_UI_UX/Employee/Delegation.md) |
 | `PAGE-ADMIN-DELEGATION-MANAGEMENT` | مدیریت تفویض‌ها / Delegation Management | `/workspace/admin/delegations` | Delegation Governance | مدیر دارای Capability | `CAP-DELEGATION-002` | Cycle 10 I3–I8 | Pending Revalidation | Gap Identified | [Delegation](../02_UI_UX/Employee/Delegation.md) |
@@ -47,50 +47,50 @@ Registry فقط Index است. Layout، رفتار، State، Security و Acceptan
 
 ## ۳. دبیرخانه
 
-| Page ID | عنوان | Route | Owner | نقش/Capability | Status | Spec |
-|---|---|---|---|---|---|---|
-| `PAGE-ADM-SECRETARIAT-INCOMING` | ثبت وارده خارجی | `/workspace/secretariat/incoming` | Secretariat Registry | کاربر مجاز دبیرخانه / `CAP-SECRETARIAT-001` | Gap Identified / Pending Revalidation | [Secretariat](../02_UI_UX/Administrative/Secretariat.md) |
-| `PAGE-ADM-SECRETARIAT-OUTGOING` | ثبت نهایی صادره | `/workspace/secretariat/outgoing` | Secretariat Registry | `CAP-SECRETARIAT-002` | Gap Identified / Pending Revalidation | همان |
-| `PAGE-ADM-SECRETARIAT-REGISTER` | دفتر وارده و صادره | `/workspace/secretariat/register` | Secretariat Registry | `CAP-SECRETARIAT-003` | Gap Identified / Pending Revalidation | همان |
-| `PAGE-ADM-SECRETARIAT-REPORTS` | گزارش دفتر | `/workspace/secretariat/reports` | Secretariat Registry | `CAP-SECRETARIAT-004` | Gap Identified / Pending Revalidation | همان |
+| Page ID | عنوان | Route | Owner | نقش/Capability | Document Status | UI Status | Backend Status | Spec |
+|---|---|---|---|---|---|---|---|---|
+| `PAGE-ADM-SECRETARIAT-INCOMING` | ثبت وارده خارجی | `/workspace/secretariat/incoming` | Secretariat Registry | کاربر مجاز دبیرخانه / `CAP-SECRETARIAT-001` | Active | Pending Revalidation | Gap Identified | [Secretariat](../02_UI_UX/Administrative/Secretariat.md) |
+| `PAGE-ADM-SECRETARIAT-OUTGOING` | ثبت نهایی صادره | `/workspace/secretariat/outgoing` | Secretariat Registry | `CAP-SECRETARIAT-002` | Active | Pending Revalidation | Gap Identified | همان |
+| `PAGE-ADM-SECRETARIAT-REGISTER` | دفتر وارده و صادره | `/workspace/secretariat/register` | Secretariat Registry | `CAP-SECRETARIAT-003` | Active | Pending Revalidation | Gap Identified | همان |
+| `PAGE-ADM-SECRETARIAT-REPORTS` | گزارش دفتر | `/workspace/secretariat/reports` | Secretariat Registry | `CAP-SECRETARIAT-004` | Active | Pending Revalidation | Gap Identified | همان |
 
 دبیرخانه Role Title نیست؛ Access Domain است. نام و ownership نهایی ماژول هنوز Open است.
 
 ## ۴. نگهبانی و Attendance
 
-| Page ID | عنوان | Route | Owner | نقش | Capability | Status | Spec |
-|---|---|---|---|---|---|---|---|
-| `PAGE-GUARD-ATTENDANCE-STATION` | ایستگاه سریع ثبت تردد نگهبانی | `/workspace/guard/attendance` | Attendance Operations | Guard Operator | `CAP-GUARD-001`؛ زمان دستی `CAP-GUARD-002` | Gap Identified / Pending Revalidation | [Guard Attendance Station](../02_UI_UX/Security/Guard_Attendance_Station.md) |
+| Page ID | عنوان | Route | Owner | نقش | Capability | Document Status | UI Status | Backend Status | Spec |
+|---|---|---|---|---|---|---|---|---|---|
+| `PAGE-GUARD-ATTENDANCE-STATION` | ایستگاه سریع ثبت تردد نگهبانی | `/workspace/guard/attendance` | Attendance Operations | Guard Operator | `CAP-GUARD-001`؛ زمان دستی `CAP-GUARD-002` | Active | Pending Revalidation | Gap Identified | [Guard Attendance Station](../02_UI_UX/Security/Guard_Attendance_Station.md) |
 
 صفحه باید روی `cas.guard.batch`, `cas.guard.batch.line`, `cas.attendance.event`, `cas.attendance.site` و `action_confirm` ساخته شود و مدل موازی ایجاد نکند.
 
 ## ۵. کامپوننت‌های مشترک بدون Route
 
-| Component/Page ID | عنوان | Owner | Consumerها | Status | Spec |
-|---|---|---|---|---|---|
-| `PAGE-COMMON-PEOPLE-PICKER` | Shared People Picker | Workspace Shared Components؛ محل فنی نهایی Open | Correspondence، Delegation، Task، Workflow، Approval، Report، Form | Gap Identified / Pending Revalidation | [People Picker](../02_UI_UX/Common/Shared_People_Picker.md) |
+| Component/Page ID | عنوان | Owner | Consumerها | Document Status | UI Status | Backend Status | Spec |
+|---|---|---|---|---|---|---|---|
+| `PAGE-COMMON-PEOPLE-PICKER` | Shared People Picker | Workspace Shared Components؛ محل فنی نهایی Open | Correspondence، Delegation، Task، Workflow، Approval، Report، Form | Active | Pending Revalidation | Gap Identified | [People Picker](../02_UI_UX/Common/Shared_People_Picker.md) |
 
 ## ۶. صفحات/Surfaceهای ثبت‌شده در Decision بدون Page Specification مستقل
 
-| Registry Key | Surface | Source Decision/Register | وضعیت | اقدام مستندی لازم |
-|---|---|---|---|---|
-| `PAGE-PENDING-ATT-CORRECTION` | Attendance Correction Request/Ledger | Cycle 9 Register و Decision | Gap Identified | Page Specification و Route لازم است. |
-| `PAGE-PENDING-ATT-AUDIT` | Delegated Random Attendance Audit | Cycle 9 Register | Gap Identified | Role/Capability/Page Spec لازم است. |
-| `PAGE-PENDING-OVERTIME` | Overtime own/request/history/cancel | Cycle 9 Decision | Gap Identified | Page Registry mapping و Page Spec لازم است. |
-| `PAGE-PENDING-FORM-BUILDER-MATRIX` | Form Builder Activity Providers/Dynamic Matrix | Cycle 9 Decision | Gap Identified | Page ID و Page Spec تکمیل شود. |
-| `PAGE-PENDING-ADMIN-CENTER` | مدیریت کاربران، سازمان، تفویض، تنظیمات و Audit | Cycle 10 Register | Gap Identified | Pageهای تفصیلی و Routeها هنوز ثبت نشده‌اند. |
-| `PAGE-PENDING-CORRESPONDENCE-C10` | جریان مکاتبات اصلاح‌شده Cycle 10 | Cycle 10 Register | Gap Identified | Page Specهای مکاتبات باید به Decision جدید Backlink دهند. |
+| Registry Key | Surface | Source Decision/Register | وضعیت مستند | Backend Status | اقدام مستندی لازم |
+|---|---|---|---|---|---|
+| `PAGE-PENDING-ATT-CORRECTION` | Attendance Correction Request/Ledger | Cycle 9 Register و Decision | Not Indexed as Page Spec | Gap Identified | Page Specification و Route لازم است. |
+| `PAGE-PENDING-ATT-AUDIT` | Delegated Random Attendance Audit | Cycle 9 Register | Not Indexed as Page Spec | Gap Identified | Role/Capability/Page Spec لازم است. |
+| `PAGE-PENDING-OVERTIME` | Overtime own/request/history/cancel | Cycle 9 Decision | Not Indexed as Page Spec | Gap Identified | Page Registry mapping و Page Spec لازم است. |
+| `PAGE-PENDING-FORM-BUILDER-MATRIX` | Form Builder Activity Providers/Dynamic Matrix | Cycle 9 Decision | Not Indexed as Page Spec | Gap Identified | Page ID و Page Spec تکمیل شود. |
+| `PAGE-PENDING-ADMIN-CENTER` | مدیریت کاربران، سازمان، تفویض، تنظیمات و Audit | Cycle 10 Register | Partial Page Coverage | Gap Identified | Pageهای تفصیلی و Routeها هنوز ثبت نشده‌اند. |
+| `PAGE-PENDING-CORRESPONDENCE-C10` | جریان مکاتبات اصلاح‌شده Cycle 10 | Cycle 10 Register | Backlink Coverage Pending | Gap Identified | Page Specهای مکاتبات باید به Decision جدید Backlink دهند. |
 
 ## ۷. صفحات Historical/Superseded
 
-| سند/Route | وضعیت | جایگزین |
+| سند/Route | Document Status / Scope | جایگزین |
 |---|---|---|
 | `Employee/Workspace.md` | Historical Cycle 7 | `Workspace_V8.md` + Cycle 9/10 changes |
 | `Shared/Workspace_Shell.md` | Historical Cycle 7 | `Workspace_Shell_V8.md` |
 | `global-search-page` | Superseded | Command Palette |
 | `recent-history` | Superseded | Recent History داخل Command Palette |
 | UI لیستی ثبت نگهبانی | Superseded baseline | Guard Attendance Station Cycle 10 |
-| OCR و DMS Navigation در آلفا | Out of Scope / Planned Removal | Attachment مجاز باقی می‌ماند |
+| OCR و DMS Navigation در آلفا | Out of Scope؛ implementation removal Planned | Attachment مجاز باقی می‌ماند |
 
 ## ۸. قاعده نگهداری
 
