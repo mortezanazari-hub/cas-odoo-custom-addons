@@ -1,0 +1,63 @@
+name: CAS Update Specs README Cycle 10
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cas-update-specs-readme-cycle10.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Update active UI review cycle in specs constitution
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('specs/README.md')
+          text = path.read_text(encoding='utf-8')
+
+          old_header = '> **آخرین چرخه فعال بازنگری UI:** `CAS UI Review Cycle 8 — Through Iteration 12`'
+          new_header = '> **آخرین چرخه فعال بازنگری UI:** `CAS UI Review Cycle 10 — Through Iteration 13`'
+          if old_header not in text:
+              raise SystemExit('Expected README header was not found')
+          text = text.replace(old_header, new_header, 1)
+
+          old_status = '''- آخرین چرخه فعال بازنگری UI: `CAS UI Review Cycle 8 — Through Iteration 12`
+- Cycle 8 نسخه نرم‌افزار نیست.
+- Cycle 8 نسخه نهایی و غیرقابل‌تغییر محصول نیست.
+- با ورود Cycle 9، Cycle 9 آخرین چرخه فعال بازنگری UI خواهد شد.
+- تصمیم‌های Active از Cycle 8 تا زمان Supersede صریح معتبر می‌مانند.
+- Backend باید با مجموعه Specificationهای مؤثر و Active منطبق شود.
+- فایل `00_Project/UI_Review_Lifecycle.md` مرجع تفصیلی مدیریت چرخه‌هاست.'''
+
+          new_status = '''- آخرین چرخه فعال بازنگری UI: `CAS UI Review Cycle 10 — Through Iteration 13`
+- Cycle 10 نسخه نرم‌افزار نیست.
+- Cycle 10 نسخه نهایی و غیرقابل‌تغییر محصول نیست.
+- Cycle 9 به‌عنوان Historical Review Source حفظ می‌شود.
+- تصمیم‌های Active از چرخه‌های قبلی تا زمان Supersede صریح معتبر می‌مانند.
+- Backend باید با مجموعه Specificationهای مؤثر و Active منطبق شود.
+- ثبت رسمی Cycle 10 در `00_Project/UI_Review_Cycle_10_Register.md` نگهداری می‌شود.
+- فایل `00_Project/UI_Review_Lifecycle.md` مرجع تفصیلی مدیریت چرخه‌هاست.'''
+
+          if old_status not in text:
+              raise SystemExit('Expected README current-status block was not found')
+          text = text.replace(old_status, new_status, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Commit README update
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add specs/README.md
+          git commit -m 'docs(specs): mark UI Review Cycle 10 as active'
+          git push origin main
