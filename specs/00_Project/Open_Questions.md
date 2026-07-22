@@ -1,128 +1,127 @@
-# سؤالات باز و موضوعات آینده
+---
+document_id: OPEN-CAS-V8
+title: Legacy Open Questions from Cycle 8 Consolidation
+document_type: Historical Open Question Register
+document_status: Superseded
+implementation_status: N/A
+ui_validation_status: N/A
+source_ui_review_cycle: CAS UI Review Cycle 8
+source_iteration: 12
+owner: Product & Architecture Governance
+domain_owner: Open Item Governance
+created_at: N/A
+updated_at: 2026-07-22
+canonical: false
+supersedes: []
+superseded_by: [REG-OPEN-001]
+related_decisions: []
+related_modules: []
+related_pages: []
+related_capabilities: []
+---
 
-| مشخصه | مقدار |
-|---|---|
-| شناسه | `OPEN-CAS-V8` |
-| وضعیت | `Consolidated` |
-| نسخه | `v8 through iteration 12` |
+# سؤالات باز Cycle 8 — سند سازگاری تاریخی
 
-## نتیجه تصمیم‌های محصولی
+> **Status: Superseded as central register**  
+> **Superseded By:** [Open Item Registry](Open_Item_Registry.md)  
+> **Historical Purpose:** حفظ شناسه‌ها، توضیحات و لینک‌های قدیمی Cycle 8.  
+> پاسخ یا Item جدید باید فقط در Registry مرکزی ثبت شود.
 
-سؤال‌های محصولی اصلی Consolidation نسخه ۸ پاسخ داده شده‌اند:
+## نتیجه تصمیم‌های محصولی Cycle 8
 
-- Iteration 12 جزو v8 است.
-- v7 Historical است.
-- Personal Task مالک مستقل دارد.
-- Self Task و Assigned Action تفکیک شده‌اند.
-- Odoo Notification Reuse می‌شود.
-- Recent History ماژول مستقل ندارد.
-- Provider Contract مشترک است.
-- Organization Scope مالک مستقل دارد.
-- Search Capability از Permission منابع جداست.
-- Notification Center Route مستقل دارد.
-- Overlay بر پایه Odoo UI Services هماهنگ می‌شود.
-- Preference Resolution تعیین شده است.
-- Dashboard Management Center لازم است.
-- Work Report چند Assignment یک گزارش ترکیبی است.
-- واحد گزارش Shift Occurrence است.
-- File Infrastructure در v8 بازطراحی نمی‌شود.
-- Activity Catalog مستقل است.
-- Applicability گزارش در Profile یا شخص قابل Disabled است.
+موارد زیر در Consolidation Cycle 8 تعیین تکلیف شده بودند:
+
+- Iteration 12 جزو Cycle 8 است؛
+- Cycle 7 Historical است؛
+- Personal Task مالک مستقل دارد؛
+- Self Task و Assigned Action تفکیک شده‌اند؛
+- Odoo Notification Reuse می‌شود؛
+- Recent History ماژول مستقل ندارد؛
+- Provider Contract مشترک است؛
+- Organization Scope مالک مستقل دارد؛
+- Search Capability از Permission منابع جداست؛
+- Notification Center Route مستقل دارد؛
+- Overlay بر پایه Odoo UI Services هماهنگ می‌شود؛
+- Preference Resolution تعیین شده است؛
+- Dashboard Management Center لازم است؛
+- Work Report چند Assignment یک گزارش ترکیبی است؛
+- واحد گزارش Shift Occurrence است؛
+- File Infrastructure در Cycle 8 بازطراحی نمی‌شود؛
+- Activity Catalog مستقل است؛
+- Applicability گزارش می‌تواند Disabled باشد؛
 - Access Grant مستقل از زیردستی لازم است.
 
-## سؤالات فنی غیرمسدودکننده Baseline
+## سؤالات فنی منتقل‌شده به Registry مرکزی
 
-این موارد تصمیم محصولی v8 را تغییر نمی‌دهند و باید هنگام Module Specification نهایی شوند.
+| Legacy ID | موضوع | Central Open ID | وضعیت جاری |
+|---|---|---|---|
+| `Q-TECH-001` | نام نهایی ماژول قرارداد Workspace | `OPEN-TECH-001` | Carried Forward |
+| `Q-TECH-002` | API دقیق Providerها | `OPEN-TECH-002` | Carried Forward |
+| `Q-TECH-003` | ذخیره Recent History | `OPEN-TECH-003` | Carried Forward |
+| `Q-TECH-004` | Gap Notification در Odoo 19 Community | `OPEN-TECH-004` | Carried Forward |
+| `Q-TECH-005` | نام/مدل Calendar Integration | `OPEN-TECH-005` | Carried Forward |
+| `Q-TECH-006` | Policy Section Reviewer | `OPEN-TECH-006` | Decision Required |
+| `Q-TECH-007` | Formula و Reporting Projection | `OPEN-TECH-007` | Open |
+| `Q-TECH-008` | Migration گزارش ثابت به پویا | `OPEN-TECH-008` | Open |
+| `Q-TECH-009` | Widget Resize و Hide/Show پیشرفته | `OPEN-TECH-009` | Deferred |
+| `Q-TECH-010` | File/Document Infrastructure Redesign | `OPEN-TECH-010` | Deferred |
+| `Q-TECH-011` | Delegation Approval Authority | `OPEN-TECH-011` | Decision Required |
+| `Q-TECH-012` | Data Retention | `OPEN-TECH-012` | Decision Required |
 
-### Q-TECH-001 — نام نهایی ماژول قرارداد Workspace
+## جزئیات تاریخی
 
-نام فعلی پیشنهادی: `cas_workspace_contract`.
+### `Q-TECH-001` — نام ماژول قرارداد Workspace
 
-معیار تصمیم:
+نام پیشنهادی `cas_workspace_contract` بود. معیارها: عدم وابستگی به UI Runtime، جلوگیری از Circular Dependency و امکان استفاده Providerها بدون وابستگی مستقیم به `cas_workspace`.
 
-- عدم وابستگی به UI Runtime
-- جلوگیری از Circular Dependency
-- امکان استفاده Providerها بدون وابستگی مستقیم به `cas_workspace`
+### `Q-TECH-002` — API Providerها
 
-### Q-TECH-002 — API دقیق Providerها
+Widget، Search، Action، History Resource Reference، Dashboard Availability و Deep Link Resolver باید Schema نهایی داشته باشند.
 
-باید Schema نهایی برای موارد زیر تعیین شود:
+### `Q-TECH-003` — Recent History
 
-- Widget Provider
-- Search Provider
-- Action Provider
-- History Resource Reference
-- Dashboard Availability
-- Deep Link Resolver
+گزینه‌های فنی Preference Model یا مدل Lightweight با Retention محدود بودند. کپی Business Data در هر دو حالت ممنوع است.
 
-### Q-TECH-003 — ذخیره Recent History
+### `Q-TECH-004` — Notification Gap
 
-گزینه‌های فنی:
+Read/Unread، aggregation، severity، action button، deep link، snooze و company policy باید در Odoo 19 Community Verify شوند.
 
-- Preference Model اختصاصی Workspace
-- مدل فنی Lightweight با Retention محدود
+### `Q-TECH-005` — Calendar Integration
 
-در هر دو حالت کپی داده کسب‌وکاری ممنوع است.
+Extension در Calendar موجود یا Bridge مستقل CAS باید بررسی شود؛ مالکیت Event نزد Calendar باقی می‌ماند.
 
-### Q-TECH-004 — Gap دقیق Notification در Odoo 19 Community
+### `Q-TECH-006` — Section Reviewer
 
-قبل از ایجاد Extension باید بررسی شود:
+تعداد Reviewer، سطح Approval و رفتار Return یک Section نسبت به سایر Sectionها نیازمند تصمیم است.
 
-- Read/Unread موردنیاز CAS
-- Aggregation چند منبع
-- Severity
-- Action Button
-- Deep Link
-- Snooze
-- Company Policy
+### `Q-TECH-007` — Projection
 
-### Q-TECH-005 — نام و مدل Calendar Integration
+Fieldهای reportable، index strategy و projection refresh باید برای Answerهای پویا تعیین شوند.
 
-باید تعیین شود آیا Extension در ماژول موجود Calendar قرار می‌گیرد یا Bridge مستقل CAS ایجاد می‌شود. مالکیت Event همچنان Calendar است.
+### `Q-TECH-008` — Migration Work Report
 
-### Q-TECH-006 — Policy دقیق Section Reviewer
+Mapping، dual read، validation و rollback plan لازم است.
 
-محصول تعیین کرده گزارش ترکیبی است. Specification باید تعیین کند:
+### `Q-TECH-009` — Widget Advanced Personalization
 
-- چند Reviewer برای Section مجاز است؟
-- Approval نهایی در سطح Report است یا Section؟
-- در صورت Return یک Section، وضعیت سایر Sectionها چیست؟
+در Scope Cycle 8 فعال نبود و برای آینده به Decision جدا نیاز دارد.
 
-### Q-TECH-007 — Formula و Projection گزارش
+### `Q-TECH-010` — Document Infrastructure
 
-باید Fieldهای Reportable، Index Strategy و Projection Refresh مشخص شود تا گزارش‌گیری روی Answerهای پویا قابل اتکا باشد.
+Versioning، retention، archive، advanced permissions، digital signature، Nextcloud integration و storage policy خارج از Cycle 8 بودند. Cycle 10 نیز OCR/DMS داخلی را از Alpha Scope خارج کرد.
 
-### Q-TECH-008 — Migration از گزارش ثابت به پویا
+### `Q-TECH-011` — Delegation Authority
 
-نیازمند Mapping، Dual Read، Validation و Rollback Plan است.
+برای هر Access Grant باید نقش مجاز create/extend/revoke/audit مشخص شود.
 
-### Q-TECH-009 — Widget Resize و Hide/Show کاربر
+### `Q-TECH-012` — Data Retention
 
-در v8 فعال نیست. برای نسخه آینده باید Interaction و Governance جداگانه تصویب شود.
+Recent History، Notification Aggregation، Audit و Work Report Evidence نیازمند Security/Compliance Specification هستند.
 
-### Q-TECH-010 — File/Document Infrastructure Redesign
+## قاعده برخورد
 
-خارج از دامنه v8 و موضوع آینده:
-
-- Versioning
-- Retention
-- Archive
-- Advanced Permissions
-- Digital Signature
-- Nextcloud Integration
-- Storage Policy
-
-### Q-TECH-011 — Delegation Approval Authority
-
-برای هر نوع Access Grant باید مشخص شود چه نقش یا گروهی حق ایجاد، تمدید، لغو و Audit آن را دارد.
-
-### Q-TECH-012 — Data Retention
-
-Retention برای Recent History، Notification Aggregation، Audit و Work Report Evidence باید در Security و Compliance Specification تعیین شود.
-
-## قاعده برخورد با سؤال باز
-
-- سؤال فنی نباید باعث تضعیف Baseline محصولی شود.
-- تا زمان پاسخ، امن‌ترین رفتار با حداقل دسترسی انتخاب می‌شود.
-- هر پاسخ نهایی باید در Decision یا Architecture Contract ثبت و از این فایل خارج شود.
-- موضوع آینده نباید به‌صورت ضمنی وارد Scope نسخه ۸ شود.
+- این فایل دیگر Registry فعال نیست؛
+- شناسه‌های قدیمی برای لینک و سابقه حفظ می‌شوند؛
+- تصمیم جدید در Decision/Architecture Contract و Item متناظر در [Open Item Registry](Open_Item_Registry.md) ثبت می‌شود؛
+- سؤال فنی نباید Baseline محصولی Active را تضعیف کند؛
+- تا زمان تصمیم، رفتار fail-closed و حداقل دسترسی اعمال می‌شود.
