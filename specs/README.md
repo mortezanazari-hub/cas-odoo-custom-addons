@@ -4,7 +4,7 @@
 >
 > **دامنه:** تمام فایل‌ها، تصمیم‌ها، طراحی‌ها، قراردادها، Change Setها و سوابق داخل پوشه `specs`
 >
-> **آخرین چرخه فعال بازنگری UI:** `CAS UI Review Cycle 8 — Through Iteration 12`
+> **آخرین چرخه فعال بازنگری UI:** `CAS UI Review Cycle 10 — Through Iteration 13`
 >
 > **نسخه نرم‌افزار:** مستقل از شماره چرخه‌های بازنگری UI و فقط در اسناد Release نرم‌افزار تعیین می‌شود.
 >
@@ -816,12 +816,13 @@ Agent نباید:
 
 # 28. وضعیت فعلی
 
-- آخرین چرخه فعال بازنگری UI: `CAS UI Review Cycle 8 — Through Iteration 12`
-- Cycle 8 نسخه نرم‌افزار نیست.
-- Cycle 8 نسخه نهایی و غیرقابل‌تغییر محصول نیست.
-- با ورود Cycle 9، Cycle 9 آخرین چرخه فعال بازنگری UI خواهد شد.
-- تصمیم‌های Active از Cycle 8 تا زمان Supersede صریح معتبر می‌مانند.
+- آخرین چرخه فعال بازنگری UI: `CAS UI Review Cycle 10 — Through Iteration 13`
+- Cycle 10 نسخه نرم‌افزار نیست.
+- Cycle 10 نسخه نهایی و غیرقابل‌تغییر محصول نیست.
+- Cycle 9 به‌عنوان Historical Review Source حفظ می‌شود.
+- تصمیم‌های Active از چرخه‌های قبلی تا زمان Supersede صریح معتبر می‌مانند.
 - Backend باید با مجموعه Specificationهای مؤثر و Active منطبق شود.
+- ثبت رسمی Cycle 10 در `00_Project/UI_Review_Cycle_10_Register.md` نگهداری می‌شود.
 - فایل `00_Project/UI_Review_Lifecycle.md` مرجع تفصیلی مدیریت چرخه‌هاست.
 
 ---
