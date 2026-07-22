@@ -1,41 +1,68 @@
+---
+document_id: INDEX-CHANGESETS-001
+title: Change Set Documentation Index
+document_type: Section Index
+document_status: Active
+implementation_status: N/A
+ui_validation_status: N/A
+source_ui_review_cycle: CAS UI Review Cycle 10
+source_iteration: 13
+owner: Product & Architecture Governance
+domain_owner: Change Governance
+created_at: N/A
+updated_at: 2026-07-22
+canonical: true
+supersedes: []
+superseded_by: []
+related_decisions: []
+related_modules: []
+related_pages: []
+related_capabilities: []
+---
+
 # 06 — Change Sets
 
-Change Set دامنه و اثر تغییر را ثبت می‌کند، اما به‌تنهایی مجوز تغییر Production نیست.
+Change Set تفاوت، اثر و مسیر Migration/Revalidation را ثبت می‌کند و به‌تنهایی مجوز تغییر Production نیست.
 
-## Change Set فعال Cycle 9
+## Change Set مستندسازی جاری
 
-- [UI Review Cycle 9 — Workspace UX Consolidation](CS-UIR09-WORKSPACE-UX-CONSOLIDATION.md)
+- [Documentation Governance and Registry Unification](CS-SPECS-GOVERNANCE-UNIFICATION.md)
 
-این Change Set آخرین تغییرات پذیرفته‌شده UI Review Cycle 9 تا Iteration 13 را ثبت می‌کند. وضعیت اجرا `Gap Identified` و وضعیت UI Production برابر `Pending Revalidation` است.
+این Change Set فقط `specs` را به‌صورت additive و non-destructive یکپارچه می‌کند و هیچ تصمیم محصولی یا تغییر کد ایجاد نمی‌کند.
 
-## Change Setهای فعال و مرجع Cycle 8
+## Cycle 10 — آخرین Review فعال
 
-- [تجمیع کامل Specificationهای Workspace v8](CS-SPECS-V8-CONSOLIDATION.md)
-- [Workspace v8 نسبت به v7](CS-WORKSPACE-V8.md)
-- [Dynamic Work Report مبتنی بر Form Engine](CS-WORK-REPORT-DYNAMIC-FORM.md)
-- [میزکار کاربر عادی](CS-EMPLOYEE-WORKSPACE.md)
+- [Cycle 10 Alpha Workspace Refinement](CS-UIR10-ALPHA-WORKSPACE-REFINEMENT.md)
 
-Cycle 8 اکنون Historical Review Source است، اما تصمیم‌های Active آن که در Cycle 9 صریحاً Supersede نشده‌اند همچنان مرجع Backend هستند.
+Scope: مکاتبات، تفویض، People Picker، مدیریت سامانه، دبیرخانه، نگهبانی و حذف OCR/DMS داخلی از آلفا. وضعیت اجرا=`Gap Identified` و UI Production=`Pending Revalidation`.
 
-## Change Set تاریخی
+## Cycle 9 — Historical Review Source با Decisionهای مؤثر
+
+- [Cycle 9 Workspace UX Consolidation](CS-UIR09-WORKSPACE-UX-CONSOLIDATION.md)
+
+تصمیم‌های بدون Supersede در Cycle 10 همچنان مؤثرند.
+
+## Change Setهای پایه Cycle 8
+
+- [Specs v8 Consolidation](CS-SPECS-V8-CONSOLIDATION.md)
+- [Workspace v8](CS-WORKSPACE-V8.md)
+- [Dynamic Work Report](CS-WORK-REPORT-DYNAMIC-FORM.md)
+- [Employee Workspace](CS-EMPLOYEE-WORKSPACE.md)
+
+## Historical
 
 - `CS-WORKSPACE-V7.md` مرجع Historical انتقال Cycle 4 به Cycle 7 است.
+- `CS-SPECS-UI-REVIEW-MODEL-CORRECTION.md` اصلاح مدل تفسیری Cycle و Version را ثبت می‌کند.
 
-## رابطه اسناد
+## الزام هر Change Set
 
-- `CS-UIR09-WORKSPACE-UX-CONSOLIDATION` تفاوت‌های پذیرفته‌شده Cycle 9 تا Iteration 13 را ثبت می‌کند.
-- `CS-SPECS-V8-CONSOLIDATION` تصمیم‌های محصولی تا Cycle 8 / Iteration 12، مالکیت‌ها و معماری پایه را یکپارچه می‌کند.
-- `CS-WORKSPACE-V8` تغییرات UI و Interaction Cycle 8 را ثبت می‌کند.
-- `CS-WORK-REPORT-DYNAMIC-FORM` دامنه گزارش کار پویا را ثبت می‌کند.
-- Constitution، Decision Recordها و Specificationهای Active در صورت تعارض مرجع بالاتر هستند.
-
-## الزام Change Set
-
-هر Change Set باید:
-
-- Baseline و Target را مشخص کند.
-- اسناد Superseded را فهرست کند.
-- Module Impact را ثبت کند.
-- Security، Migration و Test اثرپذیر را مشخص کند.
-- سؤال‌های باز را از تصمیم‌های قطعی جدا کند.
-- وضعیت `Implementation Ready` را فقط با وجود Specification اجرایی و شواهد لازم اعلام کند.
+- Baseline و Target؛
+- Source Cycle/Observations؛
+- Added/Changed/Removed/Superseded؛
+- Decision و Module/Page impacts؛
+- Security، Data، Migration، Test و Audit؛
+- Revalidation Plan؛
+- Open Items و Risks؛
+- Rollback؛
+- Registry updates؛
+- عدم اعلام `Implemented/Accepted` بدون Evidence.
