@@ -71,7 +71,7 @@ Capability برای Navigation و فعال‌سازی تجربه کاربری ا
 
 | Capability ID | نام فنی | مالک | وضعیت اجرا | مرجع |
 |---|---|---|---|---|
-| `CAP-OVERTIME-001` | `overtime.view_own` | Overtime Domain | Gap Identified | [`DEC-UIR09-010-CONSOLIDATED`](Decision_Registry.md#۳-تصمیمهای-تجمیعی-cycle-9-و-cycle-10) |
+| `CAP-OVERTIME-001` | `overtime.view_own` | Overtime Domain | Gap Identified | [Decision Registry](Decision_Registry.md)؛ `DEC-UIR09-010-CONSOLIDATED` |
 | `CAP-OVERTIME-002` | `overtime.request` | Overtime Domain | Gap Identified | همان |
 | `CAP-OVERTIME-003` | `overtime.view_history` | Overtime Domain | Gap Identified | همان |
 | `CAP-OVERTIME-004` | `overtime.cancel_request` | Overtime Domain | Gap Identified | همان |
