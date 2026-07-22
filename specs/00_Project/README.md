@@ -32,6 +32,16 @@ related_capabilities: []
 - [نقشه مرکزی مستندات](Documentation_Map.md)
 - [قانون اساسی مستندات](../README.md)
 - [استاندارد Metadata و شناسه‌ها](Metadata_And_ID_Standard.md)
+- [معماری اطلاعات Repository](Repository_Information_Architecture.md)
+
+## راهنمای اجرایی نگهداری مستندات
+
+- [راهنمای مشارکت و نگهداری مستندات](Documentation_Contribution_Guide.md)
+- [چرخه عمر مستندات](Documentation_Lifecycle.md)
+- [راهنمای اجرای Review Cycle و Iteration](Review_Process_Guide.md)
+- [چک‌لیست اجباری پایان Cycle](Cycle_Closeout_Checklist.md)
+- [راهنمای کار هوش مصنوعی](AI_Working_Guide.md)
+- [قالب استاندارد Cycle جدید](../02_UI_UX/Review_Cycles/_Template/README.md)
 
 ## Registryهای مرکزی
 
@@ -78,4 +88,5 @@ Cycle 8 و 9 Historical Review Source هستند، اما تصمیم‌های Ag
 4. Document، Implementation و UI Validation status را جدا نگه دارد؛
 5. Supersede را صریح و دوطرفه ثبت کند؛
 6. Security، Migration، Test، Audit و Revalidation را بررسی کند؛
-7. Prototype یا کد فعلی را به‌جای Decision Active معرفی نکند.
+7. Prototype یا کد فعلی را به‌جای Decision Active معرفی نکند؛
+8. پیش از بسته‌شدن Cycle، `Cycle_Closeout_Checklist.md` را تکمیل کند.
