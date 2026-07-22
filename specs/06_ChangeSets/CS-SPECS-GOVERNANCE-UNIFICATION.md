@@ -49,6 +49,7 @@ related_capabilities: []
 - `00_Project/Module_Registry.md`
 - `00_Project/Open_Item_Registry.md`
 - `00_Project/Implementation_Gap_Registry.md`
+- `00_Project/Documentation_Validation_Report.md`
 
 ## Changed
 
@@ -59,6 +60,8 @@ Indexهای `00_Project`, `01_Product`, `02_UI_UX`, `03_Modules`, `04_Decisions`
 - جداسازی Current Effective Specifications از Historical Review Source؛
 - نمایش Page/Module/Decisionهای Cycle 10؛
 - حفظ Backward Compatibility لینک‌های قدیمی.
+
+همچنین `Historical_Document_Register`, `Open_Questions` و `Traceability_Matrix` با لایه مرکزی هماهنگ شدند.
 
 ## Not Changed
 
@@ -106,15 +109,16 @@ Rename فیزیکی فقط در Change Set مستقل با link migration مجا
 - عدم Rename یا حذف مخرب؛
 - validation دستی Diff و لینک‌ها در این Change Set.
 
-## Validation Plan
+## Validation Result
 
-- تمام فایل‌های Registry وجود داشته باشند؛
-- لینک Registry به Source Document معتبر باشد؛
-- هیچ ID جدید تکراری نباشد؛
-- Indexهای سطح اول Cycle 10 را نمایش دهند؛
-- هیچ فایل خارج از `specs` در Diff نباشد؛
-- هیچ Observation به Decision Active تبدیل نشده باشد؛
-- وضعیت اجرا بدون Evidence به `Implemented` تغییر نکند.
+نتیجه کامل در [`../00_Project/Documentation_Validation_Report.md`](../00_Project/Documentation_Validation_Report.md) ثبت شده است.
+
+- تمام تغییرات فقط داخل `specs` هستند؛
+- Branch نسبت به Base عقب نیست؛
+- هیچ فایل کد یا Odoo Core تغییر نکرده است؛
+- Collisionهای شناخته‌شده ID ثبت شده‌اند؛
+- مراجع کلیدی Page/Module/Architecture بررسی شده‌اند؛
+- validator خودکار سراسری هنوز Open Item است.
 
 ## Rollback
 
