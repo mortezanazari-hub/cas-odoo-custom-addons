@@ -5,12 +5,12 @@ document_type: Decision Registry
 document_status: Active
 implementation_status: N/A
 ui_validation_status: N/A
-source_ui_review_cycle: CAS UI Review Cycle 10
-source_iteration: 13
+source_ui_review_cycle: CAS UI Review Cycle 11
+source_iteration: 7
 owner: Product & Architecture Governance
 domain_owner: Decision Governance
 created_at: 2026-07-22
-updated_at: 2026-07-22
+updated_at: 2026-07-24
 canonical: true
 supersedes: []
 superseded_by: []
@@ -54,18 +54,19 @@ related_capabilities: []
 | `DEC-V8-019-SHIFT-APPLICABILITY` | Work Report براساس Shift Occurrence و Applicability | Work Report | Cycle 8 I12 | [`DEC-019`](../04_Decisions/DEC-019-Work-Report-Applicability-And-Shift-Period.md) | Agreed | Gap Identified | Pending Revalidation | Dynamic Work Report | Source |
 | `DEC-V8-020-DELEGATED-WORK-REPORT` | دسترسی تفویض‌شده گزارش کار | Work Report | Cycle 8 I12 | [`DEC-020`](../04_Decisions/DEC-020-Delegated-Work-Report-Access.md) | Agreed | Gap Identified | Pending Revalidation | Work Report security | [Work Report Security](../03_Modules/cas_work_report/Security.md) |
 
-## ۳. تصمیم‌های تجمیعی Cycle 9 و Cycle 10
+## ۳. تصمیم‌های تجمیعی Cycle 9 تا Cycle 11
 
 | Canonical Registry Key | عنوان | Source | Status | Implementation | UI Validation | Affected Modules | Supersedes | Current Canonical Reference |
-|---|---|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|---|---|
 | `DEC-UIR09-010-CONSOLIDATED` | Workspace Navigation، Attendance Correction/Audit، Overtime، Activity Proposal، Form Matrix و Dashboard Personalization | [Cycle 9 Decision](../04_Decisions/DEC-010-UIR09-Consolidated-Workspace-And-Operational-UX.md) | Active | Gap Identified | Pending Revalidation | Workspace، Work Report، Activity Catalog، Attendance، Overtime، Form Engine | Flat navigation؛ reorder-only dashboard؛ Work Progress baseline | Source + [Cycle 9 Register](UI_Review_Cycle_9_Register.md) |
 | `DEC-UIR10-016-CONSOLIDATED` | اصلاح آلفا در مکاتبات، تفویض، People Picker، مدیریت سامانه، دبیرخانه، نگهبانی و حذف OCR/DMS | [Cycle 10 Decision](../04_Decisions/DEC-016-UIR10-Consolidated-Alpha-Workspace-Refinement.md) | Agreed | Gap Identified | Pending Revalidation | Workspace، Correspondence، Delegation، Secretariat، Attendance، Security | فقط baselineهای متعارض صریح | Source + [Cycle 10 Register](UI_Review_Cycle_10_Register.md) |
+| `DEC-UIR11-GUARD-ATTENDANCE-001` | نهایی‌سازی ثبت عادی، اصلاح رکورد و تردد اعلام‌نشده نگهبانی | [Cycle 11 Guard Decision](../04_Decisions/DEC-UIR11-Guard-Attendance-Final-Interaction.md) | Agreed | Gap Identified | Design Approved | Attendance Operations، Attendance Core، Workspace، Task/Action/Approval | منطق حدس نوع مغایرت از وضعیت داخل/خارج؛ مطالبه ساعت/توضیح نگهبان | Source + [Cycle 11 Register](UI_Review_Cycle_11_Register.md) + [Page Spec](../02_UI_UX/Security/Guard_Attendance_Station.md) |
 
 ## ۴. تعارض‌ها و نکات حاکمیتی
 
 1. شناسه‌های نمایشی `DEC-010` و `DEC-016` تکرار شده‌اند؛ کلیدهای Registry بالا برای رفع ابهام استفاده می‌شوند و فایل‌ها فعلاً Rename نمی‌شوند.
-2. Metadata تصمیم Cycle 9 مقدار Implementation=`Planned` دارد، درحالی‌که Traceability و Cycle Register آن را `Gap Identified` اعلام می‌کنند. وضعیت Registry براساس Traceability=`Gap Identified` است و تعارض در [Open Item Registry](Open_Item_Registry.md) ثبت شده است.
-3. `Agreed` یا `Active` به معنی `Implemented` یا `Accepted in Production` نیست.
+2. Metadata تصمیم Cycle 9 مقدار Implementation=`Planned` دارد، درحالی‌که Traceability و Cycle Register آن را `Gap Identified` اعلام می‌کنند. وضعیت Registry براساس Traceability=`Gap Identified` است.
+3. `Agreed`، `Active` یا `Design Approved` به معنی `Implemented` یا `Accepted in Production` نیست.
 4. Prototype و ZIP فقط Evidence بازنگری UI هستند.
 
 ## ۵. قاعده افزودن تصمیم
