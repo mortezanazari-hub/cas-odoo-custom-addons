@@ -5,12 +5,12 @@ document_type: Page Registry
 document_status: Active
 implementation_status: N/A
 ui_validation_status: N/A
-source_ui_review_cycle: CAS UI Review Cycle 10
-source_iteration: 13
+source_ui_review_cycle: CAS UI Review Cycle 11
+source_iteration: 7
 owner: Product & UX Governance
 domain_owner: Page Governance
 created_at: 2026-07-22
-updated_at: 2026-07-22
+updated_at: 2026-07-24
 canonical: true
 supersedes: []
 superseded_by: []
@@ -60,9 +60,9 @@ Registry فقط Index است. Layout، رفتار، State، Security و Acceptan
 
 | Page ID | عنوان | Route | Owner | نقش | Capability | Document Status | UI Status | Backend Status | Spec |
 |---|---|---|---|---|---|---|---|---|---|
-| `PAGE-GUARD-ATTENDANCE-STATION` | ایستگاه سریع ثبت تردد نگهبانی | `/workspace/guard/attendance` | Attendance Operations | Guard Operator | `CAP-GUARD-001`؛ زمان دستی `CAP-GUARD-002` | Active | Pending Revalidation | Gap Identified | [Guard Attendance Station](../02_UI_UX/Security/Guard_Attendance_Station.md) |
+| `PAGE-GUARD-ATTENDANCE-STATION` | ایستگاه سریع ثبت تردد نگهبانی | `/workspace/guard/attendance` | Attendance Operations | Guard Operator | `CAP-GUARD-001`؛ زمان دستی/اصلاح `CAP-GUARD-002` | Active | Design Approved — Cycle 11 I7 | Gap Identified | [Guard Attendance Station](../02_UI_UX/Security/Guard_Attendance_Station.md) |
 
-صفحه باید روی `cas.guard.batch`, `cas.guard.batch.line`, `cas.attendance.event`, `cas.attendance.site` و `action_confirm` ساخته شود و مدل موازی ایجاد نکند.
+ثبت عادی باید روی `cas.guard.batch`, `cas.guard.batch.line`, `cas.attendance.event`, `cas.attendance.site` و `action_confirm` ساخته شود. جریان تردد اعلام‌نشده با Task/Action و Approval یکپارچه است و رخداد رسمی را فقط پس از تأیید سرپرست می‌سازد.
 
 ## ۵. کامپوننت‌های مشترک بدون Route
 
@@ -89,7 +89,8 @@ Registry فقط Index است. Layout، رفتار، State، Security و Acceptan
 | `Shared/Workspace_Shell.md` | Historical Cycle 7 | `Workspace_Shell_V8.md` |
 | `global-search-page` | Superseded | Command Palette |
 | `recent-history` | Superseded | Recent History داخل Command Palette |
-| UI لیستی ثبت نگهبانی | Superseded baseline | Guard Attendance Station Cycle 10 |
+| UI لیستی ثبت نگهبانی | Superseded baseline | Guard Attendance Station Cycle 10/11 |
+| منطق حدس نوع «اعلام‌نشده» از وضعیت داخل/خارج | Superseded | انتخاب صریح نوع و تاریخ مشترک توسط نگهبان در Cycle 11 |
 | OCR و DMS Navigation در آلفا | Out of Scope؛ implementation removal Planned | Attachment مجاز باقی می‌ماند |
 
 ## ۸. قاعده نگهداری
